@@ -6,7 +6,7 @@ import com.stedi.randomimagegenerator.ImageParams;
 
 public class FlatColorGenerator implements Generator {
     @Override
-    public Bitmap generate(ImageParams imageParams) {
+    public Bitmap generate(ImageParams imageParams) throws Exception {
         return null;
     }
 }

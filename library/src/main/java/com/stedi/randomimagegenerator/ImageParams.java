@@ -1,12 +1,16 @@
 package com.stedi.randomimagegenerator;
 
+import android.graphics.Bitmap;
+
+import java.io.File;
+
 public class ImageParams {
     private final int width, height;
     private final int number;
-    private final String path;
-    private final Format format;
+    private final File path;
+    private final Bitmap.CompressFormat format;
 
-    public ImageParams(int width, int height, int number, String path, Format format) {
+    public ImageParams(int width, int height, int number, File path, Bitmap.CompressFormat format) {
         this.width = width;
         this.height = height;
         this.number = number;
@@ -26,11 +30,11 @@ public class ImageParams {
         return number;
     }
 
-    public String getPath() {
+    public File getPath() {
         return path;
     }
 
-    public Format getFormat() {
+    public Bitmap.CompressFormat getFormat() {
         return format;
     }
 }

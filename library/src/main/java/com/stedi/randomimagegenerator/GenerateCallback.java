@@ -2,7 +2,8 @@ package com.stedi.randomimagegenerator;
 
 import android.graphics.Bitmap;
 
-public interface Callback {
+public interface GenerateCallback {
     void onGenerated(ImageParams imageParams, Bitmap bitmap);
-    void onException(ImageParams imageParams, Exception ex);
+
+    void onException(ImageParams imageParams, Exception e);
 }

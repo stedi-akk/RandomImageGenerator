@@ -12,7 +12,7 @@ public class NamedGenerator implements Generator {
     }
 
     @Override
-    public Bitmap generate(ImageParams imageParams) {
+    public Bitmap generate(ImageParams imageParams) throws Exception {
         Bitmap bitmap = generator.generate(imageParams);
 
 
