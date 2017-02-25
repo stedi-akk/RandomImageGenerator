@@ -1,21 +1,19 @@
 package com.stedi.randomimagegenerator;
 
-import android.graphics.Bitmap;
-
 import java.io.File;
 
 public class ImageParams {
     private final int width, height;
     private final int number;
     private final File path;
-    private final Bitmap.CompressFormat format;
+    private final Quality quality;
 
-    public ImageParams(int width, int height, int number, File path, Bitmap.CompressFormat format) {
+    public ImageParams(int width, int height, int number, File path, Quality quality) {
         this.width = width;
         this.height = height;
         this.number = number;
         this.path = path;
-        this.format = format;
+        this.quality = quality;
     }
 
     public int getWidth() {
@@ -34,7 +32,7 @@ public class ImageParams {
         return path;
     }
 
-    public Bitmap.CompressFormat getFormat() {
-        return format;
+    public Quality getQuality() {
+        return quality;
     }
 }

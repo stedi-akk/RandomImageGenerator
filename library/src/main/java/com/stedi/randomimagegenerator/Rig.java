@@ -17,7 +17,7 @@ public class Rig {
 
     public void generate() {
         for (int n = 1; n <= attrs.count; n++) {
-            ImageParams imageParams = new ImageParams(0, 0, n, attrs.path, attrs.format);
+            ImageParams imageParams = new ImageParams(0, 0, n, attrs.path, attrs.quality);
             Bitmap bitmap = null;
 
             try {
@@ -31,7 +31,9 @@ public class Rig {
 
             if (attrs.path != null && bitmap != null) {
                 try {
-                    boolean saved = save(bitmap, attrs.path, attrs.format, attrs.quality);
+                    Bitmap.CompressFormat compressFormat = attrs.quality.getFormat();
+                    int quality = attrs.quality.getQualityValue();
+                    boolean saved = save(bitmap, attrs.path, compressFormat, quality);
                     if (!saved)
                         throw new NotSavedException();
                     if (attrs.saveCallback != null)
@@ -69,8 +71,7 @@ public class Rig {
         private int heightFrom, heightTo;
         private int count;
         private File path;
-        private Bitmap.CompressFormat format;
-        private int quality;
+        private Quality quality;
         private SaveCallback saveCallback;
     }
 
@@ -124,12 +125,7 @@ public class Rig {
             return this;
         }
 
-        public Builder format(Bitmap.CompressFormat format) {
-            a.format = format;
-            return this;
-        }
-
-        public Builder quality(int quality) {
+        public Builder quality(Quality quality) {
             a.quality = quality;
             return this;
         }
