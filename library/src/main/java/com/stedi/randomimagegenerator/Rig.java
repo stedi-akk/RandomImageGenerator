@@ -18,14 +18,10 @@ public final class Rig {
     public void generate() {
         int[] widthValues = null;
         int[] heightValues = null;
-
-        if (params.useWidthRange) {
+        if (params.useWidthRange)
             widthValues = createRangeArray(params.widthFrom, params.widthTo, params.widthStep);
-        }
-
-        if (params.useHeightRange) {
+        if (params.useHeightRange)
             widthValues = createRangeArray(params.heightFrom, params.heightTo, params.heightStep);
-        }
 
         if (widthValues != null) {
             for (int i = 0; i < widthValues.length; i++) {
@@ -63,23 +59,24 @@ public final class Rig {
             }
 
             if (params.path != null && bitmap != null) {
+                File file = new File(params.path, params.fileNamePolicy.getName(imageParams));
                 try {
                     Bitmap.CompressFormat compressFormat = params.quality.getFormat();
                     int quality = params.quality.getQualityValue();
-                    if (!save(bitmap, params.path, compressFormat, quality))
+                    if (!save(bitmap, file, compressFormat, quality))
                         throw new NotSavedException();
-                    notifySaveCallback(bitmap, params.path, null);
+                    notifySaveCallback(bitmap, file, null);
                 } catch (Exception e) {
-                    notifySaveCallback(bitmap, params.path, e);
+                    notifySaveCallback(bitmap, file, e);
                 }
             }
         }
     }
 
-    private boolean save(Bitmap bitmap, File path, Bitmap.CompressFormat format, int quality) throws Exception {
+    private boolean save(Bitmap bitmap, File file, Bitmap.CompressFormat format, int quality) throws Exception {
         FileOutputStream out = null;
         try {
-            out = new FileOutputStream(path);
+            out = new FileOutputStream(file);
             return bitmap.compress(format, quality, out);
         } finally {
             try {
@@ -90,6 +87,21 @@ public final class Rig {
                 e.printStackTrace();
             }
         }
+    }
+
+    private int[] createRangeArray(int from, int to, int step) {
+        boolean isDecreasing = to < from;
+        int size = Math.abs((to - from) / step);
+        int[] array = new int[size + 1];
+        int value = from;
+        for (int i = 0; i < array.length; i++) {
+            array[i] = value;
+            if (isDecreasing)
+                value -= step;
+            else
+                value += step;
+        }
+        return array;
     }
 
     private void notifyCallback(ImageParams imageParams, Bitmap bitmap, Exception e) {
@@ -108,17 +120,6 @@ public final class Rig {
             else
                 params.saveCallback.onSaved(bitmap, path);
         }
-    }
-
-    private int[] createRangeArray(int from, int to, int step) {
-        int size = (to - from) / step;
-        int[] array = new int[size + 1];
-        int value = from;
-        for (int i = 0; i < array.length; i++) {
-            array[i] = value;
-            value += step;
-        }
-        return array;
     }
 
     private static class Params {
@@ -163,18 +164,26 @@ public final class Rig {
         }
 
         public Builder setFixedWidth(int width) {
+            if (width <= 0)
+                throw new IllegalArgumentException("width must be > 0");
             p.width = width;
             p.useWidthRange = false;
             return this;
         }
 
         public Builder setFixedHeight(int height) {
+            if (height <= 0)
+                throw new IllegalArgumentException("height must be > 0");
             p.height = height;
             p.useHeightRange = false;
             return this;
         }
 
         public Builder setWidthRange(int from, int to, int step) {
+            if (step <= 0)
+                throw new IllegalArgumentException("step must be > 0");
+            if (from <= 0 || to <= 0)
+                throw new IllegalArgumentException("from to must be > 0");
             p.widthFrom = from;
             p.widthTo = to;
             p.useWidthRange = true;
@@ -183,6 +192,10 @@ public final class Rig {
         }
 
         public Builder setHeightRange(int from, int to, int step) {
+            if (step <= 0)
+                throw new IllegalArgumentException("step must be > 0");
+            if (from <= 0 || to <= 0)
+                throw new IllegalArgumentException("from to must be > 0");
             p.heightFrom = from;
             p.heightTo = to;
             p.useHeightRange = true;
@@ -198,7 +211,17 @@ public final class Rig {
         }
 
         public Builder setFileSavePath(String path) {
-            p.path = new File(path);
+            if (path == null) {
+                p.path = null;
+                return this;
+            }
+            File f = new File(path);
+            boolean exists = f.exists();
+            if (!exists)
+                exists = f.mkdirs();
+            if (!exists)
+                throw new IllegalArgumentException("path is not valid");
+            p.path = f;
             return this;
         }
 
@@ -213,6 +236,14 @@ public final class Rig {
         }
 
         public Rig build() {
+            if (p.generator == null)
+                throw new IllegalStateException("generator not specified");
+            if (p.quality == null)
+                p.quality = Quality.png();
+            if ((p.fileNamePolicy != null || p.saveCallback != null) && p.path == null)
+                throw new IllegalStateException("path not specified");
+            if (p.path != null && p.fileNamePolicy == null)
+                p.fileNamePolicy = new DefaultFileNamePolicy();
             return new Rig(p);
         }
     }
