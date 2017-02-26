@@ -2,6 +2,8 @@ package com.stedi.randomimagegenerator;
 
 import android.graphics.Bitmap;
 
+import com.stedi.randomimagegenerator.callbacks.GenerateCallback;
+import com.stedi.randomimagegenerator.callbacks.SaveCallback;
 import com.stedi.randomimagegenerator.generators.Generator;
 
 import java.io.File;
@@ -187,7 +189,7 @@ public final class Rig {
             p.widthFrom = from;
             p.widthTo = to;
             p.useWidthRange = true;
-            p.count = 0;
+            p.count = 1;
             return this;
         }
 
@@ -199,13 +201,15 @@ public final class Rig {
             p.heightFrom = from;
             p.heightTo = to;
             p.useHeightRange = true;
-            p.count = 0;
+            p.count = 1;
             return this;
         }
 
         public Builder setCount(int count) {
             if (p.useWidthRange || p.useHeightRange)
                 throw new IllegalStateException("count can not be set with size range");
+            if (count <= 0)
+                throw new IllegalArgumentException("count must be > 0");
             p.count = count;
             return this;
         }
@@ -240,6 +244,8 @@ public final class Rig {
                 throw new IllegalStateException("generator not specified");
             if (p.quality == null)
                 p.quality = Quality.png();
+            if (p.count == 0)
+                p.count = 1;
             if ((p.fileNamePolicy != null || p.saveCallback != null) && p.path == null)
                 throw new IllegalStateException("path not specified");
             if (p.path != null && p.fileNamePolicy == null)
