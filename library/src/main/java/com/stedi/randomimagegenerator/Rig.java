@@ -9,9 +9,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public final class Rig {
-    private final Params params;
+    private final RigParams params;
 
-    private Rig(Params params) {
+    private Rig(RigParams params) {
         this.params = params;
     }
 
@@ -122,7 +122,7 @@ public final class Rig {
         }
     }
 
-    private static class Params {
+    private static class RigParams {
         private Generator generator;
         private GenerateCallback generateCallback;
         private Quality quality;
@@ -138,10 +138,10 @@ public final class Rig {
     }
 
     public static class Builder {
-        private final Params p;
+        private final RigParams p;
 
         public Builder() {
-            this.p = new Params();
+            this.p = new RigParams();
         }
 
         public Builder setGenerator(Generator generator) {

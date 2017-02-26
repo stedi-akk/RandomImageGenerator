@@ -26,4 +26,17 @@ public class Quality {
     public int getQualityValue() {
         return value;
     }
+
+    public String getFormatName() {
+        Bitmap.CompressFormat format = getFormat();
+        switch (format) {
+            case JPEG:
+                return "jpg";
+            case PNG:
+                return "png";
+            case WEBP:
+                return "webp";
+        }
+        return "png";
+    }
 }
