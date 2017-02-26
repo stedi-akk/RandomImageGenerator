@@ -8,39 +8,69 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class Rig {
-    private final Attributes attrs;
+public final class Rig {
+    private final Params params;
 
-    private Rig(Attributes attrs) {
-        this.attrs = attrs;
+    private Rig(Params params) {
+        this.params = params;
     }
 
     public void generate() {
-        for (int n = 1; n <= attrs.count; n++) {
-            ImageParams imageParams = new ImageParams(0, 0, n, attrs.path, attrs.quality);
-            Bitmap bitmap = null;
+        int[] widthValues = null;
+        int[] heightValues = null;
 
+        if (params.useWidthRange) {
+            widthValues = createRangeArray(params.widthFrom, params.widthTo, params.widthStep);
+        }
+
+        if (params.useHeightRange) {
+            widthValues = createRangeArray(params.heightFrom, params.heightTo, params.heightStep);
+        }
+
+        if (widthValues != null) {
+            for (int i = 0; i < widthValues.length; i++) {
+                int width = widthValues[i];
+
+                if (heightValues != null) {
+                    for (int j = 0; j < heightValues.length; j++) {
+                        int height = heightValues[j];
+                        generate(width, height, 1);
+                    }
+                } else {
+                    generate(width, params.height, 1);
+                }
+            }
+        } else if (heightValues != null) {
+            for (int i = 0; i < heightValues.length; i++) {
+                int height = heightValues[i];
+                generate(params.width, height, 1);
+            }
+        } else {
+            generate(params.width, params.height, params.count);
+        }
+    }
+
+    private void generate(int width, int height, int count) {
+        for (int n = 1; n <= count; n++) {
+            ImageParams imageParams = new ImageParams(n, width, height, params.path, params.quality);
+
+            Bitmap bitmap = null;
             try {
-                bitmap = attrs.generator.generate(imageParams);
-                if (attrs.generateCallback != null)
-                    attrs.generateCallback.onGenerated(imageParams, bitmap);
+                bitmap = params.generator.generate(imageParams);
+                notifyCallback(imageParams, bitmap, null);
             } catch (Exception e) {
-                if (attrs.generateCallback != null)
-                    attrs.generateCallback.onException(imageParams, e);
+                notifyCallback(imageParams, null, e);
             }
 
-            if (attrs.path != null && bitmap != null) {
+            if (params.path != null && bitmap != null) {
                 try {
-                    Bitmap.CompressFormat compressFormat = attrs.quality.getFormat();
-                    int quality = attrs.quality.getQualityValue();
-                    boolean saved = save(bitmap, attrs.path, compressFormat, quality);
-                    if (!saved)
+                    Bitmap.CompressFormat compressFormat = params.quality.getFormat();
+                    int quality = params.quality.getQualityValue();
+                    if (!save(bitmap, params.path, compressFormat, quality))
                         throw new NotSavedException();
-                    if (attrs.saveCallback != null)
-                        attrs.saveCallback.onSave(bitmap, attrs.path);
+                    notifySaveCallback(bitmap, params.path, null);
                 } catch (Exception e) {
-                    if (attrs.saveCallback != null)
-                        attrs.saveCallback.onException(bitmap, attrs.path, e);
+                    notifySaveCallback(bitmap, params.path, e);
                 }
             }
         }
@@ -62,81 +92,128 @@ public class Rig {
         }
     }
 
-    private static class Attributes {
+    private void notifyCallback(ImageParams imageParams, Bitmap bitmap, Exception e) {
+        if (params.generateCallback != null) {
+            if (e != null)
+                params.generateCallback.onException(imageParams, e);
+            else
+                params.generateCallback.onGenerated(imageParams, bitmap);
+        }
+    }
+
+    private void notifySaveCallback(Bitmap bitmap, File path, Exception e) {
+        if (params.saveCallback != null) {
+            if (e != null)
+                params.saveCallback.onException(bitmap, path, e);
+            else
+                params.saveCallback.onSaved(bitmap, path);
+        }
+    }
+
+    private int[] createRangeArray(int from, int to, int step) {
+        int size = (to - from) / step;
+        int[] array = new int[size + 1];
+        int value = from;
+        for (int i = 0; i < array.length; i++) {
+            array[i] = value;
+            value += step;
+        }
+        return array;
+    }
+
+    private static class Params {
         private Generator generator;
-        private NamePolicy namePolicy;
         private GenerateCallback generateCallback;
+        private Quality quality;
         private int width, height;
-        private int widthFrom, widthTo;
-        private int heightFrom, heightTo;
+        private int widthFrom, widthTo, widthStep;
+        private int heightFrom, heightTo, heightStep;
+        private boolean useWidthRange;
+        private boolean useHeightRange;
         private int count;
         private File path;
-        private Quality quality;
+        private FileNamePolicy fileNamePolicy;
         private SaveCallback saveCallback;
     }
 
     public static class Builder {
-        private Attributes a;
+        private final Params p;
 
         public Builder() {
-            this.a = new Attributes();
+            this.p = new Params();
         }
 
-        public Builder generator(Generator generator) {
-            a.generator = generator;
+        public Builder setGenerator(Generator generator) {
+            p.generator = generator;
             return this;
         }
 
-        public Builder namePolicy(NamePolicy namePolicy) {
-            a.namePolicy = namePolicy;
+        public Builder setCallback(GenerateCallback generateCallback) {
+            p.generateCallback = generateCallback;
             return this;
         }
 
-        public Builder generateCallback(GenerateCallback generateCallback) {
-            a.generateCallback = generateCallback;
+        public Builder setQuality(Quality quality) {
+            p.quality = quality;
             return this;
         }
 
-        public Builder fixedSize(int width, int height) {
-            a.width = width;
-            a.height = height;
+        public Builder setFixedSize(int width, int height) {
+            return setFixedWidth(width).setFixedHeight(height);
+        }
+
+        public Builder setFixedWidth(int width) {
+            p.width = width;
+            p.useWidthRange = false;
             return this;
         }
 
-        public Builder widthRange(int from, int to) {
-            a.widthFrom = from;
-            a.widthTo = to;
+        public Builder setFixedHeight(int height) {
+            p.height = height;
+            p.useHeightRange = false;
             return this;
         }
 
-        public Builder heightRange(int from, int to) {
-            a.heightFrom = from;
-            a.heightTo = to;
+        public Builder setWidthRange(int from, int to, int step) {
+            p.widthFrom = from;
+            p.widthTo = to;
+            p.useWidthRange = true;
+            p.count = 0;
             return this;
         }
 
-        public Builder count(int count) {
-            a.count = count;
+        public Builder setHeightRange(int from, int to, int step) {
+            p.heightFrom = from;
+            p.heightTo = to;
+            p.useHeightRange = true;
+            p.count = 0;
             return this;
         }
 
-        public Builder path(String path) {
-            a.path = new File(path);
+        public Builder setCount(int count) {
+            if (p.useWidthRange || p.useHeightRange)
+                throw new IllegalStateException("count can not be set with size range");
+            p.count = count;
             return this;
         }
 
-        public Builder quality(Quality quality) {
-            a.quality = quality;
+        public Builder setFileSavePath(String path) {
+            p.path = new File(path);
             return this;
         }
 
-        public Builder saveCallback(SaveCallback saveCallback) {
-            a.saveCallback = saveCallback;
+        public Builder setFileNamePolicy(FileNamePolicy fileNamePolicy) {
+            p.fileNamePolicy = fileNamePolicy;
+            return this;
+        }
+
+        public Builder setFileSaveCallback(SaveCallback saveCallback) {
+            p.saveCallback = saveCallback;
             return this;
         }
 
         public Rig build() {
-            return new Rig(a);
+            return new Rig(p);
         }
     }
 }

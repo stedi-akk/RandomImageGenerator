@@ -14,10 +14,6 @@ public class Quality {
         return new Quality(Bitmap.CompressFormat.JPEG, quality);
     }
 
-    public Quality(Bitmap.CompressFormat format) {
-        this(format, 100);
-    }
-
     public Quality(Bitmap.CompressFormat format, int value) {
         this.format = format;
         this.value = value;

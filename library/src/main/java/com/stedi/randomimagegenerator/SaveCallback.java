@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 import java.io.File;
 
 public interface SaveCallback {
-    void onSave(Bitmap bitmap, File path);
+    void onSaved(Bitmap bitmap, File path);
 
     void onException(Bitmap bitmap, File path, Exception e);
 }
