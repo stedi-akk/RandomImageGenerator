@@ -11,17 +11,49 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.stedi.randomimagegenerator.sample.MainActivity">
 
-    <Button
-        android:id="@+id/main_activity_btn"
+    <TextView
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Generate" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:text="Count:" />
 
-    <ImageView
-        android:id="@+id/main_activity_iv"
+    <Button
+        android:id="@+id/main_activity_btn_generate_1"
+        android:layout_below="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/main_activity_btn"
+        android:text="1" />
+
+    <Button
+        android:id="@+id/main_activity_btn_generate_2"
+        android:layout_below="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/main_activity_btn_generate_1"
+        android:text="2" />
+
+    <Button
+        android:id="@+id/main_activity_btn_generate_6"
+        android:layout_below="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/main_activity_btn_generate_2"
+        android:text="6" />
+
+    <Button
+        android:id="@+id/main_activity_btn_generate_30"
+        android:layout_below="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/main_activity_btn_generate_6"
+        android:text="30" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/main_activity_rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/main_activity_btn_generate_1"
         android:layout_marginTop="@dimen/activity_vertical_margin" />
 
 </RelativeLayout>
