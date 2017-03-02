@@ -23,15 +23,12 @@ public final class Rig {
         if (params.useWidthRange)
             widthValues = createRangeArray(params.widthFrom, params.widthTo, params.widthStep);
         if (params.useHeightRange)
-            widthValues = createRangeArray(params.heightFrom, params.heightTo, params.heightStep);
+            heightValues = createRangeArray(params.heightFrom, params.heightTo, params.heightStep);
 
         if (widthValues != null) {
-            for (int i = 0; i < widthValues.length; i++) {
-                int width = widthValues[i];
-
+            for (int width : widthValues) {
                 if (heightValues != null) {
-                    for (int j = 0; j < heightValues.length; j++) {
-                        int height = heightValues[j];
+                    for (int height : heightValues) {
                         generate(width, height, 1);
                     }
                 } else {
@@ -39,8 +36,7 @@ public final class Rig {
                 }
             }
         } else if (heightValues != null) {
-            for (int i = 0; i < heightValues.length; i++) {
-                int height = heightValues[i];
+            for (int height : heightValues) {
                 generate(params.width, height, 1);
             }
         } else {
@@ -182,26 +178,22 @@ public final class Rig {
         }
 
         public Builder setWidthRange(int from, int to, int step) {
-            if (step <= 0)
-                throw new IllegalArgumentException("step must be > 0");
-            if (from <= 0 || to <= 0)
-                throw new IllegalArgumentException("from to must be > 0");
+            if (step <= 0 || from <= 0 || to <= 0)
+                throw new IllegalArgumentException("all width range args must be > 0");
             p.widthFrom = from;
             p.widthTo = to;
             p.useWidthRange = true;
-            p.count = 1;
+            p.count = 0;
             return this;
         }
 
         public Builder setHeightRange(int from, int to, int step) {
-            if (step <= 0)
-                throw new IllegalArgumentException("step must be > 0");
-            if (from <= 0 || to <= 0)
-                throw new IllegalArgumentException("from to must be > 0");
+            if (step <= 0 || from <= 0 || to <= 0)
+                throw new IllegalArgumentException("all height range args must be > 0");
             p.heightFrom = from;
             p.heightTo = to;
             p.useHeightRange = true;
-            p.count = 1;
+            p.count = 0;
             return this;
         }
 
@@ -242,6 +234,12 @@ public final class Rig {
         public Rig build() {
             if (p.generator == null)
                 throw new IllegalStateException("generator not specified");
+            if (!p.useWidthRange && !p.useHeightRange && p.width == 0 && p.height == 0)
+                throw new IllegalStateException("width and height not specified");
+            else if ((p.useWidthRange || p.width > 0) && p.height == 0)
+                throw new IllegalStateException("height not specified");
+            else if ((p.useHeightRange || p.height > 0) && p.width == 0)
+                throw new IllegalStateException("width not specified");
             if (p.quality == null)
                 p.quality = Quality.png();
             if (p.count == 0)

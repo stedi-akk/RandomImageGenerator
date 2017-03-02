@@ -7,6 +7,6 @@ public class DefaultFileNamePolicy implements FileNamePolicy {
     public String getName(ImageParams imageParams) {
         return String.format(Locale.getDefault(), "rig_%dx%d_%d.%s",
                 imageParams.getWidth(), imageParams.getHeight(),
-                imageParams.getId(), imageParams.getQuality().getFormatName());
+                imageParams.getId(), imageParams.getQuality().getFileExtension());
     }
 }

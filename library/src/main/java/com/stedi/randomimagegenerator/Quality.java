@@ -27,7 +27,7 @@ public class Quality {
         return value;
     }
 
-    public String getFormatName() {
+    public String getFileExtension() {
         Bitmap.CompressFormat format = getFormat();
         switch (format) {
             case JPEG:
