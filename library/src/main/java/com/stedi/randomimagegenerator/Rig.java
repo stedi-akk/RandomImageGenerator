@@ -53,6 +53,8 @@ public final class Rig {
             Bitmap bitmap = null;
             try {
                 bitmap = params.generator.generate(imageParams);
+                if (bitmap == null)
+                    throw new NotGeneratedException();
                 notifyCallback(imageParams, bitmap, null);
             } catch (Exception e) {
                 notifyCallback(imageParams, null, e);

@@ -71,8 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (bitmap != null)
-                    adapter.add(bitmap);
+                adapter.add(bitmap);
             }
         });
     }
