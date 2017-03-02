@@ -13,6 +13,8 @@ import java.io.IOException;
 public final class Rig {
     private final RigParams params;
 
+    private int imageId;
+
     private Rig(RigParams params) {
         this.params = params;
     }
@@ -45,8 +47,8 @@ public final class Rig {
     }
 
     private void generate(int width, int height, int count) {
-        for (int n = 1; n <= count; n++) {
-            ImageParams imageParams = new ImageParams(n, width, height, params.path, params.quality);
+        for (int i = 0; i < count; i++) {
+            ImageParams imageParams = new ImageParams(imageId++, width, height, params.path, params.quality);
 
             Bitmap bitmap = null;
             try {
