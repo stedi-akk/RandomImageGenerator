@@ -54,7 +54,7 @@ public final class Rig {
             try {
                 bitmap = params.generator.generate(imageParams);
                 if (bitmap == null)
-                    throw new NotGeneratedException();
+                    throw new NotGeneratedException("generator returned null for id " + imageParams.getId());
                 notifyCallback(imageParams, bitmap, null);
             } catch (Exception e) {
                 notifyCallback(imageParams, null, e);
@@ -66,7 +66,7 @@ public final class Rig {
                     Bitmap.CompressFormat compressFormat = params.quality.getFormat();
                     int quality = params.quality.getQualityValue();
                     if (!save(bitmap, file, compressFormat, quality))
-                        throw new NotSavedException();
+                        throw new NotSavedException("failed to save for id " + imageParams.getId());
                     notifySaveCallback(bitmap, file, null);
                 } catch (Exception e) {
                     notifySaveCallback(bitmap, file, e);

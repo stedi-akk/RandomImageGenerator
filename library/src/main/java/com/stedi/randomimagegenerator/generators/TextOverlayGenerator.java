@@ -51,6 +51,8 @@ public class TextOverlayGenerator implements Generator {
     @Override
     public Bitmap generate(ImageParams imageParams) throws Exception {
         Bitmap bitmap = generator.generate(imageParams);
+        if (bitmap == null)
+            return null;
 
         if (textPolicy == null) {
             textPolicy = new TextPolicy() {
