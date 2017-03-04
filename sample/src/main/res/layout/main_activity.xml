@@ -11,43 +11,32 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.stedi.randomimagegenerator.sample.MainActivity">
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:text="Count:" />
-
     <Button
         android:id="@+id/main_activity_btn_generate_1"
-        android:layout_below="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="1" />
 
     <Button
-        android:id="@+id/main_activity_btn_generate_2"
-        android:layout_below="@+id/title"
+        android:id="@+id/main_activity_btn_generate_6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/main_activity_btn_generate_1"
-        android:text="2" />
-
-    <Button
-        android:id="@+id/main_activity_btn_generate_6"
-        android:layout_below="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/main_activity_btn_generate_2"
         android:text="6" />
 
     <Button
         android:id="@+id/main_activity_btn_generate_30"
-        android:layout_below="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/main_activity_btn_generate_6"
         android:text="30" />
+
+    <Button
+        android:id="@+id/main_activity_btn_generate_range"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/main_activity_btn_generate_30"
+        android:text="range" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/main_activity_rv"
