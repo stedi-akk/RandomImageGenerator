@@ -11,16 +11,44 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.stedi.randomimagegenerator.sample.MainActivity">
 
+    <Spinner
+        android:id="@+id/main_activity_sp_generator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Spinner
+        android:id="@+id/main_activity_sp_quality_format"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/main_activity_sp_generator" />
+
+    <CheckBox
+        android:id="@+id/main_activity_cb_text_overlay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/main_activity_sp_generator"
+        android:text="With text overlay" />
+
+    <CheckBox
+        android:id="@+id/main_activity_cb_save_file"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/main_activity_sp_generator"
+        android:layout_toRightOf="@+id/main_activity_cb_text_overlay"
+        android:text="Save file" />
+
     <Button
         android:id="@+id/main_activity_btn_generate_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/main_activity_cb_text_overlay"
         android:text="1" />
 
     <Button
         android:id="@+id/main_activity_btn_generate_6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/main_activity_cb_text_overlay"
         android:layout_toRightOf="@id/main_activity_btn_generate_1"
         android:text="6" />
 
@@ -28,6 +56,7 @@
         android:id="@+id/main_activity_btn_generate_30"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/main_activity_cb_text_overlay"
         android:layout_toRightOf="@id/main_activity_btn_generate_6"
         android:text="30" />
 
@@ -35,8 +64,9 @@
         android:id="@+id/main_activity_btn_generate_range"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/main_activity_cb_text_overlay"
         android:layout_toRightOf="@id/main_activity_btn_generate_30"
-        android:text="range" />
+        android:text="Range" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/main_activity_rv"
