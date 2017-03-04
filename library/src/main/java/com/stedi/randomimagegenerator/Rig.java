@@ -48,7 +48,7 @@ public final class Rig {
 
     private void generate(int width, int height, int count) {
         for (int i = 0; i < count; i++) {
-            ImageParams imageParams = new ImageParams(imageId++, width, height, params.path, params.quality);
+            ImageParams imageParams = new ImageParams(++imageId, width, height, params.path, params.quality);
 
             Bitmap bitmap = null;
             try {
@@ -186,6 +186,7 @@ public final class Rig {
                 throw new IllegalArgumentException("all width range args must be > 0");
             p.widthFrom = from;
             p.widthTo = to;
+            p.widthStep = step;
             p.useWidthRange = true;
             p.count = 0;
             return this;
@@ -196,6 +197,7 @@ public final class Rig {
                 throw new IllegalArgumentException("all height range args must be > 0");
             p.heightFrom = from;
             p.heightTo = to;
+            p.heightStep = step;
             p.useHeightRange = true;
             p.count = 0;
             return this;
@@ -238,11 +240,9 @@ public final class Rig {
         public Rig build() {
             if (p.generator == null)
                 throw new IllegalStateException("generator not specified");
-            if (!p.useWidthRange && !p.useHeightRange && p.width == 0 && p.height == 0)
-                throw new IllegalStateException("width and height not specified");
-            else if ((p.useWidthRange || p.width > 0) && p.height == 0)
+            if (!p.useHeightRange && p.height == 0)
                 throw new IllegalStateException("height not specified");
-            else if ((p.useHeightRange || p.height > 0) && p.width == 0)
+            if (!p.useWidthRange && p.width == 0)
                 throw new IllegalStateException("width not specified");
             if (p.quality == null)
                 p.quality = Quality.png();
