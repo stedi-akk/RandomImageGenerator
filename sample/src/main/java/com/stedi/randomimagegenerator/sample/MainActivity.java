@@ -186,7 +186,7 @@ public class MainActivity extends AppCompatActivity implements
 
     private Generator generatorFactory(String className) {
         if (className.equals(ColoredPixelsGenerator.class.getSimpleName()))
-            return new ColoredPixelsGenerator();
+            return new ColoredPixelsGenerator(10);
         return new FlatColorGenerator();
     }
 

@@ -28,8 +28,7 @@ public class Quality {
     }
 
     public String getFileExtension() {
-        Bitmap.CompressFormat format = getFormat();
-        switch (format) {
+        switch (getFormat()) {
             case JPEG:
                 return "jpg";
             case PNG:
