@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.stedi.randomimagegenerator.sample.MainActivity">
 
     <Spinner
@@ -70,6 +69,7 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/main_activity_rv"
         android:layout_width="match_parent"
+        android:scrollbars="vertical"
         android:layout_height="match_parent"
         android:layout_below="@+id/main_activity_btn_generate_1" />
 

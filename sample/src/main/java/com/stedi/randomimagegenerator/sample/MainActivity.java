@@ -21,6 +21,7 @@ import com.stedi.randomimagegenerator.Quality;
 import com.stedi.randomimagegenerator.Rig;
 import com.stedi.randomimagegenerator.callbacks.GenerateCallback;
 import com.stedi.randomimagegenerator.callbacks.SaveCallback;
+import com.stedi.randomimagegenerator.generators.ColoredNoiseGenerator;
 import com.stedi.randomimagegenerator.generators.ColoredPixelsGenerator;
 import com.stedi.randomimagegenerator.generators.FlatColorGenerator;
 import com.stedi.randomimagegenerator.generators.Generator;
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements
     private Spinner spQualityFormat;
     private CheckBox cbTextOverlay;
     private CheckBox cbSaveFile;
+    private RecyclerView recyclerView;
     private ImagesAdapter imagesAdapter;
 
     private Generator selectedGenerator = new FlatColorGenerator();
@@ -52,7 +54,8 @@ public class MainActivity extends AppCompatActivity implements
         spGenerator.setOnItemSelectedListener(this);
         spGenerator.setAdapter(createSpinnerAdapter(new String[]{
                 FlatColorGenerator.class.getSimpleName(),
-                ColoredPixelsGenerator.class.getSimpleName()
+                ColoredPixelsGenerator.class.getSimpleName(),
+                ColoredNoiseGenerator.class.getSimpleName()
         }));
 
         spQualityFormat = (Spinner) findViewById(R.id.main_activity_sp_quality_format);
@@ -71,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements
         findViewById(R.id.main_activity_btn_generate_30).setOnClickListener(this);
         findViewById(R.id.main_activity_btn_generate_range).setOnClickListener(this);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.main_activity_rv);
+        recyclerView = (RecyclerView) findViewById(R.id.main_activity_rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         imagesAdapter = new ImagesAdapter();
@@ -144,6 +147,7 @@ public class MainActivity extends AppCompatActivity implements
             @Override
             public void run() {
                 imagesAdapter.add(bitmap);
+                recyclerView.scrollToPosition(imagesAdapter.getItemCount() - 1);
             }
         });
     }
@@ -187,6 +191,8 @@ public class MainActivity extends AppCompatActivity implements
     private Generator generatorFactory(String className) {
         if (className.equals(ColoredPixelsGenerator.class.getSimpleName()))
             return new ColoredPixelsGenerator(10);
+        if (className.equals(ColoredNoiseGenerator.class.getSimpleName()))
+            return new ColoredNoiseGenerator();
         return new FlatColorGenerator();
     }
 
