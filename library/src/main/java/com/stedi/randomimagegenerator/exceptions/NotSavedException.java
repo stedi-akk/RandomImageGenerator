@@ -1,4 +1,4 @@
-package com.stedi.randomimagegenerator;
+package com.stedi.randomimagegenerator.exceptions;
 
 import java.io.IOException;
 

@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 
 import com.stedi.randomimagegenerator.callbacks.GenerateCallback;
 import com.stedi.randomimagegenerator.callbacks.SaveCallback;
+import com.stedi.randomimagegenerator.exceptions.NotGeneratedException;
+import com.stedi.randomimagegenerator.exceptions.NotSavedException;
 import com.stedi.randomimagegenerator.generators.Generator;
 
 import java.io.File;
