@@ -21,6 +21,7 @@ import com.stedi.randomimagegenerator.Quality;
 import com.stedi.randomimagegenerator.Rig;
 import com.stedi.randomimagegenerator.callbacks.GenerateCallback;
 import com.stedi.randomimagegenerator.callbacks.SaveCallback;
+import com.stedi.randomimagegenerator.generators.ColoredCirclesGenerator;
 import com.stedi.randomimagegenerator.generators.ColoredNoiseGenerator;
 import com.stedi.randomimagegenerator.generators.ColoredPixelsGenerator;
 import com.stedi.randomimagegenerator.generators.FlatColorGenerator;
@@ -55,7 +56,8 @@ public class MainActivity extends AppCompatActivity implements
         spGenerator.setAdapter(createSpinnerAdapter(new String[]{
                 FlatColorGenerator.class.getSimpleName(),
                 ColoredPixelsGenerator.class.getSimpleName(),
-                ColoredNoiseGenerator.class.getSimpleName()
+                ColoredNoiseGenerator.class.getSimpleName(),
+                ColoredCirclesGenerator.class.getSimpleName()
         }));
 
         spQualityFormat = (Spinner) findViewById(R.id.main_activity_sp_quality_format);
@@ -193,6 +195,8 @@ public class MainActivity extends AppCompatActivity implements
             return new ColoredPixelsGenerator(10);
         if (className.equals(ColoredNoiseGenerator.class.getSimpleName()))
             return new ColoredNoiseGenerator();
+        if (className.equals(ColoredCirclesGenerator.class.getSimpleName()))
+            return new ColoredCirclesGenerator();
         return new FlatColorGenerator();
     }
 
