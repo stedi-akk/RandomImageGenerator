@@ -27,13 +27,12 @@ public class MirroredGenerator implements Generator {
 
         Bitmap resultBitmap = Bitmap.createBitmap(imageParams.getWidth(), imageParams.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(resultBitmap);
-        for (float x = 0, scaleX = 1; x < resultBitmap.getWidth(); x += resultBitmap.getWidth() / 2f, scaleX -= 2) {
-            for (float y = 0, scaleY = 1; y < resultBitmap.getHeight(); y += resultBitmap.getHeight() / 2f, scaleY -= 2) {
+
+        for (float x = 0, scaleX = 1, xPart = 1; x < resultBitmap.getWidth(); x += resultBitmap.getWidth() / 2f, scaleX -= 2, xPart++) {
+            for (float y = 0, scaleY = 1, yPart = 1; y < resultBitmap.getHeight(); y += resultBitmap.getHeight() / 2f, scaleY -= 2, yPart++) {
                 canvas.save();
                 canvas.scale(scaleX, scaleY);
-                canvas.drawBitmap(partBitmap,
-                        scaleX == 1 ? x : x * -2,
-                        scaleY == 1 ? y : y * -2, paint);
+                canvas.drawBitmap(partBitmap, x * xPart * scaleX, y * yPart * scaleY, paint);
                 canvas.restore();
             }
         }
