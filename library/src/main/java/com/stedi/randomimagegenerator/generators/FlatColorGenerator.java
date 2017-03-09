@@ -9,10 +9,14 @@ public class FlatColorGenerator implements Generator {
     @Override
     public Bitmap generate(ImageParams imageParams) throws Exception {
         Bitmap bitmap = Bitmap.createBitmap(imageParams.getWidth(), imageParams.getHeight(), Bitmap.Config.ARGB_8888);
+        bitmap.eraseColor(getRandomColor());
+        return bitmap;
+    }
+
+    protected int getRandomColor() {
         int r = (int) (Math.random() * 256);
         int g = (int) (Math.random() * 256);
         int b = (int) (Math.random() * 256);
-        bitmap.eraseColor(Color.rgb(r, g, b));
-        return bitmap;
+        return Color.rgb(r, g, b);
     }
 }

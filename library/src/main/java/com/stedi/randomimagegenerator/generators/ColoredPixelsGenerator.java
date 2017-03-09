@@ -2,13 +2,12 @@ package com.stedi.randomimagegenerator.generators;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
 import com.stedi.randomimagegenerator.ImageParams;
 
-public class ColoredPixelsGenerator implements Generator {
+public class ColoredPixelsGenerator extends FlatColorGenerator {
     private final Paint paint = new Paint();
 
     private final int pixelMultiplier;
@@ -25,8 +24,7 @@ public class ColoredPixelsGenerator implements Generator {
 
     @Override
     public Bitmap generate(ImageParams imageParams) throws Exception {
-        Bitmap bitmap = Bitmap.createBitmap(imageParams.getWidth(), imageParams.getHeight(), Bitmap.Config.ARGB_8888);
-        bitmap.eraseColor(Color.BLACK);
+        Bitmap bitmap = super.generate(imageParams);
 
         Canvas canvas = new Canvas(bitmap);
         Rect pixel = new Rect();
@@ -35,11 +33,8 @@ public class ColoredPixelsGenerator implements Generator {
             for (int y = 0; y < imageParams.getHeight(); y += pixelMultiplier) {
                 pixel.set(x, y, x + pixelMultiplier, y + pixelMultiplier);
 
-                int r = (int) (Math.random() * 256);
-                int g = (int) (Math.random() * 256);
-                int b = (int) (Math.random() * 256);
+                paint.setColor(getRandomColor());
 
-                paint.setColor(Color.rgb(r, g, b));
                 canvas.drawRect(pixel, paint);
             }
         }

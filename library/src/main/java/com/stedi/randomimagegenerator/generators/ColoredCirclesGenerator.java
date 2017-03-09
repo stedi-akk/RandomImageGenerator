@@ -2,12 +2,11 @@ package com.stedi.randomimagegenerator.generators;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 
 import com.stedi.randomimagegenerator.ImageParams;
 
-public class ColoredCirclesGenerator implements Generator {
+public class ColoredCirclesGenerator extends FlatColorGenerator {
     private final Paint paint = new Paint();
 
     private int count;
@@ -22,8 +21,7 @@ public class ColoredCirclesGenerator implements Generator {
 
     @Override
     public Bitmap generate(ImageParams imageParams) throws Exception {
-        Bitmap bitmap = Bitmap.createBitmap(imageParams.getWidth(), imageParams.getHeight(), Bitmap.Config.ARGB_8888);
-        bitmap.eraseColor(getRandomColor());
+        Bitmap bitmap = super.generate(imageParams);
 
         int biggestSide = Math.max(imageParams.getWidth(), imageParams.getHeight());
 
@@ -46,12 +44,5 @@ public class ColoredCirclesGenerator implements Generator {
         }
 
         return bitmap;
-    }
-
-    private int getRandomColor() {
-        int r = (int) (Math.random() * 256);
-        int g = (int) (Math.random() * 256);
-        int b = (int) (Math.random() * 256);
-        return Color.rgb(r, g, b);
     }
 }
