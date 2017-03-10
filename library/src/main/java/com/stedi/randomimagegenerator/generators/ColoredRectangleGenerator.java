@@ -52,4 +52,11 @@ public class ColoredRectangleGenerator extends FlatColorGenerator {
 
         return bitmap;
     }
+
+    @Override
+    public String toString() {
+        return "ColoredRectangleGenerator{" +
+                "count=" + count +
+                '}';
+    }
 }

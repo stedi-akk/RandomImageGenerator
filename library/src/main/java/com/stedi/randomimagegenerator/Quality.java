@@ -38,4 +38,12 @@ public class Quality {
         }
         return "png";
     }
+
+    @Override
+    public String toString() {
+        return "Quality{" +
+                "format=" + format +
+                ", value=" + value +
+                '}';
+    }
 }

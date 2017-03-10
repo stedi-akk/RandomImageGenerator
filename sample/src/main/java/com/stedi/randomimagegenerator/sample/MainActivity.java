@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Rig.enableDebugLogging(true);
         setContentView(R.layout.main_activity);
 
         spGenerator = (Spinner) findViewById(R.id.main_activity_sp_generator);
@@ -125,7 +126,8 @@ public class MainActivity extends AppCompatActivity implements
                 if (cbMirrored.isChecked())
                     generator = new MirroredGenerator(generator);
                 if (cbTextOverlay.isChecked())
-                    generator = new TextOverlayGenerator(generator);
+                    generator = new TextOverlayGenerator.Builder()
+                            .setGenerator(generator).build();
 
                 Rig.Builder builder = new Rig.Builder()
                         .setCallback(MainActivity.this)

@@ -86,4 +86,12 @@ public class ColoredNoiseGenerator implements Generator {
 
         return bitmap;
     }
+
+    @Override
+    public String toString() {
+        return "ColoredNoiseGenerator{" +
+                "selectedOrientation=" + selectedOrientation +
+                ", selectedType=" + selectedType +
+                '}';
+    }
 }

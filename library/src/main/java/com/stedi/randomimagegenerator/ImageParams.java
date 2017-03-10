@@ -35,4 +35,15 @@ public class ImageParams {
     public Quality getQuality() {
         return quality;
     }
+
+    @Override
+    public String toString() {
+        return "ImageParams{" +
+                "id=" + id +
+                ", width=" + width +
+                ", height=" + height +
+                ", path=" + path +
+                ", quality=" + quality +
+                '}';
+    }
 }

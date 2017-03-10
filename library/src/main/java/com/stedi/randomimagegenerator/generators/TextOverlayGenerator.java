@@ -11,76 +11,130 @@ import com.stedi.randomimagegenerator.ImageParams;
 import java.util.Locale;
 
 public class TextOverlayGenerator implements Generator {
-    private final Generator generator;
-
-    private TextPolicy textPolicy;
-    private Paint backgroundPaint;
-    private Paint textPaint;
-
-    private boolean drawBackground = true;
-    private boolean autoresizeText = true;
+    private final Params params;
 
     public interface TextPolicy {
         String getText(ImageParams imageParams);
     }
 
-    public TextOverlayGenerator(Generator generator) {
-        this.generator = generator;
+    private static class DefaultTextPolicy implements TextPolicy {
+        private final String format = "%d_%dx%d";
+
+        @Override
+        public String getText(ImageParams imageParams) {
+            return String.format(Locale.getDefault(), format,
+                    imageParams.getId(), imageParams.getWidth(), imageParams.getHeight());
+        }
+
+        @Override
+        public String toString() {
+            return "DefaultTextPolicy{" +
+                    "format='" + format + '\'' +
+                    '}';
+        }
     }
 
-    public void setTextPolicy(TextPolicy textPolicy) {
-        this.textPolicy = textPolicy;
+    private TextOverlayGenerator(Params params) {
+        this.params = params;
     }
 
-    public void setTextPaint(Paint textPaint) {
-        this.textPaint = textPaint;
+    private static class Params {
+        private Generator generator;
+        private TextPolicy textPolicy;
+        private Paint backgroundPaint;
+        private Paint textPaint;
+        private boolean drawBackground = true;
+        private boolean autoresizeText = true;
+
+        @Override
+        public String toString() {
+            return "Params{" +
+                    "generator=" + generator +
+                    ", textPolicy=" + textPolicy +
+                    ", drawBackground=" + drawBackground +
+                    ", autoresizeText=" + autoresizeText +
+                    '}';
+        }
     }
 
-    public void setBackgroundPaint(Paint backgroundPaint) {
-        this.backgroundPaint = backgroundPaint;
-    }
+    public static class Builder {
+        private final Params p;
 
-    public void drawBackground(boolean drawBackground) {
-        this.drawBackground = drawBackground;
-    }
+        public Builder() {
+            p = new Params();
+        }
 
-    public void setAutoresizeText(boolean autoresizeText) {
-        this.autoresizeText = autoresizeText;
+        public Builder setGenerator(Generator generator) {
+            if (generator == null)
+                throw new IllegalArgumentException("generator cannot be null");
+            p.generator = generator;
+            return this;
+        }
+
+        public Builder setTextPolicy(TextPolicy textPolicy) {
+            p.textPolicy = textPolicy;
+            return this;
+        }
+
+        public Builder setTextPaint(Paint textPaint) {
+            p.textPaint = textPaint;
+            return this;
+        }
+
+        public Builder setBackgroundPaint(Paint backgroundPaint) {
+            p.backgroundPaint = backgroundPaint;
+            return this;
+        }
+
+        public Builder drawBackground(boolean drawBackground) {
+            p.drawBackground = drawBackground;
+            return this;
+        }
+
+        public Builder setAutoresizeText(boolean autoresizeText) {
+            p.autoresizeText = autoresizeText;
+            return this;
+        }
+
+        public TextOverlayGenerator build() {
+            if (p.generator == null)
+                throw new IllegalStateException("generator not specified");
+
+            if (p.textPolicy == null)
+                p.textPolicy = new DefaultTextPolicy();
+
+            if (p.textPaint == null) {
+                p.textPaint = new Paint();
+                p.textPaint.setColor(Color.WHITE);
+            }
+
+            if (p.drawBackground && p.backgroundPaint == null) {
+                p.backgroundPaint = new Paint();
+                p.backgroundPaint.setColor(Color.BLACK);
+            }
+
+            return new TextOverlayGenerator(p);
+        }
     }
 
     @Override
     public Bitmap generate(ImageParams imageParams) throws Exception {
-        Bitmap bitmap = generator.generate(imageParams);
+        Bitmap bitmap = params.generator.generate(imageParams);
         if (bitmap == null)
             return null;
 
-        if (textPolicy == null) {
-            textPolicy = new TextPolicy() {
-                @Override
-                public String getText(ImageParams imageParams) {
-                    return String.format(Locale.getDefault(), "%d_%dx%d",
-                            imageParams.getId(), imageParams.getWidth(), imageParams.getHeight());
-                }
-            };
-        }
-
-        String text = textPolicy.getText(imageParams);
-
-        if (textPaint == null) {
-            textPaint = new Paint();
-            textPaint.setColor(Color.WHITE);
-        }
+        String text = params.textPolicy.getText(imageParams);
 
         Rect textBounds = new Rect();
 
-        if (autoresizeText) {
-            textPaint.setTextSize(bitmap.getWidth());
+        if (params.autoresizeText) {
+            params.textPaint.setTextSize(bitmap.getWidth());
             do {
-                textPaint.setTextSize(textPaint.getTextSize() / 2);
-                textPaint.getTextBounds(text, 0, text.length(), textBounds);
+                params.textPaint.setTextSize(params.textPaint.getTextSize() / 2);
+                params.textPaint.getTextBounds(text, 0, text.length(), textBounds);
             } while (textBounds.width() >= bitmap.getWidth() - textBounds.height() * 2);
         } else {
-            textPaint.getTextBounds(text, 0, text.length(), textBounds);
+            params.textPaint.getTextBounds(text, 0, text.length(), textBounds);
         }
 
         float centerX = bitmap.getWidth() / 2f;
@@ -91,16 +145,18 @@ public class TextOverlayGenerator implements Generator {
 
         Canvas canvas = new Canvas(bitmap);
 
-        if (drawBackground && backgroundPaint == null) {
-            backgroundPaint = new Paint();
-            backgroundPaint.setColor(Color.BLACK);
-        }
+        if (params.drawBackground)
+            canvas.drawRect(textBounds, params.backgroundPaint);
 
-        if (drawBackground)
-            canvas.drawRect(textBounds, backgroundPaint);
-
-        canvas.drawText(text, textBounds.left + padding, textBounds.top + textBounds.height() - padding, textPaint);
+        canvas.drawText(text, textBounds.left + padding, textBounds.top + textBounds.height() - padding, params.textPaint);
 
         return bitmap;
+    }
+
+    @Override
+    public String toString() {
+        return "TextOverlayGenerator{" +
+                "params=" + params +
+                '}';
     }
 }

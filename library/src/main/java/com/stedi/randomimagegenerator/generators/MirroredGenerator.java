@@ -40,4 +40,11 @@ public class MirroredGenerator implements Generator {
 
         return resultBitmap;
     }
+
+    @Override
+    public String toString() {
+        return "MirroredGenerator{" +
+                "generator=" + generator +
+                '}';
+    }
 }

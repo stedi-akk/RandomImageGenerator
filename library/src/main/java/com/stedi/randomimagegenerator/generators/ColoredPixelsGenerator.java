@@ -41,4 +41,11 @@ public class ColoredPixelsGenerator extends FlatColorGenerator {
 
         return bitmap;
     }
+
+    @Override
+    public String toString() {
+        return "ColoredPixelsGenerator{" +
+                "pixelMultiplier=" + pixelMultiplier +
+                '}';
+    }
 }

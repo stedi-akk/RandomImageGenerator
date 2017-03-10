@@ -45,4 +45,11 @@ public class ColoredCirclesGenerator extends FlatColorGenerator {
 
         return bitmap;
     }
+
+    @Override
+    public String toString() {
+        return "ColoredCirclesGenerator{" +
+                "count=" + count +
+                '}';
+    }
 }

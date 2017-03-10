@@ -19,4 +19,9 @@ public class FlatColorGenerator implements Generator {
         int b = (int) (Math.random() * 256);
         return Color.rgb(r, g, b);
     }
+
+    @Override
+    public String toString() {
+        return "FlatColorGenerator{}";
+    }
 }

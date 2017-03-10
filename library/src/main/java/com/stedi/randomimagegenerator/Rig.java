@@ -1,6 +1,7 @@
 package com.stedi.randomimagegenerator;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import com.stedi.randomimagegenerator.callbacks.GenerateCallback;
 import com.stedi.randomimagegenerator.callbacks.SaveCallback;
@@ -13,6 +14,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public final class Rig {
+    private static boolean DEBUG = false;
+    private static String TAG = "RIG";
+
     private final RigParams params;
 
     private int imageId;
@@ -22,6 +26,9 @@ public final class Rig {
     }
 
     public void generate() {
+        if (DEBUG)
+            Log.d(TAG, "Generate started with parameters: " + params);
+
         int[] widthValues = null;
         int[] heightValues = null;
         if (params.useWidthRange)
@@ -46,6 +53,9 @@ public final class Rig {
         } else {
             generate(params.width, params.height, params.count);
         }
+
+        if (DEBUG)
+            Log.d(TAG, "Generate ended");
     }
 
     private void generate(int width, int height, int count) {
@@ -126,6 +136,10 @@ public final class Rig {
         }
     }
 
+    public static void enableDebugLogging(boolean enable) {
+        DEBUG = enable;
+    }
+
     private static class RigParams {
         private Generator generator;
         private GenerateCallback generateCallback;
@@ -139,6 +153,29 @@ public final class Rig {
         private File path;
         private FileNamePolicy fileNamePolicy;
         private SaveCallback saveCallback;
+
+        @Override
+        public String toString() {
+            return "RigParams{" +
+                    "generator=" + generator +
+                    ", generateCallback=" + generateCallback +
+                    ", quality=" + quality +
+                    ", width=" + width +
+                    ", height=" + height +
+                    ", widthFrom=" + widthFrom +
+                    ", widthTo=" + widthTo +
+                    ", widthStep=" + widthStep +
+                    ", heightFrom=" + heightFrom +
+                    ", heightTo=" + heightTo +
+                    ", heightStep=" + heightStep +
+                    ", useWidthRange=" + useWidthRange +
+                    ", useHeightRange=" + useHeightRange +
+                    ", count=" + count +
+                    ", path=" + path +
+                    ", fileNamePolicy=" + fileNamePolicy +
+                    ", saveCallback=" + saveCallback +
+                    '}';
+        }
     }
 
     public static class Builder {
@@ -149,6 +186,8 @@ public final class Rig {
         }
 
         public Builder setGenerator(Generator generator) {
+            if (generator == null)
+                throw new IllegalArgumentException("generator cannot be null");
             p.generator = generator;
             return this;
         }
