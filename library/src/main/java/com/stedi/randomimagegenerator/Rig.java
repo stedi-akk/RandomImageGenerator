@@ -121,7 +121,7 @@ public final class Rig {
     private void notifyCallback(ImageParams imageParams, Bitmap bitmap, Exception e) {
         if (params.generateCallback != null) {
             if (e != null)
-                params.generateCallback.onException(imageParams, e);
+                params.generateCallback.onFailedToGenerate(imageParams, e);
             else
                 params.generateCallback.onGenerated(imageParams, bitmap);
         }
@@ -130,7 +130,7 @@ public final class Rig {
     private void notifySaveCallback(Bitmap bitmap, File path, Exception e) {
         if (params.saveCallback != null) {
             if (e != null)
-                params.saveCallback.onException(bitmap, path, e);
+                params.saveCallback.onFailedToSave(bitmap, path, e);
             else
                 params.saveCallback.onSaved(bitmap, path);
         }

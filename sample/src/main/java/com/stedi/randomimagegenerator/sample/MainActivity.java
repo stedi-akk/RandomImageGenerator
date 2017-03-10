@@ -165,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onException(final ImageParams imageParams, final Exception e) {
+    public void onFailedToGenerate(final ImageParams imageParams, final Exception e) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onException(Bitmap bitmap, final File file, final Exception e) {
+    public void onFailedToSave(Bitmap bitmap, final File file, final Exception e) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {

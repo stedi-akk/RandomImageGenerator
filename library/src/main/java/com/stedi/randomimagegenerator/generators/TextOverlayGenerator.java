@@ -99,20 +99,16 @@ public class TextOverlayGenerator implements Generator {
         public TextOverlayGenerator build() {
             if (p.generator == null)
                 throw new IllegalStateException("generator not specified");
-
             if (p.textPolicy == null)
                 p.textPolicy = new DefaultTextPolicy();
-
             if (p.textPaint == null) {
                 p.textPaint = new Paint();
                 p.textPaint.setColor(Color.WHITE);
             }
-
             if (p.drawBackground && p.backgroundPaint == null) {
                 p.backgroundPaint = new Paint();
                 p.backgroundPaint.setColor(Color.BLACK);
             }
-
             return new TextOverlayGenerator(p);
         }
     }

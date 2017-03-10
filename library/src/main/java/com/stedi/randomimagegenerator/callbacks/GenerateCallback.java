@@ -7,5 +7,5 @@ import com.stedi.randomimagegenerator.ImageParams;
 public interface GenerateCallback {
     void onGenerated(ImageParams imageParams, Bitmap bitmap);
 
-    void onException(ImageParams imageParams, Exception e);
+    void onFailedToGenerate(ImageParams imageParams, Exception e);
 }
