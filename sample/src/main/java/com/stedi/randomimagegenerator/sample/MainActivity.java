@@ -24,8 +24,10 @@ import com.stedi.randomimagegenerator.callbacks.SaveCallback;
 import com.stedi.randomimagegenerator.generators.ColoredCirclesGenerator;
 import com.stedi.randomimagegenerator.generators.ColoredNoiseGenerator;
 import com.stedi.randomimagegenerator.generators.ColoredPixelsGenerator;
+import com.stedi.randomimagegenerator.generators.ColoredRectangleGenerator;
 import com.stedi.randomimagegenerator.generators.FlatColorGenerator;
 import com.stedi.randomimagegenerator.generators.Generator;
+import com.stedi.randomimagegenerator.generators.MirroredGenerator;
 import com.stedi.randomimagegenerator.generators.TextOverlayGenerator;
 
 import java.io.File;
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements
     private Spinner spGenerator;
     private Spinner spQualityFormat;
     private CheckBox cbTextOverlay;
+    private CheckBox cbMirrored;
     private CheckBox cbSaveFile;
     private RecyclerView recyclerView;
     private ImagesAdapter imagesAdapter;
@@ -57,7 +60,8 @@ public class MainActivity extends AppCompatActivity implements
                 FlatColorGenerator.class.getSimpleName(),
                 ColoredPixelsGenerator.class.getSimpleName(),
                 ColoredNoiseGenerator.class.getSimpleName(),
-                ColoredCirclesGenerator.class.getSimpleName()
+                ColoredCirclesGenerator.class.getSimpleName(),
+                ColoredRectangleGenerator.class.getSimpleName()
         }));
 
         spQualityFormat = (Spinner) findViewById(R.id.main_activity_sp_quality_format);
@@ -69,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements
         }));
 
         cbTextOverlay = (CheckBox) findViewById(R.id.main_activity_cb_text_overlay);
+        cbMirrored = (CheckBox) findViewById(R.id.main_activity_cb_mirrored);
         cbSaveFile = (CheckBox) findViewById(R.id.main_activity_cb_save_file);
 
         findViewById(R.id.main_activity_btn_generate_1).setOnClickListener(this);
@@ -116,8 +121,11 @@ public class MainActivity extends AppCompatActivity implements
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Generator generator = cbTextOverlay.isChecked() ?
-                        new TextOverlayGenerator(selectedGenerator) : selectedGenerator;
+                Generator generator = selectedGenerator;
+                if (cbMirrored.isChecked())
+                    generator = new MirroredGenerator(generator);
+                if (cbTextOverlay.isChecked())
+                    generator = new TextOverlayGenerator(generator);
 
                 Rig.Builder builder = new Rig.Builder()
                         .setCallback(MainActivity.this)
@@ -192,11 +200,13 @@ public class MainActivity extends AppCompatActivity implements
 
     private Generator generatorFactory(String className) {
         if (className.equals(ColoredPixelsGenerator.class.getSimpleName()))
-            return new ColoredPixelsGenerator(10);
+            return new ColoredPixelsGenerator(20);
         if (className.equals(ColoredNoiseGenerator.class.getSimpleName()))
             return new ColoredNoiseGenerator();
         if (className.equals(ColoredCirclesGenerator.class.getSimpleName()))
             return new ColoredCirclesGenerator();
+        if (className.equals(ColoredRectangleGenerator.class.getSimpleName()))
+            return new ColoredRectangleGenerator();
         return new FlatColorGenerator();
     }
 

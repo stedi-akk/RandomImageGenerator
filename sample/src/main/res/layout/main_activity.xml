@@ -25,14 +25,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/main_activity_sp_generator"
-        android:text="With text overlay" />
+        android:text="Text overlay" />
+
+    <CheckBox
+        android:id="@+id/main_activity_cb_mirrored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/main_activity_sp_generator"
+        android:layout_toRightOf="@+id/main_activity_cb_text_overlay"
+        android:text="Mirrored" />
 
     <CheckBox
         android:id="@+id/main_activity_cb_save_file"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/main_activity_sp_generator"
-        android:layout_toRightOf="@+id/main_activity_cb_text_overlay"
+        android:layout_toRightOf="@+id/main_activity_cb_mirrored"
         android:text="Save file" />
 
     <Button
