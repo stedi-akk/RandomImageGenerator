@@ -12,6 +12,7 @@ import com.stedi.randomimagegenerator.generators.Generator;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 
 public final class Rig {
     private static boolean DEBUG = false;
@@ -27,14 +28,20 @@ public final class Rig {
 
     public void generate() {
         if (DEBUG)
-            Log.d(TAG, "Generate started with parameters: " + params);
+            Log.d(TAG, "Started with parameters: " + params);
 
         int[] widthValues = null;
         int[] heightValues = null;
-        if (params.useWidthRange)
+        if (params.useWidthRange) {
             widthValues = createRangeArray(params.widthFrom, params.widthTo, params.widthStep);
-        if (params.useHeightRange)
+            if (DEBUG)
+                Log.d(TAG, "Created an array for width range: " + Arrays.toString(widthValues));
+        }
+        if (params.useHeightRange) {
             heightValues = createRangeArray(params.heightFrom, params.heightTo, params.heightStep);
+            if (DEBUG)
+                Log.d(TAG, "Created an array for height range: " + Arrays.toString(heightValues));
+        }
 
         if (widthValues != null) {
             for (int width : widthValues) {
@@ -55,20 +62,28 @@ public final class Rig {
         }
 
         if (DEBUG)
-            Log.d(TAG, "Generate ended");
+            Log.d(TAG, "Ended");
     }
 
     private void generate(int width, int height, int count) {
         for (int i = 0; i < count; i++) {
             ImageParams imageParams = new ImageParams(++imageId, width, height, params.path, params.quality);
+            if (DEBUG)
+                Log.d(TAG, "Created new ImageParams object for generation: " + imageParams);
 
             Bitmap bitmap = null;
             try {
+                if (DEBUG)
+                    Log.d(TAG, "Generating for id " + imageParams.getId());
                 bitmap = params.generator.generate(imageParams);
                 if (bitmap == null)
-                    throw new NotGeneratedException("generator returned null for id " + imageParams.getId());
+                    throw new NotGeneratedException("Generator return null for id " + imageParams.getId());
+                if (DEBUG)
+                    Log.d(TAG, "Successfully generated");
                 notifyCallback(imageParams, bitmap, null);
             } catch (Exception e) {
+                if (DEBUG)
+                    Log.d(TAG, "Failed to generate", e);
                 notifyCallback(imageParams, null, e);
             }
 
@@ -77,10 +92,16 @@ public final class Rig {
                 try {
                     Bitmap.CompressFormat compressFormat = params.quality.getFormat();
                     int quality = params.quality.getQualityValue();
+                    if (DEBUG)
+                        Log.d(TAG, "Saving generated image " + file.getPath());
                     if (!save(bitmap, file, compressFormat, quality))
-                        throw new NotSavedException("failed to save for id " + imageParams.getId());
+                        throw new NotSavedException("Failed to save for id " + imageParams.getId());
+                    if (DEBUG)
+                        Log.d(TAG, "Successfully saved");
                     notifySaveCallback(bitmap, file, null);
                 } catch (Exception e) {
+                    if (DEBUG)
+                        Log.d(TAG, "Failed to save", e);
                     notifySaveCallback(bitmap, file, e);
                 }
             }
