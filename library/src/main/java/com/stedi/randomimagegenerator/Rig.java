@@ -18,12 +18,11 @@ public final class Rig {
     private static boolean DEBUG = false;
     private static String TAG = "RIG";
 
-    private final RigParams params;
+    private final RigParams params = new RigParams();
 
     private int imageId;
 
-    private Rig(RigParams params) {
-        this.params = params;
+    private Rig() {
     }
 
     public void generate() {
@@ -175,6 +174,26 @@ public final class Rig {
         private FileNamePolicy fileNamePolicy;
         private SaveCallback saveCallback;
 
+        private void apply(RigParams params) {
+            generator = params.generator;
+            generateCallback = params.generateCallback;
+            quality = params.quality;
+            width = params.width;
+            height = params.height;
+            widthFrom = params.widthFrom;
+            widthTo = params.widthTo;
+            widthStep = params.widthStep;
+            heightFrom = params.heightFrom;
+            heightTo = params.heightTo;
+            heightStep = params.heightStep;
+            useWidthRange = params.useWidthRange;
+            useHeightRange = params.useHeightRange;
+            count = params.count;
+            path = params.path;
+            fileNamePolicy = params.fileNamePolicy;
+            saveCallback = params.saveCallback;
+        }
+
         @Override
         public String toString() {
             return "RigParams{" +
@@ -314,7 +333,9 @@ public final class Rig {
                 throw new IllegalStateException("path not specified");
             if (p.path != null && p.fileNamePolicy == null)
                 p.fileNamePolicy = new DefaultFileNamePolicy();
-            return new Rig(p);
+            Rig rig = new Rig();
+            rig.params.apply(p);
+            return rig;
         }
     }
 }
