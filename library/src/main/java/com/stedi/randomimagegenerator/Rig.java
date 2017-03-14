@@ -29,6 +29,9 @@ public final class Rig {
         if (DEBUG)
             Log.d(TAG, "Started with parameters: " + params);
 
+        if (DEBUG && params.generateCallback == null && params.path == null)
+            Log.d(TAG, "Started without callback or specified path to save ! It looks useless...");
+
         int[] widthValues = null;
         int[] heightValues = null;
         if (params.useWidthRange) {
