@@ -194,4 +194,10 @@ public class BuilderExceptionsTest {
                 setHeightRange(10, 100, 10).
                 setCount(5);
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void setInvalidSavePath() {
+        new Rig.Builder().
+                setFileSavePath("");
+    }
 }
