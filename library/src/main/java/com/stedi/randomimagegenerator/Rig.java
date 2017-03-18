@@ -1,6 +1,7 @@
 package com.stedi.randomimagegenerator;
 
 import android.graphics.Bitmap;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.stedi.randomimagegenerator.callbacks.GenerateCallback;
@@ -90,8 +91,11 @@ public final class Rig {
             }
 
             if (params.path != null && bitmap != null) {
-                File file = new File(params.path, params.fileNamePolicy.getName(imageParams));
                 try {
+                    String fileName = params.fileNamePolicy.getName(imageParams);
+                    if (TextUtils.isEmpty(fileName))
+                        throw new NotSavedException("File name from FileNamePolicy is not valid for id " + imageParams.getId());
+                    File file = new File(params.path, fileName);
                     Bitmap.CompressFormat compressFormat = params.quality.getFormat();
                     int quality = params.quality.getQualityValue();
                     if (DEBUG)
@@ -104,7 +108,7 @@ public final class Rig {
                 } catch (Exception e) {
                     if (DEBUG)
                         Log.d(TAG, "Failed to save", e);
-                    notifySaveCallback(bitmap, file, e);
+                    notifySaveCallback(bitmap, null, e);
                 }
             }
         }
