@@ -3,7 +3,7 @@ package com.stedi.randomimagegenerator;
 import android.graphics.Bitmap;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.stedi.randomimagegenerator.generators.ColoredRectangleGenerator;
+import com.stedi.randomimagegenerator.generators.ColoredNoiseGenerator;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,35 +13,34 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 @RunWith(AndroidJUnit4.class)
-public class ColoredRectangleGeneratorTest {
-    private final int[] sizes = new int[]{1, 2, 63, 512};
+public class ColoredNoiseGeneratorTest {
+    private final int[] sizes = new int[]{1, 33, 128};
 
     @Test
     public void png() {
-        test(0, Quality.png());
-        test(1, Quality.png());
-        test(10, Quality.png());
-        test(200, Quality.png());
+        iterateArgsAndTest(Quality.png());
     }
 
     @Test
     public void jpg() {
-        test(0, Quality.jpg(80));
-        test(1, Quality.jpg(80));
-        test(10, Quality.jpg(80));
-        test(200, Quality.jpg(80));
+        iterateArgsAndTest(Quality.jpg(80));
     }
 
     @Test
     public void webp() {
-        test(0, new Quality(Bitmap.CompressFormat.WEBP, 100));
-        test(1, new Quality(Bitmap.CompressFormat.WEBP, 100));
-        test(10, new Quality(Bitmap.CompressFormat.WEBP, 100));
-        test(200, new Quality(Bitmap.CompressFormat.WEBP, 100));
+        iterateArgsAndTest(new Quality(Bitmap.CompressFormat.WEBP, 100));
     }
 
-    private void test(int rectangles, Quality quality) {
-        ColoredRectangleGenerator generator = new ColoredRectangleGenerator(rectangles);
+    private void iterateArgsAndTest(Quality quality) {
+        for (ColoredNoiseGenerator.Orientation orientation : ColoredNoiseGenerator.Orientation.values()) {
+            for (ColoredNoiseGenerator.Type type : ColoredNoiseGenerator.Type.values()) {
+                test(orientation, type, quality);
+            }
+        }
+    }
+
+    private void test(ColoredNoiseGenerator.Orientation orientation, ColoredNoiseGenerator.Type type, Quality quality) {
+        ColoredNoiseGenerator generator = new ColoredNoiseGenerator(orientation, type);
         int count = 0;
         for (int width : sizes) {
             for (int height : sizes) {
