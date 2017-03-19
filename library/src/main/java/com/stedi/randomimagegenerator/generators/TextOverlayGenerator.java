@@ -130,6 +130,8 @@ public class TextOverlayGenerator implements Generator {
             return null;
 
         String text = params.textPolicy.getText(imageParams);
+        if (text == null)
+            throw new NullPointerException("text from TextPolicy is null");
 
         Rect textBounds = new Rect();
 
