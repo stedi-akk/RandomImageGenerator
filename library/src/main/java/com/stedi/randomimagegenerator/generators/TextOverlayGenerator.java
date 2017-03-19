@@ -11,7 +11,7 @@ import com.stedi.randomimagegenerator.ImageParams;
 import java.util.Locale;
 
 public class TextOverlayGenerator implements Generator {
-    private final Params params;
+    private final Params params = new Params();
 
     public interface TextPolicy {
         String getText(ImageParams imageParams);
@@ -34,8 +34,7 @@ public class TextOverlayGenerator implements Generator {
         }
     }
 
-    private TextOverlayGenerator(Params params) {
-        this.params = params;
+    private TextOverlayGenerator() {
     }
 
     private static class Params {
@@ -45,6 +44,15 @@ public class TextOverlayGenerator implements Generator {
         private Paint textPaint;
         private boolean drawBackground = true;
         private boolean autoresizeText = true;
+
+        private void apply(Params params) {
+            generator = params.generator;
+            textPolicy = params.textPolicy;
+            backgroundPaint = params.backgroundPaint;
+            textPaint = params.textPaint;
+            drawBackground = params.drawBackground;
+            autoresizeText = params.autoresizeText;
+        }
 
         @Override
         public String toString() {
@@ -109,7 +117,9 @@ public class TextOverlayGenerator implements Generator {
                 p.backgroundPaint = new Paint();
                 p.backgroundPaint.setColor(Color.BLACK);
             }
-            return new TextOverlayGenerator(p);
+            TextOverlayGenerator generator = new TextOverlayGenerator();
+            generator.params.apply(p);
+            return generator;
         }
     }
 
