@@ -167,64 +167,6 @@ public final class Rig {
         DEBUG = enable;
     }
 
-    private static class RigParams {
-        private Generator generator;
-        private GenerateCallback generateCallback;
-        private Quality quality;
-        private int width, height;
-        private int widthFrom, widthTo, widthStep;
-        private int heightFrom, heightTo, heightStep;
-        private boolean useWidthRange;
-        private boolean useHeightRange;
-        private int count;
-        private File path;
-        private FileNamePolicy fileNamePolicy;
-        private SaveCallback saveCallback;
-
-        private void apply(RigParams params) {
-            generator = params.generator;
-            generateCallback = params.generateCallback;
-            quality = params.quality;
-            width = params.width;
-            height = params.height;
-            widthFrom = params.widthFrom;
-            widthTo = params.widthTo;
-            widthStep = params.widthStep;
-            heightFrom = params.heightFrom;
-            heightTo = params.heightTo;
-            heightStep = params.heightStep;
-            useWidthRange = params.useWidthRange;
-            useHeightRange = params.useHeightRange;
-            count = params.count;
-            path = params.path;
-            fileNamePolicy = params.fileNamePolicy;
-            saveCallback = params.saveCallback;
-        }
-
-        @Override
-        public String toString() {
-            return "RigParams{" +
-                    "generator=" + generator +
-                    ", generateCallback=" + generateCallback +
-                    ", quality=" + quality +
-                    ", width=" + width +
-                    ", height=" + height +
-                    ", widthFrom=" + widthFrom +
-                    ", widthTo=" + widthTo +
-                    ", widthStep=" + widthStep +
-                    ", heightFrom=" + heightFrom +
-                    ", heightTo=" + heightTo +
-                    ", heightStep=" + heightStep +
-                    ", useWidthRange=" + useWidthRange +
-                    ", useHeightRange=" + useHeightRange +
-                    ", count=" + count +
-                    ", path=" + path +
-                    ", fileNamePolicy=" + fileNamePolicy +
-                    ", saveCallback=" + saveCallback +
-                    '}';
-        }
-    }
-
     public static class Builder {
         private final RigParams p;
 
