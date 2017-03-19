@@ -18,20 +18,20 @@ public class ColoredNoiseGeneratorTest {
 
     @Test
     public void png() {
-        iterateArgsAndTest(Quality.png());
+        iterateGeneratorArgsAndTest(Quality.png());
     }
 
     @Test
     public void jpg() {
-        iterateArgsAndTest(Quality.jpg(80));
+        iterateGeneratorArgsAndTest(Quality.jpg(80));
     }
 
     @Test
     public void webp() {
-        iterateArgsAndTest(new Quality(Bitmap.CompressFormat.WEBP, 100));
+        iterateGeneratorArgsAndTest(new Quality(Bitmap.CompressFormat.WEBP, 100));
     }
 
-    private void iterateArgsAndTest(Quality quality) {
+    private void iterateGeneratorArgsAndTest(Quality quality) {
         for (ColoredNoiseGenerator.Orientation orientation : ColoredNoiseGenerator.Orientation.values()) {
             for (ColoredNoiseGenerator.Type type : ColoredNoiseGenerator.Type.values()) {
                 test(orientation, type, quality);

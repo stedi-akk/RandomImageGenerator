@@ -21,8 +21,9 @@ public class MirroredGenerator implements Generator {
         if (targetBitmap == null)
             return null;
 
-        Bitmap partBitmap = Bitmap.createScaledBitmap(targetBitmap,
-                targetBitmap.getWidth() / 2, targetBitmap.getHeight() / 2, true);
+        int scaledWidth = (int) Math.ceil(targetBitmap.getWidth() / 2f);
+        int scaledHeight = (int) Math.ceil(targetBitmap.getHeight() / 2f);
+        Bitmap partBitmap = Bitmap.createScaledBitmap(targetBitmap, scaledWidth, scaledHeight, true);
         targetBitmap.recycle();
 
         Bitmap resultBitmap = Bitmap.createBitmap(imageParams.getWidth(), imageParams.getHeight(), Bitmap.Config.ARGB_8888);
