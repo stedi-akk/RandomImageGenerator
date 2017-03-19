@@ -9,7 +9,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 22 // I'm too lazy to deal with permissions
         versionCode 1
-        versionName "0.1"
+        versionName "0.8"
     }
 
     buildTypes {
