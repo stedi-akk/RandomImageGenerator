@@ -94,7 +94,7 @@ public class TextOverlayGenerator implements Generator {
             return this;
         }
 
-        public Builder drawBackground(boolean drawBackground) {
+        public Builder setDrawBackground(boolean drawBackground) {
             p.drawBackground = drawBackground;
             return this;
         }
