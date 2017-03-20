@@ -19,7 +19,7 @@ public final class Rig {
     private static boolean DEBUG = false;
     private static String TAG = "RIG";
 
-    private final RigParams params = new RigParams();
+    final RigParams params = new RigParams();
 
     private int imageId;
 
