@@ -157,7 +157,7 @@ public final class Rig {
     private void notifySaveCallback(Bitmap bitmap, File path, Exception e) {
         if (params.saveCallback != null) {
             if (e != null)
-                params.saveCallback.onFailedToSave(bitmap, path, e);
+                params.saveCallback.onFailedToSave(bitmap, e);
             else
                 params.saveCallback.onSaved(bitmap, path);
         }

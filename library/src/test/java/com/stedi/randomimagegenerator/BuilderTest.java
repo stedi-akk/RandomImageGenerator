@@ -21,7 +21,7 @@ public class BuilderTest {
         }
 
         @Override
-        public void onFailedToSave(Bitmap bitmap, File file, Exception e) {
+        public void onFailedToSave(Bitmap bitmap, Exception e) {
 
         }
     };

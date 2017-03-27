@@ -181,12 +181,12 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onFailedToSave(Bitmap bitmap, final File file, final Exception e) {
+    public void onFailedToSave(Bitmap bitmap, final Exception e) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 e.printStackTrace();
-                Toast.makeText(MainActivity.this, "failed to save file " + file.getPath(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "failed to save image", Toast.LENGTH_SHORT).show();
             }
         });
     }
