@@ -6,6 +6,21 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class QualityTest {
+    @Test(expected = IllegalArgumentException.class)
+    public void exceptionNullCompressFormat() {
+        new Quality(null, 0);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void exceptionWrongQualityValue1() {
+        new Quality(Bitmap.CompressFormat.WEBP, -10);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void exceptionWrongQualityValue2() {
+        new Quality(Bitmap.CompressFormat.WEBP, 200);
+    }
+
     @Test
     public void staticPng() {
         Quality quality = Quality.png();
