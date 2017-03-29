@@ -11,7 +11,7 @@ public class ImageParams {
     private final File path;
     private final Quality quality;
 
-    public ImageParams(int id, int width, int height, File path, Quality quality) {
+    ImageParams(int id, int width, int height, File path, Quality quality) {
         this.id = id;
         this.width = width;
         this.height = height;
