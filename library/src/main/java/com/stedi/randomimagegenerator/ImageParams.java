@@ -2,6 +2,9 @@ package com.stedi.randomimagegenerator;
 
 import java.io.File;
 
+/**
+ * Image parameters used to generate one unique image. Created internally by {@link Rig}.
+ */
 public class ImageParams {
     private final int id;
     private final int width, height;
@@ -16,22 +19,37 @@ public class ImageParams {
         this.quality = quality;
     }
 
+    /**
+     * @return Unique image id.
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * @return Width of requested image.
+     */
     public int getWidth() {
         return width;
     }
 
+    /**
+     * @return Height of requested image.
+     */
     public int getHeight() {
         return height;
     }
 
+    /**
+     * @return The path where image should be saved.
+     */
     public File getPath() {
         return path;
     }
 
+    /**
+     * @return The quality of requested image.
+     */
     public Quality getQuality() {
         return quality;
     }
