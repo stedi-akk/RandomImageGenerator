@@ -199,7 +199,7 @@ public final class Rig {
     }
 
     /**
-     * Builder that is used to create an instance of {@code Rig}.
+     * Builder that is used to create an instance of {@link Rig}.
      */
     public static class Builder {
         private final RigParams p;

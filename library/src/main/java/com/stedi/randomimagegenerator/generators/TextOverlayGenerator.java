@@ -10,10 +10,20 @@ import com.stedi.randomimagegenerator.ImageParams;
 
 import java.util.Locale;
 
+/**
+ * Generator wrapper, that draws text in front of the target generator.
+ */
 public class TextOverlayGenerator implements Generator {
     private final Params params = new Params();
 
+    /**
+     * Text policy. Used to get text, that will be drawn in front of image.
+     */
     public interface TextPolicy {
+        /**
+         * @param imageParams Image parameters used to generate an image.
+         * @return Text that will be drawn in front of image.
+         */
         String getText(ImageParams imageParams);
     }
 
@@ -65,6 +75,9 @@ public class TextOverlayGenerator implements Generator {
         }
     }
 
+    /**
+     * Builder that is used to create an instance of {@link TextOverlayGenerator}.
+     */
     public static class Builder {
         private final Params p;
 
@@ -72,6 +85,10 @@ public class TextOverlayGenerator implements Generator {
             p = new Params();
         }
 
+        /**
+         * Set target generator.
+         * <p>Must not be null.</p>
+         */
         public Builder setGenerator(Generator generator) {
             if (generator == null)
                 throw new IllegalArgumentException("generator cannot be null");
@@ -79,26 +96,42 @@ public class TextOverlayGenerator implements Generator {
             return this;
         }
 
+        /**
+         * Set text policy.
+         * <p>If not specified, then the default implementation will be used.</p>
+         */
         public Builder setTextPolicy(TextPolicy textPolicy) {
             p.textPolicy = textPolicy;
             return this;
         }
 
+        /**
+         * To override existing {@link Paint} object for drawing text.
+         */
         public Builder setTextPaint(Paint textPaint) {
             p.textPaint = textPaint;
             return this;
         }
 
+        /**
+         * To override existing {@link Paint} object for drawing text background.
+         */
         public Builder setBackgroundPaint(Paint backgroundPaint) {
             p.backgroundPaint = backgroundPaint;
             return this;
         }
 
+        /**
+         * To draw text background, or not. Default is {@code true}.
+         */
         public Builder setDrawBackground(boolean drawBackground) {
             p.drawBackground = drawBackground;
             return this;
         }
 
+        /**
+         * To resize text based on the image size, or not. Default is {@code true}.
+         */
         public Builder setAutoresizeText(boolean autoresizeText) {
             p.autoresizeText = autoresizeText;
             return this;

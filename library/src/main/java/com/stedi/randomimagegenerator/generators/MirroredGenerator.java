@@ -6,11 +6,17 @@ import android.graphics.Paint;
 
 import com.stedi.randomimagegenerator.ImageParams;
 
+/**
+ * Generator wrapper, that creates mirrored effect for the target generator.
+ */
 public class MirroredGenerator implements Generator {
     private final Paint paint = new Paint();
 
     private final Generator generator;
 
+    /**
+     * @param generator The target generator.
+     */
     public MirroredGenerator(Generator generator) {
         this.generator = generator;
     }

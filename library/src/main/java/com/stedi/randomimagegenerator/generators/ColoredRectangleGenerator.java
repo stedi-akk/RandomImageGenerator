@@ -7,15 +7,27 @@ import android.graphics.Rect;
 
 import com.stedi.randomimagegenerator.ImageParams;
 
+/**
+ * Generator for image with random colored rectangles.
+ */
 public class ColoredRectangleGenerator extends FlatColorGenerator {
     private final Paint paint = new Paint();
 
     private int count;
 
+    /**
+     * The default constructor with unspecified rectangles count
+     * (will be random, based on the size of image).
+     */
     public ColoredRectangleGenerator() {
         this(0);
     }
 
+    /**
+     * Constructor with specified rectangles count.
+     *
+     * @param count Must be > 0.
+     */
     public ColoredRectangleGenerator(int count) {
         this.count = count;
     }
