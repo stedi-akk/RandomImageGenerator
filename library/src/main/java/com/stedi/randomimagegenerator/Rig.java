@@ -167,6 +167,9 @@ public final class Rig {
         DEBUG = enable;
     }
 
+    /**
+     * Builder that is used to create an instance of {@code Rig}.
+     */
     public static class Builder {
         private final RigParams p;
 
@@ -174,6 +177,13 @@ public final class Rig {
             this.p = new RigParams();
         }
 
+        /**
+         * Set generator that will be used for image generation.
+         * <p>Must not be null.</p>
+         *
+         * @param generator Interface definition for a generator, that is used to generate an image.
+         * @return This Builder object to allow for chaining of calls to set methods.
+         */
         public Builder setGenerator(Generator generator) {
             if (generator == null)
                 throw new IllegalArgumentException("generator cannot be null");
@@ -181,20 +191,48 @@ public final class Rig {
             return this;
         }
 
+        /**
+         * Set callback that will be used to inform if image is generated or not.
+         *
+         * @param generateCallback Interface definition for a callback to be invoked when an image is generated or not.
+         * @return This Builder object to allow for chaining of calls to set methods.
+         */
         public Builder setCallback(GenerateCallback generateCallback) {
             p.generateCallback = generateCallback;
             return this;
         }
 
+        /**
+         * Set quality that will be used for image generation and compression.
+         * <p>If not specified, then the default quality (PNG) will be used.</p>
+         *
+         * @param quality A specified quality to use for bitmap generation and compression.
+         * @return This Builder object to allow for chaining of calls to set methods.
+         */
         public Builder setQuality(Quality quality) {
             p.quality = quality;
             return this;
         }
 
+        /**
+         * Set fixed size for generated images.
+         * <p>Will override range sizes (if they was specified).</p>
+         *
+         * @param width  Must be > 0.
+         * @param height Must be > 0.
+         * @return This Builder object to allow for chaining of calls to set methods.
+         */
         public Builder setFixedSize(int width, int height) {
             return setFixedWidth(width).setFixedHeight(height);
         }
 
+        /**
+         * Set fixed width for generated images.
+         * <p>Will override width range size (if it was specified).</p>
+         *
+         * @param width Must be > 0.
+         * @return This Builder object to allow for chaining of calls to set methods.
+         */
         public Builder setFixedWidth(int width) {
             if (width <= 0)
                 throw new IllegalArgumentException("width must be > 0");
@@ -203,6 +241,13 @@ public final class Rig {
             return this;
         }
 
+        /**
+         * Set fixed height for generated images.
+         * <p>Will override height range size (if it was specified).</p>
+         *
+         * @param height Must be > 0.
+         * @return This Builder object to allow for chaining of calls to set methods.
+         */
         public Builder setFixedHeight(int height) {
             if (height <= 0)
                 throw new IllegalArgumentException("height must be > 0");
@@ -211,6 +256,18 @@ public final class Rig {
             return this;
         }
 
+        /**
+         * Set width range for generated images.
+         * <p>For example, if from=200, to=800, step=200, then it will turn into
+         * an array [200, 400, 600, 800].</p>
+         * <p>Will override fixed width (if it was specified).</p>
+         * <p>Count will be ignored (if it was specified).</p>
+         *
+         * @param from Start width in array. Must be > 0.
+         * @param to   End width in array. Must be > 0.
+         * @param step Step width in array. Must be > 0.
+         * @return This Builder object to allow for chaining of calls to set methods.
+         */
         public Builder setWidthRange(int from, int to, int step) {
             if (step <= 0 || from <= 0 || to <= 0)
                 throw new IllegalArgumentException("all width range args must be > 0");
@@ -222,6 +279,18 @@ public final class Rig {
             return this;
         }
 
+        /**
+         * Set height range for generated images.
+         * <p>For example, if from=800, to=200, step=200, then it will turn into
+         * an array [800, 600, 400, 200].</p>
+         * <p>Will override fixed height (if it was specified).</p>
+         * <p>Count will be ignored (if it was specified).</p>
+         *
+         * @param from Start height in array. Must be > 0.
+         * @param to   End height in array. Must be > 0.
+         * @param step Step height in array. Must be > 0.
+         * @return This Builder object to allow for chaining of calls to set methods.
+         */
         public Builder setHeightRange(int from, int to, int step) {
             if (step <= 0 || from <= 0 || to <= 0)
                 throw new IllegalArgumentException("all height range args must be > 0");
@@ -233,6 +302,14 @@ public final class Rig {
             return this;
         }
 
+        /**
+         * Set count of generated images.
+         * <p>Must not be used with range sizes.</p>
+         * <p>If not specified, then it will be set to 1.</p>
+         *
+         * @param count Must be > 0.
+         * @return This Builder object to allow for chaining of calls to set methods.
+         */
         public Builder setCount(int count) {
             if (p.useWidthRange || p.useHeightRange)
                 throw new IllegalStateException("count can not be set with size range");
@@ -242,6 +319,12 @@ public final class Rig {
             return this;
         }
 
+        /**
+         * File path (without filename) that will be used to save generated images.
+         * <p>The path (directories) will be created if not exists.</p>
+         *
+         * @return This Builder object to allow for chaining of calls to set methods.
+         */
         public Builder setFileSavePath(String path) {
             if (path == null) {
                 p.path = null;
@@ -257,16 +340,35 @@ public final class Rig {
             return this;
         }
 
+        /**
+         * Set file name policy that will be used for saving images.
+         * <p>If not specified, then the {@link DefaultFileNamePolicy} will be used.</p>
+         *
+         * @param fileNamePolicy Used to save images with the corresponding names retrieved from it.
+         * @return This Builder object to allow for chaining of calls to set methods.
+         */
         public Builder setFileNamePolicy(FileNamePolicy fileNamePolicy) {
             p.fileNamePolicy = fileNamePolicy;
             return this;
         }
 
+        /**
+         * Set callback that will be used to inform if image is saved, or not.
+         *
+         * @param saveCallback Interface definition for a callback to be invoked when an image is saved.
+         * @return This Builder object to allow for chaining of calls to set methods.
+         */
         public Builder setFileSaveCallback(SaveCallback saveCallback) {
             p.saveCallback = saveCallback;
             return this;
         }
 
+        /**
+         * Creates an {@link Rig} object with the arguments supplied to this
+         * builder.
+         *
+         * @return A new instance of {@link Rig}.
+         */
         public Rig build() {
             if (p.generator == null)
                 throw new IllegalStateException("generator not specified");
