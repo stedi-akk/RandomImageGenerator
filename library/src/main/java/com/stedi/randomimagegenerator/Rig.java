@@ -15,6 +15,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
 
+/**
+ * Random Image Generator (RIG).
+ * <p>Class that manages images generation.</p>
+ */
 public final class Rig {
     private static boolean DEBUG = false;
     private static String TAG = "RIG";
@@ -26,6 +30,9 @@ public final class Rig {
     private Rig() {
     }
 
+    /**
+     * Start to generate images.
+     */
     public void generate() {
         if (DEBUG)
             Log.d(TAG, "Started with parameters: " + params);
@@ -114,6 +121,9 @@ public final class Rig {
         }
     }
 
+    /**
+     * To save bitmap into file with specified compress format.
+     */
     private boolean save(Bitmap bitmap, File file, Bitmap.CompressFormat format, int quality) throws Exception {
         FileOutputStream out = null;
         try {
@@ -130,6 +140,10 @@ public final class Rig {
         }
     }
 
+    /**
+     * Creates a range array. For example, if from=200, to=800, step=200, then
+     * a new array [200, 400, 600, 800] will be returned.
+     */
     private int[] createRangeArray(int from, int to, int step) {
         boolean isDecreasing = to < from;
         int size = Math.abs((to - from) / step);
@@ -145,6 +159,13 @@ public final class Rig {
         return array;
     }
 
+    /**
+     * To notify {@link GenerateCallback} (if it was set with {@link Rig.Builder}).
+     *
+     * @param imageParams The image parameters that was used for this generation.
+     * @param bitmap      The generated image.
+     * @param e           If not null, then {@link GenerateCallback#onFailedToGenerate(ImageParams, Exception)} will be called.
+     */
     private void notifyCallback(ImageParams imageParams, Bitmap bitmap, Exception e) {
         if (params.generateCallback != null) {
             if (e != null)
@@ -154,6 +175,13 @@ public final class Rig {
         }
     }
 
+    /**
+     * To notify {@link SaveCallback} (if it was set with {@link Rig.Builder}).
+     *
+     * @param bitmap The generated image.
+     * @param path   The path where image was saved.
+     * @param e      If not null, then {@link SaveCallback#onFailedToSave(Bitmap, Exception)} will be called.
+     */
     private void notifySaveCallback(Bitmap bitmap, File path, Exception e) {
         if (params.saveCallback != null) {
             if (e != null)
@@ -163,6 +191,9 @@ public final class Rig {
         }
     }
 
+    /**
+     * To show logcat logs while generation (with tag 'RIG').
+     */
     public static void enableDebugLogging(boolean enable) {
         DEBUG = enable;
     }
