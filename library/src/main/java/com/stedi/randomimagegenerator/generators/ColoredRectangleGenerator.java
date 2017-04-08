@@ -26,7 +26,7 @@ public class ColoredRectangleGenerator extends FlatColorGenerator {
     /**
      * Constructor with specified rectangles count.
      *
-     * @param count Must be > 0.
+     * @param count Must be bigger than 0.
      */
     public ColoredRectangleGenerator(int count) {
         this.count = count;

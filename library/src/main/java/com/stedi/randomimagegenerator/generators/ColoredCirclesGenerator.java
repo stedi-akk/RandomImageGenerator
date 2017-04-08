@@ -25,7 +25,7 @@ public class ColoredCirclesGenerator extends FlatColorGenerator {
     /**
      * Constructor with specified circles count.
      *
-     * @param count Must be > 0.
+     * @param count Must be bigger than 0.
      */
     public ColoredCirclesGenerator(int count) {
         this.count = count;

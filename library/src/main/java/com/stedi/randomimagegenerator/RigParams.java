@@ -37,7 +37,7 @@ class RigParams {
     /**
      * Width of generated image.
      * <p>
-     * Must be > 0, if width range is not specified.
+     * Must be bigger than 0, if width range is not specified.
      * </p>
      */
     int width;
@@ -45,7 +45,7 @@ class RigParams {
     /**
      * Height of generated image.
      * <p>
-     * Must be > 0, if height range is not specified.
+     * Must be bigger than 0, if height range is not specified.
      * </p>
      */
     int height;
@@ -53,7 +53,7 @@ class RigParams {
     /**
      * Width range start. Used along with widthTo and widthStep.
      * <p>
-     * Must be > 0, if range is specified.
+     * Must be bigger than 0, if range is specified.
      * </p>
      */
     int widthFrom;
@@ -61,7 +61,7 @@ class RigParams {
     /**
      * Width range end. Used along with widthFrom and widthStep.
      * <p>
-     * Must be > 0, if range is specified.
+     * Must be bigger than 0, if range is specified.
      * </p>
      */
     int widthTo;
@@ -69,7 +69,7 @@ class RigParams {
     /**
      * Width range step. Used along with widthFrom and widthTo.
      * <p>
-     * Must be > 0, if range is specified.
+     * Must be bigger than 0, if range is specified.
      * </p>
      */
     int widthStep;
@@ -77,7 +77,7 @@ class RigParams {
     /**
      * Height range start. Used along with heightTo and heightStep.
      * <p>
-     * Must be > 0, if range is specified.
+     * Must be bigger than 0, if range is specified.
      * </p>
      */
     int heightFrom;
@@ -85,7 +85,7 @@ class RigParams {
     /**
      * Height range end. Used along with heightFrom and heightStep.
      * <p>
-     * Must be > 0, if range is specified.
+     * Must be bigger than 0, if range is specified.
      * </p>
      */
     int heightTo;
@@ -93,7 +93,7 @@ class RigParams {
     /**
      * Height range step. Used along with heightFrom and heightTo.
      * <p>
-     * Must be > 0, if range is specified.
+     * Must be bigger than 0, if range is specified.
      * </p>
      */
     int heightStep;
@@ -111,7 +111,7 @@ class RigParams {
     /**
      * The number of generated images.
      * <p>
-     * Must be > 0 for fixed size.
+     * Must be bigger than 0 for fixed size.
      * </p>
      */
     int count;

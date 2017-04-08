@@ -27,11 +27,11 @@ public class ColoredPixelsGenerator extends FlatColorGenerator {
     /**
      * Constructor with specified pixel multiplier.
      *
-     * @param pixelMultiplier Must be > 0.
+     * @param pixelMultiplier Must be bigger than 0.
      */
     public ColoredPixelsGenerator(int pixelMultiplier) {
         if (pixelMultiplier <= 0)
-            throw new IllegalArgumentException("pixelMultiplier must be > 0");
+            throw new IllegalArgumentException("pixelMultiplier must be bigger than 0");
         this.pixelMultiplier = pixelMultiplier;
     }
 

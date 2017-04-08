@@ -249,8 +249,8 @@ public final class Rig {
          * Set fixed size for generated images.
          * <p>Will override range sizes (if they was specified).</p>
          *
-         * @param width  Must be > 0.
-         * @param height Must be > 0.
+         * @param width  Must be bigger than 0.
+         * @param height Must be bigger than 0.
          * @return This Builder object to allow for chaining of calls to set methods.
          */
         public Builder setFixedSize(int width, int height) {
@@ -261,12 +261,12 @@ public final class Rig {
          * Set fixed width for generated images.
          * <p>Will override width range size (if it was specified).</p>
          *
-         * @param width Must be > 0.
+         * @param width Must be bigger than 0.
          * @return This Builder object to allow for chaining of calls to set methods.
          */
         public Builder setFixedWidth(int width) {
             if (width <= 0)
-                throw new IllegalArgumentException("width must be > 0");
+                throw new IllegalArgumentException("width must be bigger than 0");
             p.width = width;
             p.useWidthRange = false;
             return this;
@@ -276,12 +276,12 @@ public final class Rig {
          * Set fixed height for generated images.
          * <p>Will override height range size (if it was specified).</p>
          *
-         * @param height Must be > 0.
+         * @param height Must be bigger than 0.
          * @return This Builder object to allow for chaining of calls to set methods.
          */
         public Builder setFixedHeight(int height) {
             if (height <= 0)
-                throw new IllegalArgumentException("height must be > 0");
+                throw new IllegalArgumentException("height must be bigger than 0");
             p.height = height;
             p.useHeightRange = false;
             return this;
@@ -294,14 +294,14 @@ public final class Rig {
          * <p>Will override fixed width (if it was specified).</p>
          * <p>Count will be ignored (if it was specified).</p>
          *
-         * @param from Start width in array. Must be > 0.
-         * @param to   End width in array. Must be > 0.
-         * @param step Step width in array. Must be > 0.
+         * @param from Start width in array. Must be bigger than 0.
+         * @param to   End width in array. Must be bigger than 0.
+         * @param step Step width in array. Must be bigger than 0.
          * @return This Builder object to allow for chaining of calls to set methods.
          */
         public Builder setWidthRange(int from, int to, int step) {
             if (step <= 0 || from <= 0 || to <= 0)
-                throw new IllegalArgumentException("all width range args must be > 0");
+                throw new IllegalArgumentException("all width range args must be bigger than 0");
             p.widthFrom = from;
             p.widthTo = to;
             p.widthStep = step;
@@ -317,14 +317,14 @@ public final class Rig {
          * <p>Will override fixed height (if it was specified).</p>
          * <p>Count will be ignored (if it was specified).</p>
          *
-         * @param from Start height in array. Must be > 0.
-         * @param to   End height in array. Must be > 0.
-         * @param step Step height in array. Must be > 0.
+         * @param from Start height in array. Must be bigger than 0.
+         * @param to   End height in array. Must be bigger than 0.
+         * @param step Step height in array. Must be bigger than 0.
          * @return This Builder object to allow for chaining of calls to set methods.
          */
         public Builder setHeightRange(int from, int to, int step) {
             if (step <= 0 || from <= 0 || to <= 0)
-                throw new IllegalArgumentException("all height range args must be > 0");
+                throw new IllegalArgumentException("all height range args must be bigger than 0");
             p.heightFrom = from;
             p.heightTo = to;
             p.heightStep = step;
@@ -338,14 +338,14 @@ public final class Rig {
          * <p>Must not be used with range sizes.</p>
          * <p>If not specified, then it will be set to 1.</p>
          *
-         * @param count Must be > 0.
+         * @param count Must be bigger than 0.
          * @return This Builder object to allow for chaining of calls to set methods.
          */
         public Builder setCount(int count) {
             if (p.useWidthRange || p.useHeightRange)
                 throw new IllegalStateException("count can not be set with size range");
             if (count <= 0)
-                throw new IllegalArgumentException("count must be > 0");
+                throw new IllegalArgumentException("count must be bigger than 0");
             p.count = count;
             return this;
         }
