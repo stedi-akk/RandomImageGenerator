@@ -5,6 +5,9 @@ import android.graphics.Color;
 
 import com.stedi.randomimagegenerator.ImageParams;
 
+/**
+ * Simple random flat color image generator.
+ */
 public class FlatColorGenerator implements Generator {
     @Override
     public Bitmap generate(ImageParams imageParams) throws Exception {

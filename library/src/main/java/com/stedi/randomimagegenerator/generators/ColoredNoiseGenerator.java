@@ -7,6 +7,9 @@ import android.graphics.Paint;
 
 import com.stedi.randomimagegenerator.ImageParams;
 
+/**
+ * Generator for image with random colored noise.
+ */
 public class ColoredNoiseGenerator implements Generator {
     private final Paint paint = new Paint();
 
@@ -29,10 +32,16 @@ public class ColoredNoiseGenerator implements Generator {
         RANDOM
     }
 
+    /**
+     * The default constructor with random orientation and type.
+     */
     public ColoredNoiseGenerator() {
         this(Orientation.RANDOM, Type.RANDOM);
     }
 
+    /**
+     * Constructor with specified orientation and type.
+     */
     public ColoredNoiseGenerator(Orientation orientation, Type type) {
         this.selectedOrientation = orientation;
         this.selectedType = type;

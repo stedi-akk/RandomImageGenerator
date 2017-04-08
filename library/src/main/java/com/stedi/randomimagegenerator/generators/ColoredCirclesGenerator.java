@@ -6,15 +6,27 @@ import android.graphics.Paint;
 
 import com.stedi.randomimagegenerator.ImageParams;
 
+/**
+ * Generator for image with random colored circles.
+ */
 public class ColoredCirclesGenerator extends FlatColorGenerator {
     private final Paint paint = new Paint();
 
     private int count;
 
+    /**
+     * The default constructor with unspecified circles count
+     * (will be random, based on the size of image).
+     */
     public ColoredCirclesGenerator() {
         this(0);
     }
 
+    /**
+     * Constructor with specified circles count.
+     *
+     * @param count Must be > 0.
+     */
     public ColoredCirclesGenerator(int count) {
         this.count = count;
     }
