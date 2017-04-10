@@ -138,8 +138,8 @@ public class MainActivity extends AppCompatActivity implements
                     builder.setFixedSize(600, 600);
                     builder.setCount(count);
                 } else {
-                    builder.setHeightRange(200, 800, 200);
-                    builder.setWidthRange(600, 300, 100);
+                    builder.setHeightRange(400, 1000, 200);
+                    builder.setWidthRange(800, 500, 100);
                 }
 
                 if (cbSaveFile.isChecked()) {
