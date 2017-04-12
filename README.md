@@ -88,7 +88,7 @@ public class MyGenerator implements Generator {
 }
 ```
 
-### Download
+## Download
 Gradle:
 ```groovy
 compile 'com.stedi.randomimagegenerator:rig:1.0.0'
@@ -97,7 +97,7 @@ This library is synchronous, and you should not use it in the main thread.
    
 There is also a sample application available in the /sample directory.
 
-### License
+## License
 > Copyright 2017 Dima Stepanchenko
 > 
 > Licensed under the Apache License, Version 2.0 (the "License");
