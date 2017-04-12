@@ -68,11 +68,11 @@ There are currently 5 generators, and 2 "wrapper" generators.
 
 <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/ColoredCirclesGenerator/1.png" height="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/ColoredCirclesGenerator/2.png" height="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/ColoredCirclesGenerator/3.png" height="128">
 
-- MirroredGenerator (to create mirrored effect for generated images)
+- MirroredGenerator
 
 <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/MirroredGenerator/1.png" height="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/MirroredGenerator/2.png" height="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/MirroredGenerator/3.png" height="128">
 
-- TextOverlayGenerator (to draw text in front of generated image)
+- TextOverlayGenerator
 
 <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/TextOverlayGenerator/1.png" height="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/TextOverlayGenerator/2.png" height="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/TextOverlayGenerator/3.png" height="128">
 
