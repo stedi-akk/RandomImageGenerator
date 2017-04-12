@@ -44,6 +44,7 @@ new Rig.Builder()
         .build()
         .generate();
 ```
+For more information, please see javadoc.
 ### Embed generators
 There are currently 5 generators, and 2 "wrapper" generators.
 
@@ -87,14 +88,15 @@ public class MyGenerator implements Generator {
 }
 ```
 
-This library is synchronous, and you should not use it in the main thread. For more information, please see javadoc. 
-There is also a sample application available in the /sample directory.
-
 ### Download
 Gradle:
 ```groovy
 compile 'com.stedi.randomimagegenerator:rig:1.0.0'
 ```
+This library is synchronous, and you should not use it in the main thread.  
+   
+There is also a sample application available in the /sample directory.
+
 ### License
 > Copyright 2017 Dima Stepanchenko
 > 
