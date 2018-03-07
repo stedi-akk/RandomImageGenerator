@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.stedi.randomimagegenerator.ImageParams;
 
@@ -42,27 +44,33 @@ public class ColoredNoiseGenerator implements Generator {
     /**
      * Constructor with specified orientation and type.
      */
-    public ColoredNoiseGenerator(Orientation orientation, Type type) {
+    public ColoredNoiseGenerator(@NonNull Orientation orientation, @NonNull Type type) {
+        if (orientation == null || type == null) {
+            throw new IllegalArgumentException("arguments must not be null");
+        }
         this.selectedOrientation = orientation;
         this.selectedType = type;
     }
 
     @Override
-    public Bitmap generate(ImageParams imageParams) throws Exception {
+    @Nullable
+    public Bitmap generate(@NonNull ImageParams imageParams) throws Exception {
         Bitmap bitmap = Bitmap.createBitmap(imageParams.getWidth(), imageParams.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
 
         Orientation orientation;
-        if (selectedOrientation == Orientation.RANDOM)
+        if (selectedOrientation == Orientation.RANDOM) {
             orientation = Math.random() < 0.5d ? Orientation.HORIZONTAL : Orientation.VERTICAL;
-        else
+        } else {
             orientation = selectedOrientation;
+        }
 
         Type type;
-        if (selectedType == Type.RANDOM)
+        if (selectedType == Type.RANDOM) {
             type = Type.values()[(int) (Math.random() * 6)];
-        else
+        } else {
             type = selectedType;
+        }
 
         int iMax = orientation == Orientation.HORIZONTAL ? imageParams.getHeight() : imageParams.getWidth();
         int jMax = orientation == Orientation.HORIZONTAL ? imageParams.getWidth() : imageParams.getHeight();
@@ -73,23 +81,25 @@ public class ColoredNoiseGenerator implements Generator {
             for (int j = 0; j < jMax; j++) {
                 int rgb3 = (int) (Math.random() * 256);
 
-                if (type == Type.TYPE_1)
+                if (type == Type.TYPE_1) {
                     paint.setColor(Color.rgb(rgb1, rgb2, rgb3));
-                else if (type == Type.TYPE_2)
+                } else if (type == Type.TYPE_2) {
                     paint.setColor(Color.rgb(rgb1, rgb3, rgb2));
-                else if (type == Type.TYPE_3)
+                } else if (type == Type.TYPE_3) {
                     paint.setColor(Color.rgb(rgb2, rgb1, rgb3));
-                else if (type == Type.TYPE_4)
+                } else if (type == Type.TYPE_4) {
                     paint.setColor(Color.rgb(rgb2, rgb3, rgb1));
-                else if (type == Type.TYPE_5)
+                } else if (type == Type.TYPE_5) {
                     paint.setColor(Color.rgb(rgb3, rgb1, rgb2));
-                else if (type == Type.TYPE_6)
+                } else if (type == Type.TYPE_6) {
                     paint.setColor(Color.rgb(rgb3, rgb2, rgb1));
+                }
 
-                if (orientation == Orientation.VERTICAL)
+                if (orientation == Orientation.VERTICAL) {
                     canvas.drawPoint(i, j, paint);
-                else if (orientation == Orientation.HORIZONTAL)
+                } else if (orientation == Orientation.HORIZONTAL) {
                     canvas.drawPoint(j, i, paint);
+                }
             }
         }
 

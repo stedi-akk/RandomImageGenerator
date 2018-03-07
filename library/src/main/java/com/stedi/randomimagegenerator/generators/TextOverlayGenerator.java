@@ -5,6 +5,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.stedi.randomimagegenerator.ImageParams;
 
@@ -24,14 +26,16 @@ public class TextOverlayGenerator implements Generator {
          * @param imageParams Image parameters used to generate an image.
          * @return Text that will be drawn in front of image.
          */
-        String getText(ImageParams imageParams);
+        @NonNull
+        String getText(@NonNull ImageParams imageParams);
     }
 
     private static class DefaultTextPolicy implements TextPolicy {
         private final String format = "%d_%dx%d";
 
         @Override
-        public String getText(ImageParams imageParams) {
+        @NonNull
+        public String getText(@NonNull ImageParams imageParams) {
             return String.format(Locale.getDefault(), format,
                     imageParams.getId(), imageParams.getWidth(), imageParams.getHeight());
         }
@@ -89,9 +93,11 @@ public class TextOverlayGenerator implements Generator {
          * Set target generator.
          * <p>Must not be null.</p>
          */
-        public Builder setGenerator(Generator generator) {
-            if (generator == null)
+        @NonNull
+        public Builder setGenerator(@NonNull Generator generator) {
+            if (generator == null) {
                 throw new IllegalArgumentException("generator cannot be null");
+            }
             p.generator = generator;
             return this;
         }
@@ -100,7 +106,8 @@ public class TextOverlayGenerator implements Generator {
          * Set text policy.
          * <p>If not specified, then the default implementation will be used.</p>
          */
-        public Builder setTextPolicy(TextPolicy textPolicy) {
+        @NonNull
+        public Builder setTextPolicy(@Nullable TextPolicy textPolicy) {
             p.textPolicy = textPolicy;
             return this;
         }
@@ -108,7 +115,8 @@ public class TextOverlayGenerator implements Generator {
         /**
          * To override existing {@link Paint} object for drawing text.
          */
-        public Builder setTextPaint(Paint textPaint) {
+        @NonNull
+        public Builder setTextPaint(@Nullable Paint textPaint) {
             p.textPaint = textPaint;
             return this;
         }
@@ -116,7 +124,8 @@ public class TextOverlayGenerator implements Generator {
         /**
          * To override existing {@link Paint} object for drawing text background.
          */
-        public Builder setBackgroundPaint(Paint backgroundPaint) {
+        @NonNull
+        public Builder setBackgroundPaint(@Nullable Paint backgroundPaint) {
             p.backgroundPaint = backgroundPaint;
             return this;
         }
@@ -124,6 +133,7 @@ public class TextOverlayGenerator implements Generator {
         /**
          * To draw text background, or not. Default is {@code true}.
          */
+        @NonNull
         public Builder setDrawBackground(boolean drawBackground) {
             p.drawBackground = drawBackground;
             return this;
@@ -132,16 +142,20 @@ public class TextOverlayGenerator implements Generator {
         /**
          * To resize text based on the image size, or not. Default is {@code true}.
          */
+        @NonNull
         public Builder setAutoresizeText(boolean autoresizeText) {
             p.autoresizeText = autoresizeText;
             return this;
         }
 
+        @NonNull
         public TextOverlayGenerator build() {
-            if (p.generator == null)
+            if (p.generator == null) {
                 throw new IllegalStateException("generator not specified");
-            if (p.textPolicy == null)
+            }
+            if (p.textPolicy == null) {
                 p.textPolicy = new DefaultTextPolicy();
+            }
             if (p.textPaint == null) {
                 p.textPaint = new Paint();
                 p.textPaint.setColor(Color.WHITE);
@@ -157,14 +171,17 @@ public class TextOverlayGenerator implements Generator {
     }
 
     @Override
-    public Bitmap generate(ImageParams imageParams) throws Exception {
+    @Nullable
+    public Bitmap generate(@NonNull ImageParams imageParams) throws Exception {
         Bitmap bitmap = params.generator.generate(imageParams);
-        if (bitmap == null)
+        if (bitmap == null) {
             return null;
+        }
 
         String text = params.textPolicy.getText(imageParams);
-        if (text == null)
+        if (text == null) {
             throw new NullPointerException("text from TextPolicy is null");
+        }
 
         Rect textBounds = new Rect();
 
@@ -186,8 +203,9 @@ public class TextOverlayGenerator implements Generator {
 
         Canvas canvas = new Canvas(bitmap);
 
-        if (params.drawBackground)
+        if (params.drawBackground) {
             canvas.drawRect(textBounds, params.backgroundPaint);
+        }
 
         canvas.drawText(text, textBounds.left + padding, textBounds.top + textBounds.height() - padding, params.textPaint);
 

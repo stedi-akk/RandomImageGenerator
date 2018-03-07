@@ -2,6 +2,7 @@ package com.stedi.randomimagegenerator;
 
 import android.graphics.Bitmap;
 import android.graphics.Paint;
+import android.support.annotation.NonNull;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.stedi.randomimagegenerator.generators.ColoredCirclesGenerator;
@@ -25,7 +26,7 @@ public class TextOverlayGeneratorTest {
 
     private final TextOverlayGenerator.TextPolicy textPolicy = new TextOverlayGenerator.TextPolicy() {
         @Override
-        public String getText(ImageParams imageParams) {
+        public String getText(@NonNull ImageParams imageParams) {
             return "text";
         }
     };

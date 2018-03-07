@@ -1,6 +1,7 @@
 package com.stedi.randomimagegenerator.callbacks;
 
 import android.graphics.Bitmap;
+import android.support.annotation.NonNull;
 
 import java.io.File;
 
@@ -14,7 +15,7 @@ public interface SaveCallback {
      * @param bitmap The image that was saved.
      * @param file   The file of saved image.
      */
-    void onSaved(Bitmap bitmap, File file);
+    void onSaved(@NonNull Bitmap bitmap, @NonNull File file);
 
     /**
      * Called when an image is not saved.
@@ -22,5 +23,5 @@ public interface SaveCallback {
      * @param bitmap The image that was not saved.
      * @param e      The detailed exception.
      */
-    void onFailedToSave(Bitmap bitmap, Exception e);
+    void onFailedToSave(@NonNull Bitmap bitmap, @NonNull Exception e);
 }

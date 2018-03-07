@@ -3,8 +3,12 @@ package com.stedi.randomimagegenerator.generators;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.stedi.randomimagegenerator.ImageParams;
+
+import java.util.Objects;
 
 /**
  * Generator for image with random colored circles.
@@ -32,13 +36,18 @@ public class ColoredCirclesGenerator extends FlatColorGenerator {
     }
 
     @Override
-    public Bitmap generate(ImageParams imageParams) throws Exception {
+    @Nullable
+    public Bitmap generate(@NonNull ImageParams imageParams) throws Exception {
         Bitmap bitmap = super.generate(imageParams);
+        if (bitmap == null) {
+            return null;
+        }
 
         int biggestSide = Math.max(imageParams.getWidth(), imageParams.getHeight());
 
-        if (count <= 0)
+        if (count <= 0) {
             count = (int) Math.ceil(Math.random() * ((biggestSide / 100f) * 20f));
+        }
 
         Canvas canvas = new Canvas(bitmap);
 

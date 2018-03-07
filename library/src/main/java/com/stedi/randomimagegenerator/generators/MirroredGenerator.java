@@ -3,6 +3,8 @@ package com.stedi.randomimagegenerator.generators;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.stedi.randomimagegenerator.ImageParams;
 
@@ -17,15 +19,20 @@ public class MirroredGenerator implements Generator {
     /**
      * @param generator The target generator.
      */
-    public MirroredGenerator(Generator generator) {
+    public MirroredGenerator(@NonNull Generator generator) {
+        if (generator == null) {
+            throw new IllegalArgumentException("target generator must not be null");
+        }
         this.generator = generator;
     }
 
     @Override
-    public Bitmap generate(ImageParams imageParams) throws Exception {
+    @Nullable
+    public Bitmap generate(@NonNull ImageParams imageParams) throws Exception {
         Bitmap targetBitmap = generator.generate(imageParams);
-        if (targetBitmap == null)
+        if (targetBitmap == null) {
             return null;
+        }
 
         int scaledWidth = (int) Math.ceil(targetBitmap.getWidth() / 2f);
         int scaledHeight = (int) Math.ceil(targetBitmap.getHeight() / 2f);

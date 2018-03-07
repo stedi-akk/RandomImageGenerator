@@ -1,6 +1,7 @@
 package com.stedi.randomimagegenerator;
 
 import android.graphics.Bitmap;
+import android.support.annotation.NonNull;
 
 /**
  * A specified quality to use for bitmap generation and compression.
@@ -14,6 +15,7 @@ public class Quality {
      *
      * @return The default PNG quality.
      */
+    @NonNull
     public static Quality png() {
         return new Quality(Bitmap.CompressFormat.PNG, 100);
     }
@@ -27,6 +29,7 @@ public class Quality {
      *                quality setting.
      * @return JPEG quality instance.
      */
+    @NonNull
     public static Quality jpg(int quality) {
         return new Quality(Bitmap.CompressFormat.JPEG, quality);
     }
@@ -40,11 +43,13 @@ public class Quality {
      *               formats, like PNG which is lossless, will ignore the
      *               quality setting.
      */
-    public Quality(Bitmap.CompressFormat format, int value) {
-        if (format == null)
+    public Quality(@NonNull Bitmap.CompressFormat format, int value) {
+        if (format == null) {
             throw new IllegalArgumentException("format cannot not be null");
-        if (value < 0 || value > 100)
+        }
+        if (value < 0 || value > 100) {
             throw new IllegalArgumentException("quality value must be 0..100");
+        }
         this.format = format;
         this.value = value;
     }
@@ -52,6 +57,7 @@ public class Quality {
     /**
      * @return Quality compress format.
      */
+    @NonNull
     public Bitmap.CompressFormat getFormat() {
         return format;
     }
@@ -66,6 +72,7 @@ public class Quality {
     /**
      * @return File extension based on the quality format.
      */
+    @NonNull
     public String getFileExtension() {
         switch (getFormat()) {
             case JPEG:
@@ -75,7 +82,7 @@ public class Quality {
             case WEBP:
                 return "webp";
         }
-        return "png";
+        throw new IllegalStateException("not supported");
     }
 
     @Override

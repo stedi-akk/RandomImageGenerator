@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.stedi.randomimagegenerator.ImageParams;
 
@@ -30,14 +32,19 @@ public class ColoredPixelsGenerator extends FlatColorGenerator {
      * @param pixelMultiplier Must be bigger than 0.
      */
     public ColoredPixelsGenerator(int pixelMultiplier) {
-        if (pixelMultiplier <= 0)
+        if (pixelMultiplier <= 0) {
             throw new IllegalArgumentException("pixelMultiplier must be bigger than 0");
+        }
         this.pixelMultiplier = pixelMultiplier;
     }
 
     @Override
-    public Bitmap generate(ImageParams imageParams) throws Exception {
+    @Nullable
+    public Bitmap generate(@NonNull ImageParams imageParams) throws Exception {
         Bitmap bitmap = super.generate(imageParams);
+        if (bitmap == null) {
+            return null;
+        }
 
         Canvas canvas = new Canvas(bitmap);
         Rect pixel = new Rect();
