@@ -7,8 +7,8 @@ import android.support.annotation.NonNull;
  * A specified quality to use for bitmap generation and compression.
  */
 public class Quality {
-    private final Bitmap.CompressFormat format;
-    private final int value;
+    private Bitmap.CompressFormat format;
+    private int value;
 
     /**
      * Static creation of the default PNG quality (value 100).
@@ -44,14 +44,8 @@ public class Quality {
      *               quality setting.
      */
     public Quality(@NonNull Bitmap.CompressFormat format, int value) {
-        if (format == null) {
-            throw new IllegalArgumentException("format cannot not be null");
-        }
-        if (value < 0 || value > 100) {
-            throw new IllegalArgumentException("quality value must be 0..100");
-        }
-        this.format = format;
-        this.value = value;
+        setFormat(format);
+        setQualityValue(value);
     }
 
     /**
@@ -63,10 +57,38 @@ public class Quality {
     }
 
     /**
+     * To set quality compress format.
+     * <p> If set {@link Bitmap.CompressFormat#PNG}, the quality value will be 100. </p>
+     */
+    public void setFormat(@NonNull Bitmap.CompressFormat format) {
+        if (format == null) {
+            throw new IllegalArgumentException("format cannot not be null");
+        }
+        this.format = format;
+        if (format == Bitmap.CompressFormat.PNG) {
+            setQualityValue(100);
+        }
+    }
+
+    /**
      * @return Quality compress value (0-100).
      */
     public int getQualityValue() {
         return value;
+    }
+
+    /**
+     * To set quality value (0-100).
+     * <p> If current format is {@link Bitmap.CompressFormat#PNG}, the quality value is always 100. </p>
+     */
+    public void setQualityValue(int value) {
+        if (value < 0 || value > 100) {
+            throw new IllegalArgumentException("quality value must be 0..100");
+        }
+        if (this.format == Bitmap.CompressFormat.PNG && value != 100) {
+            return;
+        }
+        this.value = value;
     }
 
     /**
