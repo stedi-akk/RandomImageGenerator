@@ -12,7 +12,7 @@ import com.stedi.randomimagegenerator.ImageParams;
  * Generator wrapper, that creates mirrored effect for the target generator.
  */
 public class MirroredGenerator implements Generator {
-    private final Paint paint = new Paint();
+    private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     private final Generator generator;
 

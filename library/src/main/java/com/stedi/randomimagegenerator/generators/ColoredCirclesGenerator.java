@@ -14,7 +14,7 @@ import java.util.Objects;
  * Generator for image with random colored circles.
  */
 public class ColoredCirclesGenerator extends FlatColorGenerator {
-    private final Paint paint = new Paint();
+    private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     private int count;
 
@@ -29,7 +29,7 @@ public class ColoredCirclesGenerator extends FlatColorGenerator {
     /**
      * Constructor with specified circles count.
      *
-     * @param count Must be bigger than 0.
+     * @param count Should be bigger than 0. Otherwise, count will be random, based on the size of image.
      */
     public ColoredCirclesGenerator(int count) {
         this.count = count;

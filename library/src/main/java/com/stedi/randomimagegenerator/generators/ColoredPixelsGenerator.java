@@ -15,7 +15,7 @@ import com.stedi.randomimagegenerator.ImageParams;
  * <p>For example: if pixel multiplier is 5, then the colored cell will have 25 pixels.</p>
  */
 public class ColoredPixelsGenerator extends FlatColorGenerator {
-    private final Paint paint = new Paint();
+    private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     private final int pixelMultiplier;
 

@@ -13,7 +13,7 @@ import com.stedi.randomimagegenerator.ImageParams;
  * Generator for image with random colored noise.
  */
 public class ColoredNoiseGenerator implements Generator {
-    private final Paint paint = new Paint();
+    private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     private final Orientation selectedOrientation;
     private final Type selectedType;

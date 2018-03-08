@@ -157,11 +157,11 @@ public class TextOverlayGenerator implements Generator {
                 p.textPolicy = new DefaultTextPolicy();
             }
             if (p.textPaint == null) {
-                p.textPaint = new Paint();
+                p.textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
                 p.textPaint.setColor(Color.WHITE);
             }
             if (p.drawBackground && p.backgroundPaint == null) {
-                p.backgroundPaint = new Paint();
+                p.backgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
                 p.backgroundPaint.setColor(Color.BLACK);
             }
             TextOverlayGenerator generator = new TextOverlayGenerator();
