@@ -7,6 +7,7 @@ import com.stedi.randomimagegenerator.callbacks.SaveCallback;
 import com.stedi.randomimagegenerator.generators.Generator;
 
 import java.io.File;
+import java.util.Arrays;
 
 /**
  * Generation parameters created by {@link Rig.Builder} and used by {@link Rig}
@@ -111,6 +112,22 @@ class RigParams {
     boolean useHeightRange;
 
     /**
+     * Calculated width values if {@link #useWidthRange} is true.
+     * <p>
+     * Can be null.
+     * </p>
+     */
+    int[] widthRangeValues;
+
+    /**
+     * Calculated height values if {@link #useHeightRange} is true.
+     * <p>
+     * Can be null.
+     * </p>
+     */
+    int[] heightRangeValues;
+
+    /**
      * The number of generated images.
      * <p>
      * Must be bigger than 0 for fixed size.
@@ -178,6 +195,8 @@ class RigParams {
                 ", heightStep=" + heightStep +
                 ", useWidthRange=" + useWidthRange +
                 ", useHeightRange=" + useHeightRange +
+                ", widthRangeValues=" + Arrays.toString(widthRangeValues) +
+                ", heightRangeValues=" + Arrays.toString(heightRangeValues) +
                 ", count=" + count +
                 ", path=" + path +
                 ", fileNamePolicy=" + fileNamePolicy +

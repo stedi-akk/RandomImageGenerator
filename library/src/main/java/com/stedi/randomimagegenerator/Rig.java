@@ -15,7 +15,6 @@ import com.stedi.randomimagegenerator.generators.Generator;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
 
 /**
  * Random Image Generator (RIG).
@@ -43,34 +42,20 @@ public final class Rig {
             Log.d(TAG, "Started without callback or specified path to save ! It looks useless...");
         }
 
-        int[] widthValues = null;
-        int[] heightValues = null;
+        imageId = 0;
 
-        if (params.useWidthRange) {
-            widthValues = createRangeArray(params.widthFrom, params.widthTo, params.widthStep);
-            if (DEBUG) {
-                Log.d(TAG, "Created an array for width range: " + Arrays.toString(widthValues));
-            }
-        }
-        if (params.useHeightRange) {
-            heightValues = createRangeArray(params.heightFrom, params.heightTo, params.heightStep);
-            if (DEBUG) {
-                Log.d(TAG, "Created an array for height range: " + Arrays.toString(heightValues));
-            }
-        }
-
-        if (widthValues != null) {
-            for (int width : widthValues) {
-                if (heightValues != null) {
-                    for (int height : heightValues) {
+        if (params.widthRangeValues != null) {
+            for (int width : params.widthRangeValues) {
+                if (params.heightRangeValues != null) {
+                    for (int height : params.heightRangeValues) {
                         generate(width, height, 1);
                     }
                 } else {
                     generate(width, params.height, 1);
                 }
             }
-        } else if (heightValues != null) {
-            for (int height : heightValues) {
+        } else if (params.heightRangeValues != null) {
+            for (int height : params.heightRangeValues) {
                 generate(params.width, height, 1);
             }
         } else {
@@ -170,26 +155,6 @@ public final class Rig {
     }
 
     /**
-     * Creates a range array. For example, if from=200, to=800, step=200, then
-     * a new array [200, 400, 600, 800] will be returned.
-     */
-    private int[] createRangeArray(int from, int to, int step) {
-        boolean isDecreasing = to < from;
-        int size = Math.abs((to - from) / step);
-        int[] array = new int[size + 1];
-        int value = from;
-        for (int i = 0; i < array.length; i++) {
-            array[i] = value;
-            if (isDecreasing) {
-                value -= step;
-            } else {
-                value += step;
-            }
-        }
-        return array;
-    }
-
-    /**
      * To notify {@link GenerateCallback} (if it was set with {@link Rig.Builder}).
      *
      * @param imageParams The image parameters that was used for this generation.
@@ -228,6 +193,41 @@ public final class Rig {
      */
     public static void enableDebugLogging(boolean enable) {
         DEBUG = enable;
+    }
+
+    /**
+     * Creates a positive range array. For example, if from=200, to=800, step=200, then
+     * a new array [200, 400, 600, 800] will be returned.
+     *
+     * @param from Must be bigger than 0. Always present in the return array as the first item.
+     * @param to   Must be bigger than 0. Always present in the return array as the last item.
+     * @param step Must be bigger than 0.
+     */
+    public static int[] createRangeArray(int from, int to, int step) {
+        if (step <= 0 || from <= 0 || to <= 0) {
+            throw new IllegalArgumentException("all args must be bigger than 0");
+        }
+
+        boolean isDecreasing = to < from;
+        int size = (int) Math.ceil(Math.abs((1f * to - from) / step * 1f));
+        if (size == 0) {
+            size = 1;
+        }
+
+        int[] array = new int[size + 1];
+        array[array.length - 1] = to;
+
+        int value = from;
+        for (int i = 0; i < array.length - 1; i++) {
+            array[i] = value;
+            if (isDecreasing) {
+                value -= step;
+            } else {
+                value += step;
+            }
+        }
+
+        return array;
     }
 
     /**
@@ -464,14 +464,20 @@ public final class Rig {
             if (!p.useWidthRange && p.width == 0) {
                 throw new IllegalStateException("width not specified");
             }
+            if ((p.fileNamePolicy != null || p.saveCallback != null) && p.path == null) {
+                throw new IllegalStateException("path not specified");
+            }
+            if (p.useWidthRange) {
+                p.widthRangeValues = createRangeArray(p.widthFrom, p.widthTo, p.widthStep);
+            }
+            if (p.useHeightRange) {
+                p.heightRangeValues = createRangeArray(p.heightFrom, p.heightTo, p.heightStep);
+            }
             if (p.quality == null) {
                 p.quality = Quality.png();
             }
             if (p.count == 0) {
                 p.count = 1;
-            }
-            if ((p.fileNamePolicy != null || p.saveCallback != null) && p.path == null) {
-                throw new IllegalStateException("path not specified");
             }
             if (p.path != null && p.fileNamePolicy == null) {
                 p.fileNamePolicy = new DefaultFileNamePolicy();
