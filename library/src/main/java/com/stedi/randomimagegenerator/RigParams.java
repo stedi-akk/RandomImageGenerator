@@ -173,6 +173,8 @@ class RigParams {
         heightStep = from.heightStep;
         useWidthRange = from.useWidthRange;
         useHeightRange = from.useHeightRange;
+        widthRangeValues = from.widthRangeValues;
+        heightRangeValues = from.heightRangeValues;
         count = from.count;
         path = from.path;
         fileNamePolicy = from.fileNamePolicy;

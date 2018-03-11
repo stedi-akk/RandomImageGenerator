@@ -44,9 +44,9 @@ public final class Rig {
 
         imageId = 0;
 
-        if (params.widthRangeValues != null) {
+        if (params.useWidthRange) {
             for (int width : params.widthRangeValues) {
-                if (params.heightRangeValues != null) {
+                if (params.useHeightRange) {
                     for (int height : params.heightRangeValues) {
                         generate(width, height, 1);
                     }
@@ -54,7 +54,7 @@ public final class Rig {
                     generate(width, params.height, 1);
                 }
             }
-        } else if (params.heightRangeValues != null) {
+        } else if (params.useHeightRange) {
             for (int height : params.heightRangeValues) {
                 generate(params.width, height, 1);
             }
@@ -189,6 +189,22 @@ public final class Rig {
     }
 
     /**
+     * @return Number of images to be generated.
+     */
+    public int getCount() {
+        if (!params.useWidthRange && !params.useHeightRange) {
+            return params.count;
+        }
+
+        if (params.useWidthRange) {
+            int widthRangeLength = params.widthRangeValues.length;
+            return params.useHeightRange ? widthRangeLength * params.heightRangeValues.length : widthRangeLength;
+        } else {
+            return params.heightRangeValues.length;
+        }
+    }
+
+    /**
      * To show logcat logs while generation (with tag 'RIG').
      */
     public static void enableDebugLogging(boolean enable) {
@@ -203,6 +219,7 @@ public final class Rig {
      * @param to   Must be bigger than 0. Always present in the return array as the last item.
      * @param step Must be bigger than 0.
      */
+    @NonNull
     public static int[] createRangeArray(int from, int to, int step) {
         if (step <= 0 || from <= 0 || to <= 0) {
             throw new IllegalArgumentException("all args must be bigger than 0");
