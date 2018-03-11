@@ -163,10 +163,14 @@ public final class Rig {
      */
     private void notifyGenerateCallback(ImageParams imageParams, Bitmap bitmap, Exception e) {
         if (params.generateCallback != null) {
-            if (e != null) {
-                params.generateCallback.onFailedToGenerate(imageParams, e);
-            } else {
-                params.generateCallback.onGenerated(imageParams, bitmap);
+            try {
+                if (e != null) {
+                    params.generateCallback.onFailedToGenerate(imageParams, e);
+                } else {
+                    params.generateCallback.onGenerated(imageParams, bitmap);
+                }
+            } catch (Exception e1) {
+                e1.printStackTrace();
             }
         }
     }
@@ -180,10 +184,14 @@ public final class Rig {
      */
     private void notifySaveCallback(Bitmap bitmap, File path, Exception e) {
         if (params.saveCallback != null) {
-            if (e != null) {
-                params.saveCallback.onFailedToSave(bitmap, e);
-            } else {
-                params.saveCallback.onSaved(bitmap, path);
+            try {
+                if (e != null) {
+                    params.saveCallback.onFailedToSave(bitmap, e);
+                } else {
+                    params.saveCallback.onSaved(bitmap, path);
+                }
+            } catch (Exception e1) {
+                e1.printStackTrace();
             }
         }
     }
