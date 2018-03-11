@@ -25,6 +25,8 @@ public final class Rig {
 
     final RigParams params = new RigParams();
 
+    private volatile boolean isCanceled;
+
     private int imageId;
 
     private Rig() {
@@ -42,6 +44,7 @@ public final class Rig {
             Log.d(TAG, "Started without callback or specified path to save ! It looks useless...");
         }
 
+        isCanceled = false;
         imageId = 0;
 
         if (params.useWidthRange) {
@@ -63,12 +66,20 @@ public final class Rig {
         }
 
         if (DEBUG) {
-            Log.d(TAG, "Ended");
+            if (isCanceled) {
+                Log.d(TAG, "Canceled");
+            } else {
+                Log.d(TAG, "Ended");
+            }
         }
     }
 
     private void generate(int width, int height, int count) {
         for (int i = 0; i < count; i++) {
+            if (isCanceled) {
+                return;
+            }
+
             ImageParams imageParams = new ImageParams(++imageId, width, height, params.path, params.quality);
 
             if (DEBUG) {
@@ -194,6 +205,13 @@ public final class Rig {
                 e1.printStackTrace();
             }
         }
+    }
+
+    /**
+     * To cancel ongoing generation.
+     */
+    public void cancel() {
+        isCanceled = true;
     }
 
     /**
