@@ -53,7 +53,7 @@ public class ColoredPixelsGenerator extends FlatColorGenerator {
             for (int y = 0; y < imageParams.getHeight(); y += pixelMultiplier) {
                 pixel.set(x, y, x + pixelMultiplier, y + pixelMultiplier);
 
-                paint.setColor(getRandomColor());
+                paint.setColor(imageParams.getPalette().getRandom());
 
                 canvas.drawRect(pixel, paint);
             }

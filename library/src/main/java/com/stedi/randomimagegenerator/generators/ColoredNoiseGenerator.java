@@ -3,7 +3,11 @@ package com.stedi.randomimagegenerator.generators;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -75,6 +79,10 @@ public class ColoredNoiseGenerator implements Generator {
         int iMax = orientation == Orientation.HORIZONTAL ? imageParams.getHeight() : imageParams.getWidth();
         int jMax = orientation == Orientation.HORIZONTAL ? imageParams.getWidth() : imageParams.getHeight();
 
+        ColorMatrix grayscaleMatrix = new ColorMatrix();
+        grayscaleMatrix.setSaturation(0f);
+        paint.setColorFilter(new ColorMatrixColorFilter(grayscaleMatrix));
+
         int rgb1 = (int) (Math.random() * 256);
         for (int i = 0; i < iMax; i++) {
             int rgb2 = (int) (Math.random() * 256);
@@ -101,6 +109,12 @@ public class ColoredNoiseGenerator implements Generator {
                     canvas.drawPoint(j, i, paint);
                 }
             }
+        }
+
+        if (!imageParams.getPalette().isBlackAndWhite()) {
+            Paint palettePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            palettePaint.setColorFilter(new PorterDuffColorFilter(imageParams.getPalette().getRandom(), PorterDuff.Mode.SRC_OUT));
+            canvas.drawBitmap(bitmap, 0, 0, palettePaint);
         }
 
         return bitmap;

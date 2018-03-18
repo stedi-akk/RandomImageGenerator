@@ -80,7 +80,7 @@ public final class Rig {
                 return;
             }
 
-            ImageParams imageParams = new ImageParams(++imageId, width, height, params.path, params.quality);
+            ImageParams imageParams = new ImageParams(++imageId, width, height, params.path, params.quality, params.palette);
 
             if (DEBUG) {
                 Log.d(TAG, "Created new ImageParams object for generation: " + imageParams);
@@ -300,6 +300,19 @@ public final class Rig {
         }
 
         /**
+         * Set palette which will be used for image generation.
+         * <p>If not specified, then the default palette will be used.</p>
+         *
+         * @param palette Color palette for generated images.
+         * @return This Builder object to allow for chaining of calls to set methods.
+         */
+        @NonNull
+        public Builder setPalette(@Nullable RigPalette palette) {
+            p.palette = palette;
+            return this;
+        }
+
+        /**
          * Set callback that will be used to inform if image is generated or not.
          *
          * @param generateCallback Interface definition for a callback to be invoked when an image is generated or not.
@@ -515,6 +528,9 @@ public final class Rig {
             }
             if (p.useHeightRange) {
                 p.heightRangeValues = createRangeArray(p.heightFrom, p.heightTo, p.heightStep);
+            }
+            if (p.palette == null) {
+                p.palette = RigPalette.allColors();
             }
             if (p.quality == null) {
                 p.quality = Quality.png();

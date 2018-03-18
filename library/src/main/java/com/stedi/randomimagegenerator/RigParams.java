@@ -22,6 +22,14 @@ class RigParams {
     Generator generator;
 
     /**
+     * Color palette for bitmaps.
+     * <p>
+     * Must not be null.
+     * </p>
+     */
+    RigPalette palette;
+
+    /**
      * Callbacks while generation.
      * <p>
      * Can be null.
@@ -161,6 +169,7 @@ class RigParams {
 
     void apply(@NonNull RigParams from) {
         generator = from.generator;
+        palette = from.palette;
         generateCallback = from.generateCallback;
         quality = from.quality;
         width = from.width;
@@ -185,6 +194,7 @@ class RigParams {
     public String toString() {
         return "RigParams{" +
                 "generator=" + generator +
+                ", palette=" + palette +
                 ", generateCallback=" + generateCallback +
                 ", quality=" + quality +
                 ", width=" + width +

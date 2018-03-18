@@ -64,7 +64,7 @@ public class ColoredRectangleGenerator extends FlatColorGenerator {
             int bottom = (int) (top + ((Math.random() * (heightTo - heightFrom)) + heightFrom));
             rect.set(left, top, right, bottom);
 
-            paint.setColor(getRandomColor());
+            paint.setColor(imageParams.getPalette().getRandom());
 
             canvas.drawRect(rect, paint);
         }

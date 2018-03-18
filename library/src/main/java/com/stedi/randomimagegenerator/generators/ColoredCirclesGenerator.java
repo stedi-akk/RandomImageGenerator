@@ -8,8 +8,6 @@ import android.support.annotation.Nullable;
 
 import com.stedi.randomimagegenerator.ImageParams;
 
-import java.util.Objects;
-
 /**
  * Generator for image with random colored circles.
  */
@@ -59,7 +57,7 @@ public class ColoredCirclesGenerator extends FlatColorGenerator {
             float cy = (float) (Math.random() * imageParams.getHeight());
             float radius = (float) ((Math.random() * (radiusTo - radiusFrom)) + radiusFrom);
 
-            paint.setColor(getRandomColor());
+            paint.setColor(imageParams.getPalette().getRandom());
 
             canvas.drawCircle(cx, cy, radius, paint);
         }

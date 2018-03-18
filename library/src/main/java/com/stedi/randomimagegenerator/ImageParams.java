@@ -13,13 +13,15 @@ public class ImageParams {
     private final int width, height;
     private final File path;
     private final Quality quality;
+    private final RigPalette palette;
 
-    ImageParams(int id, int width, int height, @Nullable File path, @NonNull Quality quality) {
+    ImageParams(int id, int width, int height, @Nullable File path, @NonNull Quality quality, @NonNull RigPalette palette) {
         this.id = id;
         this.width = width;
         this.height = height;
         this.path = path;
         this.quality = quality;
+        this.palette = palette;
     }
 
     /**
@@ -59,6 +61,14 @@ public class ImageParams {
         return quality;
     }
 
+    /**
+     * @return The palette of requested image.
+     */
+    @NonNull
+    public RigPalette getPalette() {
+        return palette;
+    }
+
     @Override
     public String toString() {
         return "ImageParams{" +
@@ -67,6 +77,7 @@ public class ImageParams {
                 ", height=" + height +
                 ", path=" + path +
                 ", quality=" + quality +
+                ", palette=" + palette +
                 '}';
     }
 }

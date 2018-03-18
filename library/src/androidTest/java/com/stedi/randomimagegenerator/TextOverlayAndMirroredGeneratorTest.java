@@ -56,7 +56,7 @@ public class TextOverlayAndMirroredGeneratorTest {
         int count = 0;
         for (int width : sizes) {
             for (int height : sizes) {
-                ImageParams params = new ImageParams(++count, width, height, null, quality);
+                ImageParams params = new ImageParams(++count, width, height, null, quality, RigPalette.allColors());
                 try {
                     Bitmap bitmap = generator.generate(params);
                     assertNotNull(bitmap);
