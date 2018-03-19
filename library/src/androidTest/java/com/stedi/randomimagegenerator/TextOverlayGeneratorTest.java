@@ -12,6 +12,7 @@ import com.stedi.randomimagegenerator.generators.ColoredRectangleGenerator;
 import com.stedi.randomimagegenerator.generators.FlatColorGenerator;
 import com.stedi.randomimagegenerator.generators.Generator;
 import com.stedi.randomimagegenerator.generators.TextOverlayGenerator;
+import com.stedi.randomimagegenerator.generators.effects.TextOverlayEffect;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -78,7 +79,7 @@ public class TextOverlayGeneratorTest {
                 .build(), quality);
     }
 
-    private void test(TextOverlayGenerator generator, Quality quality) {
+    private void test(TextOverlayEffect generator, Quality quality) {
         int count = 0;
         for (int width : sizes) {
             for (int height : sizes) {

@@ -6,10 +6,12 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.stedi.randomimagegenerator.generators.FlatColorGenerator;
 import com.stedi.randomimagegenerator.generators.TextOverlayGenerator;
+import com.stedi.randomimagegenerator.generators.effects.TextOverlayEffect;
 
-import static junit.framework.Assert.assertNotNull;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import static junit.framework.Assert.assertNotNull;
 
 @RunWith(AndroidJUnit4.class)
 public class TextOverlayGeneratorBuilderTest {
@@ -34,7 +36,7 @@ public class TextOverlayGeneratorBuilderTest {
 
     @Test
     public void buildSimple() {
-        TextOverlayGenerator generator = new TextOverlayGenerator.Builder()
+        TextOverlayEffect generator = new TextOverlayGenerator.Builder()
                 .setGenerator(new FlatColorGenerator())
                 .build();
 
@@ -43,7 +45,7 @@ public class TextOverlayGeneratorBuilderTest {
 
     @Test
     public void buildSimpleWithTextPolicy() {
-        TextOverlayGenerator generator = new TextOverlayGenerator.Builder()
+        TextOverlayEffect generator = new TextOverlayGenerator.Builder()
                 .setGenerator(new FlatColorGenerator())
                 .setTextPolicy(textPolicy)
                 .build();
@@ -53,7 +55,7 @@ public class TextOverlayGeneratorBuilderTest {
 
     @Test
     public void buildSimpleWithNullPaint() {
-        TextOverlayGenerator generator = new TextOverlayGenerator.Builder()
+        TextOverlayEffect generator = new TextOverlayGenerator.Builder()
                 .setGenerator(new FlatColorGenerator())
                 .setTextPolicy(textPolicy)
                 .setTextPaint(null)
@@ -65,7 +67,7 @@ public class TextOverlayGeneratorBuilderTest {
 
     @Test
     public void buildSimpleWithNonNullPaint() {
-        TextOverlayGenerator generator = new TextOverlayGenerator.Builder()
+        TextOverlayEffect generator = new TextOverlayGenerator.Builder()
                 .setGenerator(new FlatColorGenerator())
                 .setTextPolicy(textPolicy)
                 .setTextPaint(new Paint())
@@ -77,7 +79,7 @@ public class TextOverlayGeneratorBuilderTest {
 
     @Test
     public void buildSimpleWithFalseSetters() {
-        TextOverlayGenerator generator = new TextOverlayGenerator.Builder()
+        TextOverlayEffect generator = new TextOverlayGenerator.Builder()
                 .setGenerator(new FlatColorGenerator())
                 .setTextPolicy(textPolicy)
                 .setTextPaint(new Paint())
