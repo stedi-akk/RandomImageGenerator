@@ -8,6 +8,7 @@ import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
+import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -21,6 +22,7 @@ public class ColoredNoiseGenerator implements Generator {
 
     private final Orientation selectedOrientation;
     private final Type selectedType;
+    private final int pixelMultiplier;
 
     public enum Orientation {
         VERTICAL,
@@ -38,22 +40,41 @@ public class ColoredNoiseGenerator implements Generator {
         RANDOM
     }
 
+    {
+        ColorMatrix grayscaleMatrix = new ColorMatrix();
+        grayscaleMatrix.setSaturation(0f);
+        paint.setColorFilter(new ColorMatrixColorFilter(grayscaleMatrix));
+    }
+
     /**
-     * The default constructor with random orientation and type.
+     * The default constructor with random orientation and type, with pixel multiplier set to 2.
      */
     public ColoredNoiseGenerator() {
         this(Orientation.RANDOM, Type.RANDOM);
     }
 
     /**
-     * Constructor with specified orientation and type.
+     * Constructor with specified orientation and type, with pixel multiplier set to 2.
      */
     public ColoredNoiseGenerator(@NonNull Orientation orientation, @NonNull Type type) {
+        this(orientation, type, 2);
+    }
+
+    /**
+     * Constructor with specified orientation, type and pixel multiplier.
+     *
+     * @param pixelMultiplier Must be bigger than 0.
+     */
+    public ColoredNoiseGenerator(@NonNull Orientation orientation, @NonNull Type type, int pixelMultiplier) {
         if (orientation == null || type == null) {
             throw new IllegalArgumentException("arguments must not be null");
         }
+        if (pixelMultiplier <= 0) {
+            throw new IllegalArgumentException("pixelMultiplier must be bigger than 0");
+        }
         this.selectedOrientation = orientation;
         this.selectedType = type;
+        this.pixelMultiplier = pixelMultiplier;
     }
 
     @Override
@@ -79,14 +100,12 @@ public class ColoredNoiseGenerator implements Generator {
         int iMax = orientation == Orientation.HORIZONTAL ? imageParams.getHeight() : imageParams.getWidth();
         int jMax = orientation == Orientation.HORIZONTAL ? imageParams.getWidth() : imageParams.getHeight();
 
-        ColorMatrix grayscaleMatrix = new ColorMatrix();
-        grayscaleMatrix.setSaturation(0f);
-        paint.setColorFilter(new ColorMatrixColorFilter(grayscaleMatrix));
+        Rect pixel = new Rect(0, 0, pixelMultiplier, pixelMultiplier);
 
         int rgb1 = (int) (Math.random() * 256);
-        for (int i = 0; i < iMax; i++) {
+        for (int i = 0; i < iMax; i += pixelMultiplier) {
             int rgb2 = (int) (Math.random() * 256);
-            for (int j = 0; j < jMax; j++) {
+            for (int j = 0; j < jMax; j += pixelMultiplier) {
                 int rgb3 = (int) (Math.random() * 256);
 
                 if (type == Type.TYPE_1) {
@@ -104,16 +123,18 @@ public class ColoredNoiseGenerator implements Generator {
                 }
 
                 if (orientation == Orientation.VERTICAL) {
-                    canvas.drawPoint(i, j, paint);
+                    pixel.offsetTo(i, j);
                 } else if (orientation == Orientation.HORIZONTAL) {
-                    canvas.drawPoint(j, i, paint);
+                    pixel.offsetTo(j, i);
                 }
+
+                canvas.drawRect(pixel, paint);
             }
         }
 
         if (!imageParams.getPalette().isBlackAndWhite()) {
             Paint palettePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-            palettePaint.setColorFilter(new PorterDuffColorFilter(imageParams.getPalette().getRandom(), PorterDuff.Mode.SRC_OUT));
+            palettePaint.setColorFilter(new PorterDuffColorFilter(imageParams.getPalette().getRandom(), PorterDuff.Mode.OVERLAY));
             canvas.drawBitmap(bitmap, 0, 0, palettePaint);
         }
 
@@ -125,6 +146,7 @@ public class ColoredNoiseGenerator implements Generator {
         return "ColoredNoiseGenerator{" +
                 "selectedOrientation=" + selectedOrientation +
                 ", selectedType=" + selectedType +
+                ", pixelMultiplier=" + pixelMultiplier +
                 '}';
     }
 }

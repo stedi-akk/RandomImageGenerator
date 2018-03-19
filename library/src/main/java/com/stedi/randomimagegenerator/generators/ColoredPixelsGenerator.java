@@ -20,10 +20,10 @@ public class ColoredPixelsGenerator extends FlatColorGenerator {
     private final int pixelMultiplier;
 
     /**
-     * The default constructor with pixel multiplier set to 1.
+     * The default constructor with pixel multiplier set to 10.
      */
     public ColoredPixelsGenerator() {
-        this(1);
+        this(10);
     }
 
     /**

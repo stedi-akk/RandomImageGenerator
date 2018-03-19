@@ -5,7 +5,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 
 /**
- * Is used by {@link com.stedi.randomimagegenerator.generators.Generator} to generate images with specified palette.
+ * Is used by generators to generate images with specified palette.
  */
 public class RigPalette {
     private final float[] hsv = new float[3];

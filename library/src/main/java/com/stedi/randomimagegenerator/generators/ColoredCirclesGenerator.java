@@ -27,7 +27,7 @@ public class ColoredCirclesGenerator extends FlatColorGenerator {
     /**
      * Constructor with specified circles count.
      *
-     * @param count Should be bigger than 0. Otherwise, count will be random, based on the size of image.
+     * @param count Should be bigger than 0. Otherwise it will be random (based on the size of image).
      */
     public ColoredCirclesGenerator(int count) {
         this.count = count;
