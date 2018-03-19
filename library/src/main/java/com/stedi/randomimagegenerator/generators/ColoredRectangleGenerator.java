@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.stedi.randomimagegenerator.ImageParams;
+import com.stedi.randomimagegenerator.Rig;
 
 /**
  * Generator for image with random colored rectangles.
@@ -15,7 +16,7 @@ import com.stedi.randomimagegenerator.ImageParams;
 public class ColoredRectangleGenerator extends FlatColorGenerator {
     private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
-    private int count;
+    private final int count;
 
     /**
      * The default constructor with unspecified rectangles count
@@ -43,25 +44,28 @@ public class ColoredRectangleGenerator extends FlatColorGenerator {
         }
 
         int biggestSide = Math.max(imageParams.getWidth(), imageParams.getHeight());
+        int selectedCount = count;
 
-        if (count <= 0) {
-            count = (int) Math.ceil(Math.random() * ((biggestSide / 100f) * 20f));
+        if (selectedCount <= 0) {
+            float to = biggestSide / 100f * 20f;
+            float from = to / 10f;
+            selectedCount = (int) Math.ceil(Rig.random(from, to));
         }
 
         Canvas canvas = new Canvas(bitmap);
 
-        float widthFrom = biggestSide / 4f;
-        float widthTo = biggestSide;
-        float heightFrom = biggestSide / 4f;
-        float heightTo = biggestSide;
+        float widthFrom = biggestSide / 6f;
+        float widthTo = biggestSide / 2f;
+        float heightFrom = biggestSide / 6f;
+        float heightTo = biggestSide / 2f;
 
-        for (int i = 0; i < count; i++) {
+        for (int i = 0; i < selectedCount; i++) {
             Rect rect = new Rect();
 
-            int left = (int) ((Math.random() * imageParams.getWidth()) - imageParams.getWidth() / 2f);
-            int top = (int) ((Math.random() * imageParams.getHeight()) - imageParams.getHeight() / 2f);
-            int right = (int) (left + ((Math.random() * (widthTo - widthFrom)) + widthFrom));
-            int bottom = (int) (top + ((Math.random() * (heightTo - heightFrom)) + heightFrom));
+            int left = (int) (Rig.random(imageParams.getWidth()) - widthTo / 2f);
+            int top = (int) (Rig.random(imageParams.getHeight()) - heightTo / 2f);
+            int right = (int) (left + Rig.random(widthFrom, widthTo));
+            int bottom = (int) (top + Rig.random(heightFrom, heightTo));
             rect.set(left, top, right, bottom);
 
             paint.setColor(imageParams.getPalette().getRandom());

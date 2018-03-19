@@ -274,6 +274,45 @@ public final class Rig {
     }
 
     /**
+     * Returns a pseudorandom {@code boolean}.
+     */
+    public static boolean random() {
+        return Math.random() < 0.5;
+    }
+
+    /**
+     * Returns a pseudorandom positive {@code float} value between 0 and the specified value.
+     */
+    public static float random(float value) {
+        if (value < 0) {
+            throw new IllegalArgumentException("value must be positive");
+        }
+
+        return (float) (Math.random() * value);
+    }
+
+    /**
+     * Returns a pseudorandom positive {@code float} value between the specified positive range.
+     */
+    public static float random(float from, float to) {
+        if (from < 0 || to < 0) {
+            throw new IllegalArgumentException("range must be positive");
+        }
+
+        if (from == to) {
+            return from;
+        }
+
+        if (to < from) {
+            float temp = from;
+            from = to;
+            to = temp;
+        }
+
+        return (float) (Math.random() * (to - from) + from);
+    }
+
+    /**
      * Builder that is used to create an instance of {@link Rig}.
      */
     public static class Builder {

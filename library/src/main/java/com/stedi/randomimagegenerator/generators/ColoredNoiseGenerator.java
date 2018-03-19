@@ -13,6 +13,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.stedi.randomimagegenerator.ImageParams;
+import com.stedi.randomimagegenerator.Rig;
 
 /**
  * Generator for image with random colored noise.
@@ -85,14 +86,14 @@ public class ColoredNoiseGenerator implements Generator {
 
         Orientation orientation;
         if (selectedOrientation == Orientation.RANDOM) {
-            orientation = Math.random() < 0.5d ? Orientation.HORIZONTAL : Orientation.VERTICAL;
+            orientation = Rig.random() ? Orientation.HORIZONTAL : Orientation.VERTICAL;
         } else {
             orientation = selectedOrientation;
         }
 
         Type type;
         if (selectedType == Type.RANDOM) {
-            type = Type.values()[(int) (Math.random() * 6)];
+            type = Type.values()[(int) (Rig.random(6))];
         } else {
             type = selectedType;
         }
@@ -102,11 +103,11 @@ public class ColoredNoiseGenerator implements Generator {
 
         Rect pixel = new Rect(0, 0, pixelMultiplier, pixelMultiplier);
 
-        int rgb1 = (int) (Math.random() * 256);
+        int rgb1 = (int) Rig.random(256);
         for (int i = 0; i < iMax; i += pixelMultiplier) {
-            int rgb2 = (int) (Math.random() * 256);
+            int rgb2 = (int) Rig.random(256);
             for (int j = 0; j < jMax; j += pixelMultiplier) {
-                int rgb3 = (int) (Math.random() * 256);
+                int rgb3 = (int) Rig.random(256);
 
                 if (type == Type.TYPE_1) {
                     paint.setColor(Color.rgb(rgb1, rgb2, rgb3));

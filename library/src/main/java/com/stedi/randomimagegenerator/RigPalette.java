@@ -141,27 +141,13 @@ public class RigPalette {
         if (isBlackAndWhite) {
             hsv[0] = 0f;
             hsv[1] = 0f;
-            hsv[2] = random(0f, 1f);
+            hsv[2] = Rig.random(1);
         } else {
-            hsv[0] = random(hueFrom, hueTo);
-            hsv[1] = useLightColors ? random(0f, 1f) : 1f;
-            hsv[2] = useDarkColors ? random(0f, 1f) : 1f;
+            hsv[0] = Rig.random(hueFrom, hueTo);
+            hsv[1] = useLightColors ? Rig.random() ? Rig.random(0.75f, 1f) : Rig.random(1) : 1f;
+            hsv[2] = useDarkColors ? Rig.random() ? Rig.random(0.75f, 1f) : Rig.random(0.175f, 1f) : 1f;
         }
         return Color.HSVToColor(hsv);
-    }
-
-    private float random(float from, float to) {
-        if (from == to) {
-            return from;
-        }
-
-        if (to < from) {
-            float temp = from;
-            from = to;
-            to = temp;
-        }
-
-        return (float) (Math.random() * ((to - from) + 1f) + from);
     }
 
     @Override
