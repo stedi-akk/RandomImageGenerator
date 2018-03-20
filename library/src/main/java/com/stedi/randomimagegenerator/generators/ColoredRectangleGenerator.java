@@ -3,15 +3,16 @@ package com.stedi.randomimagegenerator.generators;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Rect;
+import android.graphics.RectF;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.WorkerThread;
 
 import com.stedi.randomimagegenerator.ImageParams;
 import com.stedi.randomimagegenerator.Rig;
 
 /**
- * Generator for image with random colored rectangles.
+ * Generator for images with random colored rectangles.
  */
 public class ColoredRectangleGenerator extends FlatColorGenerator {
     private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -37,6 +38,7 @@ public class ColoredRectangleGenerator extends FlatColorGenerator {
 
     @Override
     @Nullable
+    @WorkerThread
     public Bitmap generate(@NonNull ImageParams imageParams) throws Exception {
         Bitmap bitmap = super.generate(imageParams);
         if (bitmap == null) {
@@ -56,16 +58,16 @@ public class ColoredRectangleGenerator extends FlatColorGenerator {
 
         float widthFrom = biggestSide / 6f;
         float widthTo = biggestSide / 2f;
-        float heightFrom = biggestSide / 6f;
-        float heightTo = biggestSide / 2f;
+        float heightFrom = widthFrom;
+        float heightTo = widthTo;
+
+        RectF rect = new RectF();
 
         for (int i = 0; i < selectedCount; i++) {
-            Rect rect = new Rect();
-
-            int left = (int) (Rig.random(imageParams.getWidth()) - widthTo / 2f);
-            int top = (int) (Rig.random(imageParams.getHeight()) - heightTo / 2f);
-            int right = (int) (left + Rig.random(widthFrom, widthTo));
-            int bottom = (int) (top + Rig.random(heightFrom, heightTo));
+            float left = Rig.random(imageParams.getWidth()) - widthTo / 2f;
+            float top = Rig.random(imageParams.getHeight()) - heightTo / 2f;
+            float right = left + Rig.random(widthFrom, widthTo);
+            float bottom = top + Rig.random(heightFrom, heightTo);
             rect.set(left, top, right, bottom);
 
             paint.setColor(imageParams.getPalette().getRandom());

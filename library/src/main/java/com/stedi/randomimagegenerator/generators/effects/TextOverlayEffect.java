@@ -7,11 +7,11 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.WorkerThread;
 
+import com.stedi.randomimagegenerator.DefaultFileNamePolicy;
 import com.stedi.randomimagegenerator.ImageParams;
 import com.stedi.randomimagegenerator.generators.Generator;
-
-import java.util.Locale;
 
 /**
  * Generator wrapper, that draws text in front of the target generator.
@@ -32,20 +32,12 @@ public class TextOverlayEffect implements Generator {
     }
 
     private static class DefaultTextPolicy implements TextPolicy {
-        private final String format = "%d_%dx%d";
+        private static final DefaultFileNamePolicy policy = new DefaultFileNamePolicy();
 
         @Override
         @NonNull
         public String getText(@NonNull ImageParams imageParams) {
-            return String.format(Locale.getDefault(), format,
-                    imageParams.getId(), imageParams.getWidth(), imageParams.getHeight());
-        }
-
-        @Override
-        public String toString() {
-            return "DefaultTextPolicy{" +
-                    "format='" + format + '\'' +
-                    '}';
+            return policy.getName(imageParams);
         }
     }
 
@@ -74,6 +66,8 @@ public class TextOverlayEffect implements Generator {
             return "Params{" +
                     "generator=" + generator +
                     ", textPolicy=" + textPolicy +
+                    ", backgroundPaint=" + backgroundPaint +
+                    ", textPaint=" + textPaint +
                     ", drawBackground=" + drawBackground +
                     ", autoresizeText=" + autoresizeText +
                     '}';
@@ -173,6 +167,7 @@ public class TextOverlayEffect implements Generator {
 
     @Override
     @Nullable
+    @WorkerThread
     public Bitmap generate(@NonNull ImageParams imageParams) throws Exception {
         Bitmap bitmap = params.generator.generate(imageParams);
         if (bitmap == null) {

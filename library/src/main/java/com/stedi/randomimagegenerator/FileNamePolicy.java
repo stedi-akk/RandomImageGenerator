@@ -7,7 +7,7 @@ import android.support.annotation.NonNull;
  */
 public interface FileNamePolicy {
     /**
-     * Called before an image will be saved to a specified path.
+     * Called before an image will be saved to specified path.
      *
      * @param imageParams Image parameters used to generate an image.
      * @return Image file name.

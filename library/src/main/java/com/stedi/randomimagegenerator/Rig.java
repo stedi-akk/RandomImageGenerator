@@ -3,6 +3,7 @@ package com.stedi.randomimagegenerator;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.WorkerThread;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -33,15 +34,16 @@ public final class Rig {
     }
 
     /**
-     * Start to generate images.
+     * To start images generation.
      */
+    @WorkerThread
     public void generate() {
         if (DEBUG) {
             Log.d(TAG, "Started with parameters: " + params);
         }
 
         if (DEBUG && params.generateCallback == null && params.path == null) {
-            Log.d(TAG, "Started without callback or specified path to save ! It looks useless...");
+            Log.d(TAG, "Started without callback or specified path to save! It looks useless...");
         }
 
         isCanceled = false;
@@ -80,7 +82,7 @@ public final class Rig {
                 return;
             }
 
-            ImageParams imageParams = new ImageParams(++imageId, width, height, params.path, params.quality, params.palette);
+            ImageParams imageParams = new ImageParams(++imageId, width, height, params.path, params.quality, params.palette, params.fileNamePolicy);
 
             if (DEBUG) {
                 Log.d(TAG, "Created new ImageParams object for generation: " + imageParams);
@@ -168,7 +170,7 @@ public final class Rig {
     /**
      * To notify {@link GenerateCallback} (if it was set with {@link Rig.Builder}).
      *
-     * @param imageParams The image parameters that was used for this generation.
+     * @param imageParams The image parameters that were used for this generation.
      * @param bitmap      The generated image.
      * @param e           If not null, then {@link GenerateCallback#onFailedToGenerate(ImageParams, Exception)} will be called.
      */
@@ -231,7 +233,7 @@ public final class Rig {
     }
 
     /**
-     * To show logcat logs while generation (with tag 'RIG').
+     * To show logcat logs while generation (with tag {@link Rig#TAG}).
      */
     public static void enableDebugLogging(boolean enable) {
         DEBUG = enable;
@@ -281,7 +283,7 @@ public final class Rig {
     }
 
     /**
-     * Returns a pseudorandom positive {@code float} value between 0 and the specified value.
+     * Returns a pseudorandom positive {@code float} value between 0 and the specified value (excluded).
      */
     public static float random(float value) {
         if (value < 0) {
@@ -293,6 +295,9 @@ public final class Rig {
 
     /**
      * Returns a pseudorandom positive {@code float} value between the specified positive range.
+     *
+     * @param from Start of the range (included).
+     * @param to   End of the range (excluded).
      */
     public static float random(float from, float to) {
         if (from < 0 || to < 0) {
@@ -323,10 +328,10 @@ public final class Rig {
         }
 
         /**
-         * Set generator that will be used for image generation.
+         * Set generator that will be used for images generation.
          * <p>Must not be null.</p>
          *
-         * @param generator Interface definition for a generator, that is used to generate an image.
+         * @param generator Interface definition for a generator, that is used to generate images.
          * @return This Builder object to allow for chaining of calls to set methods.
          */
         @NonNull
@@ -339,10 +344,10 @@ public final class Rig {
         }
 
         /**
-         * Set palette which will be used for image generation.
+         * Set palette which will be used for images generation.
          * <p>If not specified, then the default palette will be used.</p>
          *
-         * @param palette Color palette for generated images.
+         * @param palette Color palette for images generation.
          * @return This Builder object to allow for chaining of calls to set methods.
          */
         @NonNull
@@ -352,7 +357,7 @@ public final class Rig {
         }
 
         /**
-         * Set callback that will be used to inform if image is generated or not.
+         * Set callback that will be used to inform if image was generated or not.
          *
          * @param generateCallback Interface definition for a callback to be invoked when an image is generated or not.
          * @return This Builder object to allow for chaining of calls to set methods.
@@ -364,10 +369,10 @@ public final class Rig {
         }
 
         /**
-         * Set quality that will be used for image generation and compression.
+         * Set quality that will be used for images generation and compression.
          * <p>If not specified, then the default quality (PNG) will be used.</p>
          *
-         * @param quality A specified quality to use for bitmap generation and compression.
+         * @param quality A specified quality to use for bitmaps generation and compression.
          * @return This Builder object to allow for chaining of calls to set methods.
          */
         @NonNull
@@ -378,7 +383,7 @@ public final class Rig {
 
         /**
          * Set fixed size for generated images.
-         * <p>Will override range sizes (if they was specified).</p>
+         * <p>Will override range sizes (if were specified).</p>
          *
          * @param width  Must be bigger than 0.
          * @param height Must be bigger than 0.
@@ -391,7 +396,7 @@ public final class Rig {
 
         /**
          * Set fixed width for generated images.
-         * <p>Will override width range size (if it was specified).</p>
+         * <p>Will override width range size (if was specified).</p>
          *
          * @param width Must be bigger than 0.
          * @return This Builder object to allow for chaining of calls to set methods.
@@ -408,7 +413,7 @@ public final class Rig {
 
         /**
          * Set fixed height for generated images.
-         * <p>Will override height range size (if it was specified).</p>
+         * <p>Will override height range size (if was specified).</p>
          *
          * @param height Must be bigger than 0.
          * @return This Builder object to allow for chaining of calls to set methods.
@@ -427,8 +432,8 @@ public final class Rig {
          * Set width range for generated images.
          * <p>For example, if from=200, to=800, step=200, then it will turn into
          * an array [200, 400, 600, 800].</p>
-         * <p>Will override fixed width (if it was specified).</p>
-         * <p>Count will be ignored (if it was specified).</p>
+         * <p>Will override fixed width (if was specified).</p>
+         * <p>Count will be ignored (if was specified).</p>
          *
          * @param from Start width in array. Must be bigger than 0.
          * @param to   End width in array. Must be bigger than 0.
@@ -452,8 +457,8 @@ public final class Rig {
          * Set height range for generated images.
          * <p>For example, if from=800, to=200, step=200, then it will turn into
          * an array [800, 600, 400, 200].</p>
-         * <p>Will override fixed height (if it was specified).</p>
-         * <p>Count will be ignored (if it was specified).</p>
+         * <p>Will override fixed height (if was specified).</p>
+         * <p>Count will be ignored (if was specified).</p>
          *
          * @param from Start height in array. Must be bigger than 0.
          * @param to   End height in array. Must be bigger than 0.
@@ -494,8 +499,8 @@ public final class Rig {
         }
 
         /**
-         * File path (without filename) that will be used to save generated images.
-         * <p>The path (directories) will be created if not exists.</p>
+         * File path (directories) that will be used to save generated images.
+         * <p>Will be created if not exists.</p>
          *
          * @return This Builder object to allow for chaining of calls to set methods.
          */
@@ -531,7 +536,7 @@ public final class Rig {
         }
 
         /**
-         * Set callback that will be used to inform if image is saved, or not.
+         * Set callback that will be used to inform if image was saved, or not.
          *
          * @param saveCallback Interface definition for a callback to be invoked when an image is saved.
          * @return This Builder object to allow for chaining of calls to set methods.
@@ -543,7 +548,7 @@ public final class Rig {
         }
 
         /**
-         * Creates an {@link Rig} object with the arguments supplied to this
+         * Creates an {@link Rig} instance with the arguments supplied to this
          * builder.
          *
          * @return A new instance of {@link Rig}.

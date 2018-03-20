@@ -11,12 +11,13 @@ import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.WorkerThread;
 
 import com.stedi.randomimagegenerator.ImageParams;
 import com.stedi.randomimagegenerator.Rig;
 
 /**
- * Generator for image with random colored noise.
+ * Generator for images with random colored noise.
  */
 public class ColoredNoiseGenerator implements Generator {
     private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -80,6 +81,7 @@ public class ColoredNoiseGenerator implements Generator {
 
     @Override
     @Nullable
+    @WorkerThread
     public Bitmap generate(@NonNull ImageParams imageParams) throws Exception {
         Bitmap bitmap = Bitmap.createBitmap(imageParams.getWidth(), imageParams.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);

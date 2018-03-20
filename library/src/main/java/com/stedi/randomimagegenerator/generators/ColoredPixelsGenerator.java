@@ -6,13 +6,14 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.WorkerThread;
 
 import com.stedi.randomimagegenerator.ImageParams;
 
 /**
- * Generator for random colored pixelate image.
+ * Generator for random colored pixelate images.
  * <p>Uses pixel multiplier, which represents one colored cell in pixels^2.</p>
- * <p>For example: if pixel multiplier is 5, then the colored cell will have 25 pixels.</p>
+ * <p>For example, if pixel multiplier is 5, then the colored cell will have 25 pixels.</p>
  */
 public class ColoredPixelsGenerator extends FlatColorGenerator {
     private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -40,6 +41,7 @@ public class ColoredPixelsGenerator extends FlatColorGenerator {
 
     @Override
     @Nullable
+    @WorkerThread
     public Bitmap generate(@NonNull ImageParams imageParams) throws Exception {
         Bitmap bitmap = super.generate(imageParams);
         if (bitmap == null) {

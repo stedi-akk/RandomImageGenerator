@@ -12,7 +12,7 @@ public interface GenerateCallback {
     /**
      * Called when an image is generated.
      *
-     * @param imageParams The parameters that was used to generate image.
+     * @param imageParams The parameters that were used to generate image.
      * @param bitmap      The image that was generated.
      */
     void onGenerated(@NonNull ImageParams imageParams, @NonNull Bitmap bitmap);
@@ -20,7 +20,7 @@ public interface GenerateCallback {
     /**
      * Called when an image is not generated.
      *
-     * @param imageParams The parameters that was used to generate image.
+     * @param imageParams The parameters that were used to generate image.
      * @param e           The detailed exception.
      */
     void onFailedToGenerate(@NonNull ImageParams imageParams, @NonNull Exception e);

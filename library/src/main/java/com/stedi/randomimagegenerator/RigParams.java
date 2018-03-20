@@ -10,11 +10,11 @@ import java.io.File;
 import java.util.Arrays;
 
 /**
- * Generation parameters created by {@link Rig.Builder} and used by {@link Rig}
+ * Generation parameters created by {@link Rig.Builder} and used by {@link Rig}.
  */
 class RigParams {
     /**
-     * Used for bitmap generation.
+     * Used for bitmaps generation.
      * <p>
      * Must not be null.
      * </p>
@@ -38,7 +38,7 @@ class RigParams {
     GenerateCallback generateCallback;
 
     /**
-     * Used by {@link Generator} and for image saving quality
+     * Format and saving quality of bitmaps.
      * <p>
      * Must not be null.
      * </p>
@@ -46,17 +46,17 @@ class RigParams {
     Quality quality;
 
     /**
-     * Width of generated image.
+     * Width of generated images.
      * <p>
-     * Must be bigger than 0, if width range is not specified.
+     * Must be bigger than 0 (if width range is not specified).
      * </p>
      */
     int width;
 
     /**
-     * Height of generated image.
+     * Height of generated images.
      * <p>
-     * Must be bigger than 0, if height range is not specified.
+     * Must be bigger than 0 (if height range is not specified).
      * </p>
      */
     int height;
@@ -64,7 +64,7 @@ class RigParams {
     /**
      * Width range start. Used along with widthTo and widthStep.
      * <p>
-     * Must be bigger than 0, if range is specified.
+     * Must be bigger than 0 (if range is specified).
      * </p>
      */
     int widthFrom;
@@ -72,7 +72,7 @@ class RigParams {
     /**
      * Width range end. Used along with widthFrom and widthStep.
      * <p>
-     * Must be bigger than 0, if range is specified.
+     * Must be bigger than 0 (if range is specified).
      * </p>
      */
     int widthTo;
@@ -80,7 +80,7 @@ class RigParams {
     /**
      * Width range step. Used along with widthFrom and widthTo.
      * <p>
-     * Must be bigger than 0, if range is specified.
+     * Must be bigger than 0 (if range is specified).
      * </p>
      */
     int widthStep;
@@ -88,7 +88,7 @@ class RigParams {
     /**
      * Height range start. Used along with heightTo and heightStep.
      * <p>
-     * Must be bigger than 0, if range is specified.
+     * Must be bigger than 0 (if range is specified).
      * </p>
      */
     int heightFrom;
@@ -96,7 +96,7 @@ class RigParams {
     /**
      * Height range end. Used along with heightFrom and heightStep.
      * <p>
-     * Must be bigger than 0, if range is specified.
+     * Must be bigger than 0 (if range is specified).
      * </p>
      */
     int heightTo;
@@ -104,7 +104,7 @@ class RigParams {
     /**
      * Height range step. Used along with heightFrom and heightTo.
      * <p>
-     * Must be bigger than 0, if range is specified.
+     * Must be bigger than 0 (if range is specified).
      * </p>
      */
     int heightStep;
@@ -138,7 +138,7 @@ class RigParams {
     /**
      * The number of generated images.
      * <p>
-     * Must be bigger than 0 for fixed size.
+     * Must be bigger than 0 (for fixed size).
      * </p>
      */
     int count;
@@ -152,15 +152,15 @@ class RigParams {
     File path;
 
     /**
-     * File name used for image save.
+     * File name creator, which is used for saving images.
      * <p>
-     * Must not be null if path is specified.
+     * Must not be null (if path is specified).
      * </p>
      */
     FileNamePolicy fileNamePolicy;
 
     /**
-     * Callbacks while image save.
+     * Callbacks while saving images.
      * <p>
      * Can be null.
      * </p>

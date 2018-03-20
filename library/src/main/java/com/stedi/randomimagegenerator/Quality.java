@@ -4,7 +4,7 @@ import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 
 /**
- * A specified quality to use for bitmap generation and compression.
+ * A specified quality to use for bitmaps generation and compression.
  */
 public class Quality {
     private Bitmap.CompressFormat format;
@@ -24,9 +24,7 @@ public class Quality {
      * Static creation of specified JPEG quality.
      *
      * @param quality Hint to the compressor, 0-100. 0 meaning compress for
-     *                small size, 100 meaning compress for max quality. Some
-     *                formats, like PNG which is lossless, will ignore the
-     *                quality setting.
+     *                small size, 100 meaning compress for max quality.
      * @return JPEG quality instance.
      */
     @NonNull
@@ -39,9 +37,8 @@ public class Quality {
      *
      * @param format Specifies the known formats a bitmap can be compressed into.
      * @param value  Hint to the compressor, 0-100. 0 meaning compress for
-     *               small size, 100 meaning compress for max quality. Some
-     *               formats, like PNG which is lossless, will ignore the
-     *               quality setting.
+     *               small size, 100 meaning compress for max quality.
+     *               PNG will ignore the quality setting.
      */
     public Quality(@NonNull Bitmap.CompressFormat format, int value) {
         setFormat(format);

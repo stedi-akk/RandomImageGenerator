@@ -7,6 +7,7 @@ import android.graphics.Path;
 import android.graphics.RectF;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.WorkerThread;
 
 import com.stedi.randomimagegenerator.ImageParams;
 import com.stedi.randomimagegenerator.Rig;
@@ -43,6 +44,7 @@ public class ColoredLinesGenerator extends FlatColorGenerator {
 
     @Nullable
     @Override
+    @WorkerThread
     public Bitmap generate(@NonNull ImageParams imageParams) throws Exception {
         Bitmap bitmap = super.generate(imageParams);
         if (bitmap == null) {

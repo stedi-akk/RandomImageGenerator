@@ -3,6 +3,7 @@ package com.stedi.randomimagegenerator.generators;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.WorkerThread;
 
 import com.stedi.randomimagegenerator.ImageParams;
 import com.stedi.randomimagegenerator.Rig;
@@ -28,6 +29,7 @@ public class GeneratorPack implements Generator {
 
     @Nullable
     @Override
+    @WorkerThread
     public Bitmap generate(@NonNull ImageParams imageParams) throws Exception {
         return pack.get((int) Rig.random(pack.size())).generate(imageParams);
     }

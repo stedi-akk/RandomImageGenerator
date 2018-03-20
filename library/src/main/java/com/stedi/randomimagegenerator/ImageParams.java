@@ -14,18 +14,20 @@ public class ImageParams {
     private final File path;
     private final Quality quality;
     private final RigPalette palette;
+    private final FileNamePolicy fileNamePolicy;
 
-    ImageParams(int id, int width, int height, @Nullable File path, @NonNull Quality quality, @NonNull RigPalette palette) {
+    ImageParams(int id, int width, int height, @Nullable File path, @NonNull Quality quality, @NonNull RigPalette palette, @Nullable FileNamePolicy fileNamePolicy) {
         this.id = id;
         this.width = width;
         this.height = height;
         this.path = path;
         this.quality = quality;
         this.palette = palette;
+        this.fileNamePolicy = fileNamePolicy;
     }
 
     /**
-     * @return Unique image id.
+     * @return Unique image id (number of image).
      */
     public int getId() {
         return id;
@@ -69,6 +71,14 @@ public class ImageParams {
         return palette;
     }
 
+    /**
+     * @return The file name policy of requested image.
+     */
+    @Nullable
+    public FileNamePolicy getFileNamePolicy() {
+        return fileNamePolicy;
+    }
+
     @Override
     public String toString() {
         return "ImageParams{" +
@@ -78,6 +88,7 @@ public class ImageParams {
                 ", path=" + path +
                 ", quality=" + quality +
                 ", palette=" + palette +
+                ", fileNamePolicy=" + fileNamePolicy +
                 '}';
     }
 }
