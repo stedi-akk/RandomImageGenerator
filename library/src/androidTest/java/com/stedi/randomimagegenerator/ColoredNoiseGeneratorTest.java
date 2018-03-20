@@ -17,30 +17,57 @@ public class ColoredNoiseGeneratorTest {
     private final int[] sizes = new int[]{1, 33, 128};
 
     @Test
+    public void incorrectArgs() {
+        try {
+            new ColoredNoiseGenerator(null, null, -1);
+            fail();
+        } catch (IllegalArgumentException e) {
+        }
+
+        try {
+            new ColoredNoiseGenerator(ColoredNoiseGenerator.Orientation.HORIZONTAL, null, -1);
+            fail();
+        } catch (IllegalArgumentException e) {
+        }
+
+        try {
+            new ColoredNoiseGenerator(ColoredNoiseGenerator.Orientation.HORIZONTAL, ColoredNoiseGenerator.Type.TYPE_1, -1);
+            fail();
+        } catch (IllegalArgumentException e) {
+        }
+    }
+
+    @Test
     public void png() {
-        iterateGeneratorArgsAndTest(Quality.png());
+        iterateGeneratorArgsAndTest(1, Quality.png());
+        iterateGeneratorArgsAndTest(10, Quality.png());
+        iterateGeneratorArgsAndTest(200, Quality.png());
     }
 
     @Test
     public void jpg() {
-        iterateGeneratorArgsAndTest(Quality.jpg(80));
+        iterateGeneratorArgsAndTest(1, Quality.jpg(80));
+        iterateGeneratorArgsAndTest(10, Quality.jpg(80));
+        iterateGeneratorArgsAndTest(200, Quality.jpg(80));
     }
 
     @Test
     public void webp() {
-        iterateGeneratorArgsAndTest(new Quality(Bitmap.CompressFormat.WEBP, 100));
+        iterateGeneratorArgsAndTest(1, new Quality(Bitmap.CompressFormat.WEBP, 100));
+        iterateGeneratorArgsAndTest(10, new Quality(Bitmap.CompressFormat.WEBP, 100));
+        iterateGeneratorArgsAndTest(200, new Quality(Bitmap.CompressFormat.WEBP, 100));
     }
 
-    private void iterateGeneratorArgsAndTest(Quality quality) {
+    private void iterateGeneratorArgsAndTest(int pixelMultiplier, Quality quality) {
         for (ColoredNoiseGenerator.Orientation orientation : ColoredNoiseGenerator.Orientation.values()) {
             for (ColoredNoiseGenerator.Type type : ColoredNoiseGenerator.Type.values()) {
-                test(orientation, type, quality);
+                test(orientation, type, quality, pixelMultiplier);
             }
         }
     }
 
-    private void test(ColoredNoiseGenerator.Orientation orientation, ColoredNoiseGenerator.Type type, Quality quality) {
-        ColoredNoiseGenerator generator = new ColoredNoiseGenerator(orientation, type);
+    private void test(ColoredNoiseGenerator.Orientation orientation, ColoredNoiseGenerator.Type type, Quality quality, int pixelMultiplier) {
+        ColoredNoiseGenerator generator = new ColoredNoiseGenerator(orientation, type, pixelMultiplier);
         int count = 0;
         for (int width : sizes) {
             for (int height : sizes) {
