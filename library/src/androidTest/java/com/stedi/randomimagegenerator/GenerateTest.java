@@ -213,8 +213,9 @@ public class GenerateTest {
         // width - 10
         // height - 20, 30, 40, 60, 70, 80, 90, 100
         for (int height = 10, i = 0; height <= 100; height += 10) {
-            if (height == 10 || height == 50)
+            if (height == 10 || height == 50) {
                 continue;
+            }
             Bitmap result = bitmaps.get(i);
             assertNotNull(result);
             assertEquals(result.getWidth(), 10);

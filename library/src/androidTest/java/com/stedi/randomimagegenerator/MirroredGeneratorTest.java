@@ -22,6 +22,11 @@ import static org.junit.Assert.fail;
 public class MirroredGeneratorTest {
     private final int[] sizes = new int[]{1, 2, 63, 256};
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testNotNull() {
+        new MirroredGenerator(null);
+    }
+
     @Test
     public void png() {
         testWithDefaultGenerators(Quality.png());
