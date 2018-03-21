@@ -1,8 +1,9 @@
 # RIG – Random Image Generator
-A library for Android that generates random Bitmap images based on the passed parameters like width, height, type of generator, etc. Generated images can be also automatically saved in the requested path with appropriate quality.
+A library for Android that generates random [Bitmap](https://developer.android.com/reference/android/graphics/Bitmap.html) images. Generation is performed on the basis of different passed parameters like width, height, type of generator, color palette, etc. Images can be also automatically saved in the requested path with appropriate quality.
 
 
-<img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/1.png" width="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/2.png" width="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/3.png" width="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/4.png" width="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/5.png" width="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/6.png" width="128">
+<img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/2.png" width="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/1.png" width="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/4.png" width="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/9.png" width="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/5.png" width="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/6.png" width="128">
+<img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/11.png" width="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/8.png" width="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/3.png" width="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/10.png" width="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/7.png" width="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/12.png" width="128">
 
 ## Usage
 Simple example with callback:
@@ -44,41 +45,48 @@ new Rig.Builder()
         .build()
         .generate();
 ```
-For more information, please see javadoc.
+For more information, please see [Rig.Builder](https://github.com/stedi-akk/RandomImageGenerator/blob/master/library/src/main/java/com/stedi/randomimagegenerator/Rig.java#L323) javadoc.
 ### Embed generators
-There are currently 5 generators, and 2 "wrapper" generators.
+There are currently 6 generators, and 3 effects.
 
-- FlatColorGenerator
+- [FlatColorGenerator](https://github.com/stedi-akk/RandomImageGenerator/blob/master/library/src/main/java/com/stedi/randomimagegenerator/generators/FlatColorGenerator.java)
 
 <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/FlatColorGenerator/1.png" height="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/FlatColorGenerator/2.png" height="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/FlatColorGenerator/3.png" height="128">
 
-- ColoredPixelsGenerator
+- [ColoredPixelsGenerator](https://github.com/stedi-akk/RandomImageGenerator/blob/master/library/src/main/java/com/stedi/randomimagegenerator/generators/ColoredPixelsGenerator.java)
 
 <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/ColoredPixelsGenerator/1.png" height="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/ColoredPixelsGenerator/2.png" height="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/ColoredPixelsGenerator/3.png" height="128">
 
-- ColoredRectangleGenerator
+- [ColoredRectangleGenerator](https://github.com/stedi-akk/RandomImageGenerator/blob/master/library/src/main/java/com/stedi/randomimagegenerator/generators/ColoredRectangleGenerator.java)
 
 <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/ColoredRectangleGenerator/1.png" height="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/ColoredRectangleGenerator/2.png" height="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/ColoredRectangleGenerator/3.png" height="128">
 
-- ColoredNoiseGenerator
+- [ColoredNoiseGenerator](https://github.com/stedi-akk/RandomImageGenerator/blob/master/library/src/main/java/com/stedi/randomimagegenerator/generators/ColoredNoiseGenerator.java)
 
 <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/ColoredNoiseGenerator/1.png" height="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/ColoredNoiseGenerator/2.png" height="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/ColoredNoiseGenerator/3.png" height="128">
 
-- ColoredCirclesGenerator
+- [ColoredCirclesGenerator](https://github.com/stedi-akk/RandomImageGenerator/blob/master/library/src/main/java/com/stedi/randomimagegenerator/generators/ColoredCirclesGenerator.java)
 
 <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/ColoredCirclesGenerator/1.png" height="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/ColoredCirclesGenerator/2.png" height="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/ColoredCirclesGenerator/3.png" height="128">
 
-- MirroredEffect
+- [ColoredLinesGenerator](https://github.com/stedi-akk/RandomImageGenerator/blob/master/library/src/main/java/com/stedi/randomimagegenerator/generators/ColoredLinesGenerator.java)
+
+<img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/ColoredLinesGenerator/1.png" height="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/ColoredLinesGenerator/2.png" height="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/ColoredLinesGenerator/3.png" height="128">
+
+- [MirroredEffect](https://github.com/stedi-akk/RandomImageGenerator/blob/master/library/src/main/java/com/stedi/randomimagegenerator/generators/effects/MirroredEffect.java)
 
 <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/MirroredEffect/1.png" height="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/MirroredEffect/2.png" height="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/MirroredEffect/3.png" height="128">
 
-- TextOverlayEffect
+- [ThresholdEffect](https://github.com/stedi-akk/RandomImageGenerator/blob/master/library/src/main/java/com/stedi/randomimagegenerator/generators/effects/ThresholdEffect.java)
+
+<img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/ThresholdEffect/1.png" height="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/ThresholdEffect/2.png" height="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/ThresholdEffect/3.png" height="128">
+
+- [TextOverlayEffect](https://github.com/stedi-akk/RandomImageGenerator/blob/master/library/src/main/java/com/stedi/randomimagegenerator/generators/effects/TextOverlayEffect.java)
 
 <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/TextOverlayEffect/1.png" height="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/TextOverlayEffect/2.png" height="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/TextOverlayEffect/3.png" height="128">
 
-Additional generators are planned in the future.
 ### Custom generators
-To create your own generator, you just need to implement Generator interface:
+To create your own generator, you just need to implement [Generator](https://github.com/stedi-akk/RandomImageGenerator/blob/master/library/src/main/java/com/stedi/randomimagegenerator/generators/Generator.java) interface:
 ```java
 public class MyGenerator implements Generator {
     @Override
@@ -88,14 +96,38 @@ public class MyGenerator implements Generator {
 }
 ```
 
+### Color palette
+By default, the library generates images with all available [HSV](https://en.wikipedia.org/wiki/HSL_and_HSV) colors. [RigPalette](https://github.com/stedi-akk/RandomImageGenerator/blob/master/library/src/main/java/com/stedi/randomimagegenerator/RigPalette.java) class is used to change this palette.
+
+Examples:
+
+```java
+RigPalette.blackAndWhite()
+```
+<img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/Grayscale/1.png" height="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/Grayscale/2.png" height="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/Grayscale/3.png" height="128">
+
+```java
+RigPalette.fromColor(Color.RED)
+```
+<img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/Red/1.png" height="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/Red/2.png" height="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/Red/3.png" height="128">
+
+```java
+RigPalette.fromColor(Color.GREEN)
+```
+<img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/Green/1.png" height="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/Green/2.png" height="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/Green/3.png" height="128">
+
+```java
+RigPalette.fromColor(Color.BLUE)
+```
+<img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/Blue/1.png" height="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/Blue/2.png" height="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/Blue/3.png" height="128">
+
 ## Download
 Gradle:
 ```groovy
 compile 'com.stedi.randomimagegenerator:rig:1.1.0'
 ```
-This library is synchronous, and you should not use it in the main thread.  
    
-There is also a sample application available in the /sample directory.
+There is also a sample application available in the [/sample](https://github.com/stedi-akk/RandomImageGenerator/tree/master/sample) directory.
 
 ## License
 > Copyright 2018 Dima Stepanchenko
