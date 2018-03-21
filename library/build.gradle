@@ -1,4 +1,16 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
+
+publish {
+    userOrg = 'stedi'
+    groupId = 'com.stedi.randomimagegenerator'
+    artifactId = 'rig'
+    publishVersion = '1.1.0'
+    repoName = 'RandomImageGenerator'
+    uploadName = 'RandomImageGenerator'
+    desc = 'Random image generator for Android'
+    website = 'https://github.com/stedi-akk/RandomImageGenerator'
+}
 
 android {
     compileSdkVersion 26
@@ -10,6 +22,15 @@ android {
         versionCode 3
         versionName "1.1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+}
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.novoda:bintray-release:0.8.0'
     }
 }
 
