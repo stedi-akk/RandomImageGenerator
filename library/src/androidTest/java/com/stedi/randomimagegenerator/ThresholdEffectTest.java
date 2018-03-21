@@ -4,13 +4,13 @@ import android.graphics.Bitmap;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.stedi.randomimagegenerator.generators.ColoredCirclesGenerator;
+import com.stedi.randomimagegenerator.generators.ColoredLinesGenerator;
 import com.stedi.randomimagegenerator.generators.ColoredNoiseGenerator;
 import com.stedi.randomimagegenerator.generators.ColoredPixelsGenerator;
 import com.stedi.randomimagegenerator.generators.ColoredRectangleGenerator;
 import com.stedi.randomimagegenerator.generators.FlatColorGenerator;
 import com.stedi.randomimagegenerator.generators.Generator;
-import com.stedi.randomimagegenerator.generators.MirroredGenerator;
-import com.stedi.randomimagegenerator.generators.TextOverlayGenerator;
+import com.stedi.randomimagegenerator.generators.effects.ThresholdEffect;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,8 +20,13 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 @RunWith(AndroidJUnit4.class)
-public class TextOverlayAndMirroredGeneratorTest {
+public class ThresholdEffectTest {
     private final int[] sizes = new int[]{1, 2, 63, 256};
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testNotNull() {
+        new ThresholdEffect(null);
+    }
 
     @Test
     public void png() {
@@ -39,26 +44,22 @@ public class TextOverlayAndMirroredGeneratorTest {
     }
 
     private void testWithDefaultGenerators(Quality quality) {
-        wrapAndTest(new FlatColorGenerator(), quality);
-        wrapAndTest(new ColoredRectangleGenerator(), quality);
-        wrapAndTest(new ColoredPixelsGenerator(), quality);
-        wrapAndTest(new ColoredNoiseGenerator(), quality);
-        wrapAndTest(new ColoredCirclesGenerator(), quality);
+        test(new FlatColorGenerator(), quality);
+        test(new ColoredRectangleGenerator(), quality);
+        test(new ColoredPixelsGenerator(), quality);
+        test(new ColoredNoiseGenerator(), quality);
+        test(new ColoredCirclesGenerator(), quality);
+        test(new ColoredLinesGenerator(), quality);
     }
 
-    private void wrapAndTest(Generator target, Quality quality) {
-        test(new TextOverlayGenerator.Builder()
-                .setGenerator(new MirroredGenerator(target))
-                .build(), quality);
-    }
-
-    private void test(Generator generator, Quality quality) {
+    private void test(Generator target, Quality quality) {
+        ThresholdEffect effect = new ThresholdEffect(target);
         int count = 0;
         for (int width : sizes) {
             for (int height : sizes) {
                 ImageParams params = new ImageParams(++count, width, height, null, quality, RigPalette.allColors(), null);
                 try {
-                    Bitmap bitmap = generator.generate(params);
+                    Bitmap bitmap = effect.generate(params);
                     assertNotNull(bitmap);
                     assertEquals(bitmap.getWidth(), width);
                     assertEquals(bitmap.getHeight(), height);

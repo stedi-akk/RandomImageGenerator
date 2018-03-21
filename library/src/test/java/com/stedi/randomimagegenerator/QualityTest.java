@@ -42,11 +42,41 @@ public class QualityTest {
     }
 
     @Test
-    public void webp() {
+    public void generalTest() {
         Quality quality = new Quality(Bitmap.CompressFormat.WEBP, 100);
 
         assertEquals(quality.getQualityValue(), 100);
         assertSame(quality.getFormat(), Bitmap.CompressFormat.WEBP);
         assertEquals(quality.getFileExtension(), "webp");
+
+        quality.setQualityValue(66);
+
+        assertEquals(quality.getQualityValue(), 66);
+        assertSame(quality.getFormat(), Bitmap.CompressFormat.WEBP);
+        assertEquals(quality.getFileExtension(), "webp");
+
+        quality.setFormat(Bitmap.CompressFormat.PNG);
+
+        assertEquals(quality.getQualityValue(), 100);
+        assertSame(quality.getFormat(), Bitmap.CompressFormat.PNG);
+        assertEquals(quality.getFileExtension(), "png");
+
+        quality.setQualityValue(10);
+
+        assertEquals(quality.getQualityValue(), 100);
+        assertSame(quality.getFormat(), Bitmap.CompressFormat.PNG);
+        assertEquals(quality.getFileExtension(), "png");
+
+        quality.setFormat(Bitmap.CompressFormat.JPEG);
+
+        assertEquals(quality.getQualityValue(), 100);
+        assertSame(quality.getFormat(), Bitmap.CompressFormat.JPEG);
+        assertEquals(quality.getFileExtension(), "jpg");
+
+        quality.setQualityValue(0);
+
+        assertEquals(quality.getQualityValue(), 0);
+        assertSame(quality.getFormat(), Bitmap.CompressFormat.JPEG);
+        assertEquals(quality.getFileExtension(), "jpg");
     }
 }

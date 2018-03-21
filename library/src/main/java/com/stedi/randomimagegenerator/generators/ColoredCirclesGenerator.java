@@ -3,16 +3,20 @@ package com.stedi.randomimagegenerator.generators;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.WorkerThread;
 
 import com.stedi.randomimagegenerator.ImageParams;
+import com.stedi.randomimagegenerator.Rig;
 
 /**
- * Generator for image with random colored circles.
+ * Generator for images with random colored circles.
  */
 public class ColoredCirclesGenerator extends FlatColorGenerator {
-    private final Paint paint = new Paint();
+    private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
-    private int count;
+    private final int count;
 
     /**
      * The default constructor with unspecified circles count
@@ -25,32 +29,41 @@ public class ColoredCirclesGenerator extends FlatColorGenerator {
     /**
      * Constructor with specified circles count.
      *
-     * @param count Must be bigger than 0.
+     * @param count Should be bigger than 0. Otherwise it will be random (based on the size of image).
      */
     public ColoredCirclesGenerator(int count) {
         this.count = count;
     }
 
     @Override
-    public Bitmap generate(ImageParams imageParams) throws Exception {
+    @Nullable
+    @WorkerThread
+    public Bitmap generate(@NonNull ImageParams imageParams) throws Exception {
         Bitmap bitmap = super.generate(imageParams);
+        if (bitmap == null) {
+            return null;
+        }
 
         int biggestSide = Math.max(imageParams.getWidth(), imageParams.getHeight());
+        int selectedCount = count;
 
-        if (count <= 0)
-            count = (int) Math.ceil(Math.random() * ((biggestSide / 100f) * 20f));
+        if (selectedCount <= 0) {
+            float to = biggestSide / 100f * 20f;
+            float from = to / 10f;
+            selectedCount = (int) Math.ceil(Rig.random(from, to));
+        }
 
         Canvas canvas = new Canvas(bitmap);
 
         float radiusFrom = biggestSide / 12f;
         float radiusTo = biggestSide / 4f;
 
-        for (int i = 0; i < count; i++) {
-            float cx = (float) (Math.random() * imageParams.getWidth());
-            float cy = (float) (Math.random() * imageParams.getHeight());
-            float radius = (float) ((Math.random() * (radiusTo - radiusFrom)) + radiusFrom);
+        for (int i = 0; i < selectedCount; i++) {
+            float cx = Rig.random(imageParams.getWidth());
+            float cy = Rig.random(imageParams.getHeight());
+            float radius = Rig.random(radiusFrom, radiusTo);
 
-            paint.setColor(getRandomColor());
+            paint.setColor(imageParams.getPalette().getRandom());
 
             canvas.drawCircle(cx, cy, radius, paint);
         }

@@ -22,6 +22,11 @@ import static org.junit.Assert.fail;
 public class MirroredGeneratorTest {
     private final int[] sizes = new int[]{1, 2, 63, 256};
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testNotNull() {
+        new MirroredGenerator(null);
+    }
+
     @Test
     public void png() {
         testWithDefaultGenerators(Quality.png());
@@ -50,7 +55,7 @@ public class MirroredGeneratorTest {
         int count = 0;
         for (int width : sizes) {
             for (int height : sizes) {
-                ImageParams params = new ImageParams(++count, width, height, null, quality);
+                ImageParams params = new ImageParams(++count, width, height, null, quality, RigPalette.allColors(), null);
                 try {
                     Bitmap bitmap = generator.generate(params);
                     assertNotNull(bitmap);

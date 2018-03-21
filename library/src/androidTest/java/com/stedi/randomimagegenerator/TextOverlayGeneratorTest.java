@@ -2,6 +2,7 @@ package com.stedi.randomimagegenerator;
 
 import android.graphics.Bitmap;
 import android.graphics.Paint;
+import android.support.annotation.NonNull;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.stedi.randomimagegenerator.generators.ColoredCirclesGenerator;
@@ -11,6 +12,7 @@ import com.stedi.randomimagegenerator.generators.ColoredRectangleGenerator;
 import com.stedi.randomimagegenerator.generators.FlatColorGenerator;
 import com.stedi.randomimagegenerator.generators.Generator;
 import com.stedi.randomimagegenerator.generators.TextOverlayGenerator;
+import com.stedi.randomimagegenerator.generators.effects.TextOverlayEffect;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,7 +27,7 @@ public class TextOverlayGeneratorTest {
 
     private final TextOverlayGenerator.TextPolicy textPolicy = new TextOverlayGenerator.TextPolicy() {
         @Override
-        public String getText(ImageParams imageParams) {
+        public String getText(@NonNull ImageParams imageParams) {
             return "text";
         }
     };
@@ -77,11 +79,11 @@ public class TextOverlayGeneratorTest {
                 .build(), quality);
     }
 
-    private void test(TextOverlayGenerator generator, Quality quality) {
+    private void test(TextOverlayEffect generator, Quality quality) {
         int count = 0;
         for (int width : sizes) {
             for (int height : sizes) {
-                ImageParams params = new ImageParams(++count, width, height, null, quality);
+                ImageParams params = new ImageParams(++count, width, height, null, quality, RigPalette.allColors(), null);
                 try {
                     Bitmap bitmap = generator.generate(params);
                     assertNotNull(bitmap);

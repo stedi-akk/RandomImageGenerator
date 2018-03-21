@@ -3,6 +3,7 @@ package com.stedi.randomimagegenerator.generators;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.RectF;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,32 +13,37 @@ import com.stedi.randomimagegenerator.ImageParams;
 import com.stedi.randomimagegenerator.Rig;
 
 /**
- * Generator for images with random colored rectangles.
+ * Generator for images with random colored lines.
  */
-public class ColoredRectangleGenerator extends FlatColorGenerator {
+public class ColoredLinesGenerator extends FlatColorGenerator {
     private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     private final int count;
 
+    {
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(5f);
+    }
+
     /**
-     * The default constructor with unspecified rectangles count
+     * The default constructor with unspecified lines count
      * (will be random, based on the size of image).
      */
-    public ColoredRectangleGenerator() {
+    public ColoredLinesGenerator() {
         this(0);
     }
 
     /**
-     * Constructor with specified rectangles count.
+     * Constructor with specified lines count.
      *
      * @param count Should be bigger than 0. Otherwise it will be random (based on the size of image).
      */
-    public ColoredRectangleGenerator(int count) {
+    public ColoredLinesGenerator(int count) {
         this.count = count;
     }
 
-    @Override
     @Nullable
+    @Override
     @WorkerThread
     public Bitmap generate(@NonNull ImageParams imageParams) throws Exception {
         Bitmap bitmap = super.generate(imageParams);
@@ -49,30 +55,39 @@ public class ColoredRectangleGenerator extends FlatColorGenerator {
         int selectedCount = count;
 
         if (selectedCount <= 0) {
-            float to = biggestSide / 100f * 20f;
+            float to = biggestSide / 10f * 20f;
             float from = to / 10f;
             selectedCount = (int) Math.ceil(Rig.random(from, to));
         }
 
         Canvas canvas = new Canvas(bitmap);
+        Path line = new Path();
+        RectF lineRect = new RectF();
 
-        float widthFrom = biggestSide / 6f;
-        float widthTo = biggestSide / 2f;
-        float heightFrom = widthFrom;
-        float heightTo = widthTo;
-
-        RectF rect = new RectF();
+        float startX = -imageParams.getWidth() / 2f;
+        float startY = -imageParams.getHeight() / 2f;
+        float zoneWidth = imageParams.getWidth() * 2f;
+        float zoneHeight = imageParams.getHeight() * 2f;
 
         for (int i = 0; i < selectedCount; i++) {
-            float left = Rig.random(imageParams.getWidth()) - widthTo / 2f;
-            float top = Rig.random(imageParams.getHeight()) - heightTo / 2f;
-            float right = left + Rig.random(widthFrom, widthTo);
-            float bottom = top + Rig.random(heightFrom, heightTo);
-            rect.set(left, top, right, bottom);
+            float cx = Rig.random(zoneWidth) + startX;
+            float cy = Rig.random(zoneHeight) + startY;
+
+            lineRect.set(Rig.random(zoneWidth) + startX,
+                    Rig.random(zoneHeight) + startY,
+                    Rig.random(zoneWidth) + startX,
+                    Rig.random(zoneHeight) + startY);
+
+            float startAngle = Rig.random(360f);
+            float sweepAngle = Rig.random(360f);
 
             paint.setColor(imageParams.getPalette().getRandom());
 
-            canvas.drawRect(rect, paint);
+            line.reset();
+            line.moveTo(cx, cy);
+            line.arcTo(lineRect, startAngle, sweepAngle, false);
+
+            canvas.drawPath(line, paint);
         }
 
         return bitmap;
@@ -80,7 +95,7 @@ public class ColoredRectangleGenerator extends FlatColorGenerator {
 
     @Override
     public String toString() {
-        return "ColoredRectangleGenerator{" +
+        return "ColoredLinesGenerator{" +
                 "count=" + count +
                 '}';
     }

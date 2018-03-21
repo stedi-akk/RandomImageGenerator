@@ -1,6 +1,7 @@
 package com.stedi.randomimagegenerator;
 
 import android.graphics.Bitmap;
+import android.support.annotation.NonNull;
 
 import com.stedi.randomimagegenerator.callbacks.GenerateCallback;
 import com.stedi.randomimagegenerator.callbacks.SaveCallback;
@@ -16,24 +17,24 @@ import static junit.framework.Assert.*;
 public class BuilderTest {
     private final SaveCallback emptySaveCallback = new SaveCallback() {
         @Override
-        public void onSaved(Bitmap bitmap, File file) {
+        public void onSaved(@NonNull Bitmap bitmap, @NonNull File file) {
 
         }
 
         @Override
-        public void onFailedToSave(Bitmap bitmap, Exception e) {
+        public void onFailedToSave(@NonNull Bitmap bitmap, @NonNull Exception e) {
 
         }
     };
 
     private final GenerateCallback emptyGenerateCallback = new GenerateCallback() {
         @Override
-        public void onGenerated(ImageParams imageParams, Bitmap bitmap) {
+        public void onGenerated(@NonNull ImageParams imageParams, @NonNull Bitmap bitmap) {
 
         }
 
         @Override
-        public void onFailedToGenerate(ImageParams imageParams, Exception e) {
+        public void onFailedToGenerate(@NonNull ImageParams imageParams, @NonNull Exception e) {
 
         }
     };
@@ -55,11 +56,14 @@ public class BuilderTest {
         assertEquals(rig.params.width, 10);
         assertEquals(rig.params.height, 10);
         assertFalse(rig.params.useHeightRange);
+        assertNull(rig.params.heightRangeValues);
         assertFalse(rig.params.useWidthRange);
+        assertNull(rig.params.widthRangeValues);
         assertEquals(rig.params.count, 1);
         assertNull(rig.params.path);
         assertNull(rig.params.fileNamePolicy);
         assertNull(rig.params.saveCallback);
+        assertNotNull(rig.params.palette);
     }
 
     @Test
@@ -80,11 +84,14 @@ public class BuilderTest {
         assertEquals(rig.params.width, 10);
         assertEquals(rig.params.height, 10);
         assertFalse(rig.params.useHeightRange);
+        assertNull(rig.params.heightRangeValues);
         assertFalse(rig.params.useWidthRange);
+        assertNull(rig.params.widthRangeValues);
         assertEquals(rig.params.count, 1);
         assertNull(rig.params.path);
         assertNull(rig.params.fileNamePolicy);
         assertNull(rig.params.saveCallback);
+        assertNotNull(rig.params.palette);
     }
 
     @Test
@@ -106,11 +113,14 @@ public class BuilderTest {
         assertEquals(rig.params.width, 10);
         assertEquals(rig.params.height, 10);
         assertFalse(rig.params.useHeightRange);
+        assertNull(rig.params.heightRangeValues);
         assertFalse(rig.params.useWidthRange);
+        assertNull(rig.params.widthRangeValues);
         assertEquals(rig.params.count, 1);
         assertNull(rig.params.path);
         assertNull(rig.params.fileNamePolicy);
         assertNull(rig.params.saveCallback);
+        assertNotNull(rig.params.palette);
     }
 
     @Test
@@ -133,10 +143,13 @@ public class BuilderTest {
         assertEquals(rig.params.heightTo, 100);
         assertEquals(rig.params.heightStep, 10);
         assertTrue(rig.params.useHeightRange);
+        assertNotNull(rig.params.heightRangeValues);
         assertFalse(rig.params.useWidthRange);
+        assertNull(rig.params.widthRangeValues);
         assertNull(rig.params.path);
         assertNull(rig.params.fileNamePolicy);
         assertNull(rig.params.saveCallback);
+        assertNotNull(rig.params.palette);
     }
 
     @Test
@@ -159,10 +172,13 @@ public class BuilderTest {
         assertEquals(rig.params.widthTo, 100);
         assertEquals(rig.params.widthStep, 10);
         assertFalse(rig.params.useHeightRange);
+        assertNull(rig.params.heightRangeValues);
         assertTrue(rig.params.useWidthRange);
+        assertNotNull(rig.params.widthRangeValues);
         assertNull(rig.params.path);
         assertNull(rig.params.fileNamePolicy);
         assertNull(rig.params.saveCallback);
+        assertNotNull(rig.params.palette);
     }
 
     @Test
@@ -187,10 +203,13 @@ public class BuilderTest {
         assertEquals(rig.params.heightTo, 10);
         assertEquals(rig.params.heightStep, 10);
         assertTrue(rig.params.useHeightRange);
+        assertNotNull(rig.params.heightRangeValues);
         assertTrue(rig.params.useWidthRange);
+        assertNotNull(rig.params.widthRangeValues);
         assertNull(rig.params.path);
         assertNull(rig.params.fileNamePolicy);
         assertNull(rig.params.saveCallback);
+        assertNotNull(rig.params.palette);
     }
 
     @Test
@@ -216,10 +235,13 @@ public class BuilderTest {
         assertEquals(rig.params.heightTo, 10);
         assertEquals(rig.params.heightStep, 10);
         assertTrue(rig.params.useHeightRange);
+        assertNotNull(rig.params.heightRangeValues);
         assertTrue(rig.params.useWidthRange);
+        assertNotNull(rig.params.widthRangeValues);
         assertNull(rig.params.path);
         assertNull(rig.params.fileNamePolicy);
         assertNull(rig.params.saveCallback);
+        assertNotNull(rig.params.palette);
     }
 
     @Test
@@ -241,11 +263,14 @@ public class BuilderTest {
         assertEquals(rig.params.width, 20);
         assertEquals(rig.params.height, 20);
         assertFalse(rig.params.useHeightRange);
+        assertNull(rig.params.heightRangeValues);
         assertFalse(rig.params.useWidthRange);
+        assertNull(rig.params.widthRangeValues);
         assertEquals(rig.params.count, 1);
         assertNull(rig.params.path);
         assertNull(rig.params.fileNamePolicy);
         assertNull(rig.params.saveCallback);
+        assertNotNull(rig.params.palette);
     }
 
     @Test
@@ -266,11 +291,14 @@ public class BuilderTest {
         assertEquals(rig.params.width, 10);
         assertEquals(rig.params.height, 10);
         assertFalse(rig.params.useHeightRange);
+        assertNull(rig.params.heightRangeValues);
         assertFalse(rig.params.useWidthRange);
+        assertNull(rig.params.widthRangeValues);
         assertEquals(rig.params.count, 10);
         assertNull(rig.params.path);
         assertNull(rig.params.fileNamePolicy);
         assertNull(rig.params.saveCallback);
+        assertNotNull(rig.params.palette);
     }
 
     @Test
@@ -296,10 +324,13 @@ public class BuilderTest {
         assertEquals(rig.params.heightTo, 10);
         assertEquals(rig.params.heightStep, 20);
         assertTrue(rig.params.useHeightRange);
+        assertNotNull(rig.params.heightRangeValues);
         assertTrue(rig.params.useWidthRange);
+        assertNotNull(rig.params.widthRangeValues);
         assertNull(rig.params.path);
         assertNull(rig.params.fileNamePolicy);
         assertNull(rig.params.saveCallback);
+        assertNotNull(rig.params.palette);
     }
 
     @Test
@@ -322,11 +353,14 @@ public class BuilderTest {
         assertEquals(rig.params.width, 10);
         assertEquals(rig.params.height, 100);
         assertFalse(rig.params.useHeightRange);
+        assertNull(rig.params.heightRangeValues);
         assertFalse(rig.params.useWidthRange);
+        assertNull(rig.params.widthRangeValues);
         assertEquals(rig.params.count, 5);
         assertNull(rig.params.path);
         assertNull(rig.params.fileNamePolicy);
         assertNull(rig.params.saveCallback);
+        assertNotNull(rig.params.palette);
     }
 
     @Test
@@ -349,11 +383,14 @@ public class BuilderTest {
         assertEquals(rig.params.width, 10);
         assertEquals(rig.params.height, 100);
         assertFalse(rig.params.useHeightRange);
+        assertNull(rig.params.heightRangeValues);
         assertFalse(rig.params.useWidthRange);
+        assertNull(rig.params.widthRangeValues);
         assertEquals(rig.params.count, 2);
         assertNull(rig.params.path);
         assertNull(rig.params.fileNamePolicy);
         assertNull(rig.params.saveCallback);
+        assertNotNull(rig.params.palette);
     }
 
     @Test
@@ -377,11 +414,14 @@ public class BuilderTest {
         assertEquals(rig.params.width, 10);
         assertEquals(rig.params.height, 100);
         assertFalse(rig.params.useHeightRange);
+        assertNull(rig.params.heightRangeValues);
         assertFalse(rig.params.useWidthRange);
+        assertNull(rig.params.widthRangeValues);
         assertEquals(rig.params.count, 2);
         assertNull(rig.params.path);
         assertNull(rig.params.fileNamePolicy);
         assertNull(rig.params.saveCallback);
+        assertNotNull(rig.params.palette);
     }
 
     @Test
@@ -406,11 +446,14 @@ public class BuilderTest {
         assertEquals(rig.params.width, 10);
         assertEquals(rig.params.height, 100);
         assertFalse(rig.params.useHeightRange);
+        assertNull(rig.params.heightRangeValues);
         assertFalse(rig.params.useWidthRange);
+        assertNull(rig.params.widthRangeValues);
         assertEquals(rig.params.count, 2);
         assertEquals(rig.params.path.getPath(), "BuilderTest");
         assertNotNull(rig.params.fileNamePolicy);
         assertNull(rig.params.saveCallback);
+        assertNotNull(rig.params.palette);
     }
 
     @Test
@@ -436,10 +479,13 @@ public class BuilderTest {
         assertEquals(rig.params.width, 10);
         assertEquals(rig.params.height, 100);
         assertFalse(rig.params.useHeightRange);
+        assertNull(rig.params.heightRangeValues);
         assertFalse(rig.params.useWidthRange);
+        assertNull(rig.params.widthRangeValues);
         assertEquals(rig.params.count, 2);
         assertEquals(rig.params.path.getPath(), "BuilderTest");
         assertNotNull(rig.params.fileNamePolicy);
+        assertNotNull(rig.params.palette);
         assertSame(rig.params.saveCallback, emptySaveCallback);
     }
 
@@ -468,8 +514,11 @@ public class BuilderTest {
         assertEquals(rig.params.width, 10);
         assertEquals(rig.params.height, 100);
         assertFalse(rig.params.useHeightRange);
+        assertNull(rig.params.heightRangeValues);
         assertFalse(rig.params.useWidthRange);
+        assertNull(rig.params.widthRangeValues);
         assertEquals(rig.params.count, 2);
+        assertNotNull(rig.params.palette);
         assertEquals(rig.params.path.getPath(), "BuilderTest");
         assertSame(rig.params.fileNamePolicy, fileNamePolicy);
         assertSame(rig.params.saveCallback, emptySaveCallback);
@@ -506,9 +555,54 @@ public class BuilderTest {
         assertEquals(rig.params.heightTo, 1000);
         assertEquals(rig.params.heightStep, 10);
         assertTrue(rig.params.useHeightRange);
+        assertNotNull(rig.params.heightRangeValues);
         assertTrue(rig.params.useWidthRange);
+        assertNotNull(rig.params.widthRangeValues);
+        assertNotNull(rig.params.palette);
         assertEquals(rig.params.path.getPath(), "BuilderTest");
         assertSame(rig.params.fileNamePolicy, fileNamePolicy);
         assertSame(rig.params.saveCallback, emptySaveCallback);
+    }
+
+    @Test
+    public void buildFullWithPalette() {
+        Generator generator = new FlatColorGenerator();
+        Quality quality = Quality.png();
+        FileNamePolicy fileNamePolicy = new DefaultFileNamePolicy();
+        RigPalette palette = RigPalette.blackAndWhite();
+
+        Rig rig = new Rig.Builder()
+                .setGenerator(generator)
+                .setPalette(palette)
+                .setFixedSize(10, 100)
+                .setCount(2)
+                .setCallback(emptyGenerateCallback)
+                .setQuality(quality)
+                .setFileSavePath("BuilderTest")
+                .setFileSaveCallback(emptySaveCallback)
+                .setFileNamePolicy(fileNamePolicy)
+                .setHeightRange(100, 1000, 10)
+                .setWidthRange(50, 100, 25)
+                .build();
+
+        assertNotNull(rig);
+        assertNotNull(rig.params);
+        assertSame(rig.params.generator, generator);
+        assertSame(rig.params.generateCallback, emptyGenerateCallback);
+        assertSame(rig.params.quality, quality);
+        assertEquals(rig.params.widthFrom, 50);
+        assertEquals(rig.params.widthTo, 100);
+        assertEquals(rig.params.widthStep, 25);
+        assertEquals(rig.params.heightFrom, 100);
+        assertEquals(rig.params.heightTo, 1000);
+        assertEquals(rig.params.heightStep, 10);
+        assertTrue(rig.params.useHeightRange);
+        assertNotNull(rig.params.heightRangeValues);
+        assertTrue(rig.params.useWidthRange);
+        assertNotNull(rig.params.widthRangeValues);
+        assertEquals(rig.params.path.getPath(), "BuilderTest");
+        assertSame(rig.params.fileNamePolicy, fileNamePolicy);
+        assertSame(rig.params.saveCallback, emptySaveCallback);
+        assertSame(rig.params.palette, palette);
     }
 }

@@ -1,6 +1,7 @@
 package com.stedi.randomimagegenerator;
 
 import android.graphics.Bitmap;
+import android.support.annotation.NonNull;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.stedi.randomimagegenerator.callbacks.GenerateCallback;
@@ -38,12 +39,12 @@ public class GenerateTest {
                 .setFixedSize(100, 100)
                 .setCallback(new GenerateCallback() {
                     @Override
-                    public void onGenerated(ImageParams imageParams, Bitmap bitmap) {
+                    public void onGenerated(@NonNull ImageParams imageParams, @NonNull Bitmap bitmap) {
                         bitmaps.add(bitmap);
                     }
 
                     @Override
-                    public void onFailedToGenerate(ImageParams imageParams, Exception e) {
+                    public void onFailedToGenerate(@NonNull ImageParams imageParams, @NonNull Exception e) {
                         e.printStackTrace();
                         fail();
                     }
@@ -68,12 +69,12 @@ public class GenerateTest {
                 .setFixedSize(100, 100)
                 .setCallback(new GenerateCallback() {
                     @Override
-                    public void onGenerated(ImageParams imageParams, Bitmap bitmap) {
+                    public void onGenerated(@NonNull ImageParams imageParams, @NonNull Bitmap bitmap) {
                         bitmaps.add(bitmap);
                     }
 
                     @Override
-                    public void onFailedToGenerate(ImageParams imageParams, Exception e) {
+                    public void onFailedToGenerate(@NonNull ImageParams imageParams, @NonNull Exception e) {
                         exceptions.add(e);
                     }
                 }).build().generate();
@@ -91,12 +92,12 @@ public class GenerateTest {
                 .setCount(10)
                 .setCallback(new GenerateCallback() {
                     @Override
-                    public void onGenerated(ImageParams imageParams, Bitmap bitmap) {
+                    public void onGenerated(@NonNull ImageParams imageParams, @NonNull Bitmap bitmap) {
                         bitmaps.add(bitmap);
                     }
 
                     @Override
-                    public void onFailedToGenerate(ImageParams imageParams, Exception e) {
+                    public void onFailedToGenerate(@NonNull ImageParams imageParams, @NonNull Exception e) {
                         e.printStackTrace();
                         fail();
                     }
@@ -119,12 +120,12 @@ public class GenerateTest {
                 .setHeightRange(10, 100, 10)
                 .setCallback(new GenerateCallback() {
                     @Override
-                    public void onGenerated(ImageParams imageParams, Bitmap bitmap) {
+                    public void onGenerated(@NonNull ImageParams imageParams, @NonNull Bitmap bitmap) {
                         bitmaps.add(bitmap);
                     }
 
                     @Override
-                    public void onFailedToGenerate(ImageParams imageParams, Exception e) {
+                    public void onFailedToGenerate(@NonNull ImageParams imageParams, @NonNull Exception e) {
                         e.printStackTrace();
                         fail();
                     }
@@ -150,12 +151,12 @@ public class GenerateTest {
                 .setHeightRange(10, 50, 10)
                 .setCallback(new GenerateCallback() {
                     @Override
-                    public void onGenerated(ImageParams imageParams, Bitmap bitmap) {
+                    public void onGenerated(@NonNull ImageParams imageParams, @NonNull Bitmap bitmap) {
                         bitmaps.add(bitmap);
                     }
 
                     @Override
-                    public void onFailedToGenerate(ImageParams imageParams, Exception e) {
+                    public void onFailedToGenerate(@NonNull ImageParams imageParams, @NonNull Exception e) {
                         e.printStackTrace();
                         fail();
                     }
@@ -196,12 +197,12 @@ public class GenerateTest {
                 .setHeightRange(10, 100, 10)
                 .setCallback(new GenerateCallback() {
                     @Override
-                    public void onGenerated(ImageParams imageParams, Bitmap bitmap) {
+                    public void onGenerated(@NonNull ImageParams imageParams, @NonNull Bitmap bitmap) {
                         bitmaps.add(bitmap);
                     }
 
                     @Override
-                    public void onFailedToGenerate(ImageParams imageParams, Exception e) {
+                    public void onFailedToGenerate(@NonNull ImageParams imageParams, @NonNull Exception e) {
                         exceptions.add(e);
                     }
                 }).build().generate();
@@ -212,8 +213,9 @@ public class GenerateTest {
         // width - 10
         // height - 20, 30, 40, 60, 70, 80, 90, 100
         for (int height = 10, i = 0; height <= 100; height += 10) {
-            if (height == 10 || height == 50)
+            if (height == 10 || height == 50) {
                 continue;
+            }
             Bitmap result = bitmaps.get(i);
             assertNotNull(result);
             assertEquals(result.getWidth(), 10);

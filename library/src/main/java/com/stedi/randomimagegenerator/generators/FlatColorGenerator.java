@@ -1,7 +1,9 @@
 package com.stedi.randomimagegenerator.generators;
 
 import android.graphics.Bitmap;
-import android.graphics.Color;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.WorkerThread;
 
 import com.stedi.randomimagegenerator.ImageParams;
 
@@ -10,17 +12,12 @@ import com.stedi.randomimagegenerator.ImageParams;
  */
 public class FlatColorGenerator implements Generator {
     @Override
-    public Bitmap generate(ImageParams imageParams) throws Exception {
+    @Nullable
+    @WorkerThread
+    public Bitmap generate(@NonNull ImageParams imageParams) throws Exception {
         Bitmap bitmap = Bitmap.createBitmap(imageParams.getWidth(), imageParams.getHeight(), Bitmap.Config.ARGB_8888);
-        bitmap.eraseColor(getRandomColor());
+        bitmap.eraseColor(imageParams.getPalette().getRandom());
         return bitmap;
-    }
-
-    protected int getRandomColor() {
-        int r = (int) (Math.random() * 256);
-        int g = (int) (Math.random() * 256);
-        int b = (int) (Math.random() * 256);
-        return Color.rgb(r, g, b);
     }
 
     @Override
