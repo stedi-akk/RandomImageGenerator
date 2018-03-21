@@ -68,13 +68,13 @@ There are currently 5 generators, and 2 "wrapper" generators.
 
 <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/ColoredCirclesGenerator/1.png" height="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/ColoredCirclesGenerator/2.png" height="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/ColoredCirclesGenerator/3.png" height="128">
 
-- MirroredGenerator
+- MirroredEffect
 
-<img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/MirroredGenerator/1.png" height="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/MirroredGenerator/2.png" height="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/MirroredGenerator/3.png" height="128">
+<img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/MirroredEffect/1.png" height="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/MirroredEffect/2.png" height="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/MirroredEffect/3.png" height="128">
 
-- TextOverlayGenerator
+- TextOverlayEffect
 
-<img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/TextOverlayGenerator/1.png" height="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/TextOverlayGenerator/2.png" height="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/TextOverlayGenerator/3.png" height="128">
+<img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/TextOverlayEffect/1.png" height="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/TextOverlayEffect/2.png" height="128"> <img src="https://github.com/stedi-akk/RandomImageGenerator/raw/master/images/TextOverlayEffect/3.png" height="128">
 
 Additional generators are planned in the future.
 ### Custom generators
@@ -91,14 +91,14 @@ public class MyGenerator implements Generator {
 ## Download
 Gradle:
 ```groovy
-compile 'com.stedi.randomimagegenerator:rig:1.0.0'
+compile 'com.stedi.randomimagegenerator:rig:1.1.0'
 ```
 This library is synchronous, and you should not use it in the main thread.  
    
 There is also a sample application available in the /sample directory.
 
 ## License
-> Copyright 2017 Dima Stepanchenko
+> Copyright 2018 Dima Stepanchenko
 > 
 > Licensed under the Apache License, Version 2.0 (the "License");
 > you may not use this file except in compliance with the License.
